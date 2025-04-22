@@ -98,7 +98,7 @@ export default function AdminDashboard() {
               <div className="mr-3">
                 <DashboardIcon />
               </div>
-              <span>Dashboard</span>
+              <span>Dashboardlala</span>
             </a>
           </div>
           
