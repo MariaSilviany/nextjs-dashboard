@@ -5,17 +5,17 @@ import { Nunito_Sans, Creepster, Jolly_Lodger } from 'next/font/google';
 import { StarIcon, ShoppingCartIcon, UsersIcon, ArchiveBoxIcon } from '@heroicons/react/24/solid';
 
 //Font yang digunakan
-export const jollyLodger = Jolly_Lodger({
+const jollyLodger = Jolly_Lodger({
   weight: '400',
   subsets: ['latin'],
 });
 
-export const creepster = Creepster({
+const creepster = Creepster({
   weight: '400',
   subsets: ['latin'],
 });
 
-export const nunitoSans = Nunito_Sans({
+const nunitoSans = Nunito_Sans({
   weight: ['400', '700'],
   subsets: ['latin'],
 });
