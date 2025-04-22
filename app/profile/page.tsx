@@ -156,6 +156,7 @@ export default function Home() {
         </div>
       </section>
 
+// Tim haunted Hollow
       {/* Team Section */}
       <main className="w-full min-h-screen bg-gray-900 flex flex-col items-center py-10 px-4">
         <header className="mb-8 text-center mt-20">
