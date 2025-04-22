@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Jolly_Lodger } from "next/font/google";
 import { Creepster } from "next/font/google";
@@ -345,4 +345,13 @@ const EditProduk: React.FC = () => {
   );
 };
 
-export default EditProduk;
+//perubahan
+const EditProdukWrapper: React.FC = () => {
+  return (
+    <Suspense fallback={<div className="text-white">Loading...</div>}>
+      <EditProduk />
+    </Suspense>
+  );
+};
+
+export default EditProdukWrapper;
