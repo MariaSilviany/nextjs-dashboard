@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/useRouter";
+import { useRouter } from "next/router";
 import { Jolly_Lodger } from "next/font/google";
 import { Creepster } from "next/font/google";
 
