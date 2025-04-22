@@ -262,7 +262,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Tabel Produk Unggulan */}
+        {/* Tabel Produk Unggulan Toko */}
         <div className="bg-[#B9BFC7] p-6 rounded-lg mb-6 items-start mx-auto ml-8 mt-10">
           <h3 className={`text-5xl text-red-900 font-bold mb-4 ${jollyLodger.className}`}>Produk Unggulan</h3>
           <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ${nunitoSans.className}`}>
