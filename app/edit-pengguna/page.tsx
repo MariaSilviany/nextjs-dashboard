@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/useRouter";
 import { Jolly_Lodger } from "next/font/google";
 import { Creepster } from "next/font/google";
 
@@ -19,8 +19,8 @@ const creepster = Creepster({
 });
 
 const EditProduk: React.FC = () => {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const router = useRouter();
+  const { id } = router.query;
 
   // Mock user data
   const users = [
@@ -89,7 +89,7 @@ const EditProduk: React.FC = () => {
     },
   ];
 
-  const user = users.find((u) => u.id === parseInt(id || "", 10));
+  const user = users.find((u) => u.id === parseInt(id as string, 10)); 
 
   const [status, setStatus] = useState(user?.status === "Aktif");
 
@@ -98,8 +98,8 @@ const EditProduk: React.FC = () => {
   }
 
   const toggleStatus = () => {
-    setStatus(!status);
-  };
+    setStatus((prevStatus) => !prevStatus);
+  };  
 
   // SVG Icons
   const DashboardIcon = () => (
