@@ -109,11 +109,12 @@ enum OrderStatus {
 //   status   String
 //   // kamu bisa tambahkan relasi customer nanti kalau perlu
 //   items    invoices_items[]
-<<<<<<< HEAD
-// }
-=======
-// }
+// <<<<<<< HEAD
+// // }
+// =======
+// // }
 
 
-// >>>>>>> 64d20bdbcbe8d01623200514c9ac28eb6b530b63
->>>>>>> e30e48d4bb6cf752326f75919e7a2a002174bd21
+// // >>>>>>> 64d20bdbcbe8d01623200514c9ac28eb6b530b63
+// >>>>>>> e30e48d4bb6cf752326f75919e7a2a002174bd21
+// 
