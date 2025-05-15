@@ -92,7 +92,7 @@ async function seedPelanggan() {
     );
   `;
 
-  const insertedCustomers = await Promise.all(
+  const insertedPelanggan = await Promise.all(
     pelanggan.map(
       (customer) => sql`
         INSERT INTO pelanggan (id, nama, email, alamat, telepon)
@@ -102,7 +102,7 @@ async function seedPelanggan() {
     ),
   );
 
-  return insertedCustomers;
+  return insertedPelanggan;
 }
 
 async function seedPendapatan() {
@@ -113,7 +113,7 @@ async function seedPendapatan() {
   );
   `;
 
-  const insertedRevenue = await Promise.all(
+  const insertedPendapatan= await Promise.all(
     pendapatan.map(
       (rev) => sql`
         INSERT INTO pendapatan (bulan, pendapatan)
@@ -123,7 +123,7 @@ async function seedPendapatan() {
     ),
   );
 
-  return insertedRevenue;
+  return insertedPendapatan;
 }
 
 export async function GET() {
@@ -141,5 +141,3 @@ export async function GET() {
     return Response.json({ error }, { status: 500 });
   }
 }
-
-
