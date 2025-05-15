@@ -55,5 +55,3 @@ const invoices = [
     imageUrl: '/products/produk4.png',
   },
 ];
-
-export { cardData, revenues, invoices };
