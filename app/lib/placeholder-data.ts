@@ -163,4 +163,39 @@ const rating_toko = [
   }
 ];
 
-export { users, pelanggan, produk, penjualan, pendapatan, rating_toko };
+const pesanan = [
+  {
+    id_pesanan: 'PSN001',
+    id_pelanggan: pelanggan[0].id,
+    produk: 'Topeng Hantu Horor(1 Pcs)',
+    total: 80000,
+    tanggal: '2024-03-01T11:32:00',
+    status: 'Sedang Diproses',
+  },
+  {
+    id_pesanan: 'PSN002',
+    id_pelanggan: pelanggan[1].id,
+    produk: 'Topeng Hantu Horor(1 Pcs), Lilin Aroma Misterius(1 Pcs)',
+    total: 146000,
+    tanggal: '2024-09-06T14:32:00',
+    status: 'Menunggu Pembayaran',
+  },
+  {
+    id_pesanan: 'PSN003',
+    id_pelanggan: pelanggan[2].id,
+    produk: 'Boneka Seram (1 Pcs), Lilin Aroma Misterius(3 Pcs)',
+    total: 132000,
+    tanggal: '2024-09-25T10:22:00',
+    status: 'Menunggu Pembayaran',
+  },
+  {
+    id_pesanan: 'PSN004',
+    id_pelanggan: pelanggan[3].id,
+    produk: 'Karilan Arwah Kela (1 Pcs), Lampu Hias gantung(1 Pcs)',
+    total: 220000,
+    tanggal: '2024-04-30T08:46:00',
+    status: 'Sedang Diproses',
+  },
+];
+
+export { users, pelanggan, produk, penjualan, pendapatan, rating_toko, pesanan };
