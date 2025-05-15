@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import postgres from 'postgres';
-import { penjualan, pelanggan, pendapatan, users } from '../lib/placeholder-data';
+import { penjualan, pelanggan, pendapatan, users, produk } from '../lib/placeholder-data';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -79,7 +79,7 @@ async function seedPenjualan() {
 }
 
 
-async function seedCustomers() {
+async function seedPelanggan() {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
   await sql`
@@ -93,7 +93,7 @@ async function seedCustomers() {
   `;
 
   const insertedCustomers = await Promise.all(
-    customers.map(
+    pelanggan.map(
       (customer) => sql`
         INSERT INTO pelanggan (id, nama, email, alamat, telepon)
         VALUES (${customer.id}, ${customer.nama}, ${customer.email}, ${customer.alamat}, ${customer.telepon})
@@ -105,7 +105,7 @@ async function seedCustomers() {
   return insertedCustomers;
 }
 
-async function seedRevenue() {
+async function seedPendapatan() {
   await sql`
     CREATE TABLE IF NOT EXISTS pendapatan (
       bulan VARCHAR(7) PRIMARY KEY,
@@ -114,7 +114,7 @@ async function seedRevenue() {
   `;
 
   const insertedRevenue = await Promise.all(
-    revenue.map(
+    pendapatan.map(
       (rev) => sql`
         INSERT INTO pendapatan (bulan, pendapatan)
         VALUES (${rev.bulan}, ${rev.pendapatan})
@@ -128,13 +128,13 @@ async function seedRevenue() {
 
 export async function GET() {
   try {
-    const result = await sql.begin((sql) => [
-  seedUsers(),
-  seedCustomers(),     // alias seedPelanggan()
-  seedProduk(),
-  seedPenjualan(),
-  seedRevenue(),       // alias seedPendapatan()
-]);
+    const result = await sql.begin(async (sql) => {
+      await seedUsers();
+      await seedPelanggan();
+      await seedProduk();
+      await seedPenjualan();
+      await seedPendapatan();
+    });
 
     return Response.json({ message: 'Database seeded successfully' });
   } catch (error) {
