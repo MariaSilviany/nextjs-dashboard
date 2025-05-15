@@ -8,36 +8,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    String  @id @default(uuid())
-  name  String
-  email String  @unique
-  orders Order[]
+model customers {
+  id        String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name      String @db.VarChar(255)
+  email     String @db.VarChar(255)
+  image_url String @db.VarChar(255)
 }
 
-model Product {
-  id         String  @id @default(uuid())
-  name       String
-  price      Int
-  imageUrl   String
-  soldCount  Int
-  isFeatured Boolean @default(false)
-  orders     Order[]
+model invoices {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  customer_id String   @db.Uuid
+  amount      Int
+  status      String   @db.VarChar(255)
+  date        DateTime @db.Date
 }
 
-model Order {
-  id        String   @id @default(uuid())
-  product   Product  @relation(fields: [productId], references: [id])
-  productId String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  quantity  Int
-  total     Int
-  status    Status
+model revenue {
+  month   String @unique @db.VarChar(4)
+  revenue Int
 }
 
-enum Status {
-  PROSES
-  DIKIRIM
-  SELESAI
+model users {
+  id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name     String @db.VarChar(255)
+  email    String @unique
+  password String
 }
