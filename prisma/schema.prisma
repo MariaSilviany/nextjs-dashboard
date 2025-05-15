@@ -47,6 +47,7 @@ model store_metrics {
 
 model invoices { 
   id       String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  customer String           @db.VarChar(255)
   date     DateTime         @default(now())
   amount   Int
   status   String
