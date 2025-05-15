@@ -4,22 +4,23 @@ import Image from 'next/image';
 import { Nunito_Sans, Creepster, Jolly_Lodger } from 'next/font/google';
 import { StarIcon, ShoppingCartIcon, UsersIcon, ArchiveBoxIcon } from '@heroicons/react/24/solid';
 
-export const jollyLodger = Jolly_Lodger({
+//Font yang digunakan
+const jollyLodger = Jolly_Lodger({
   weight: '400',
   subsets: ['latin'],
 });
 
-export const creepster = Creepster({
+const creepster = Creepster({
   weight: '400',
   subsets: ['latin'],
 });
 
-export const nunitoSans = Nunito_Sans({
+const nunitoSans = Nunito_Sans({
   weight: ['400', '700'],
   subsets: ['latin'],
 });
 
-// Icon SVG
+// SVG Icon
 const DashboardIcon = () => (
   <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="22" height="22" fill="url(#pattern0_277_833)" />

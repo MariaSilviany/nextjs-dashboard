@@ -156,7 +156,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Tim Haunted Hollow*/}
       <main className="w-full min-h-screen bg-gray-900 flex flex-col items-center py-10 px-4">
         <header className="mb-8 text-center mt-20">
           <h1 className={`text-6xl text-blue-500 text-center ${jollyLodger.className} mb-4`} style={{ WebkitTextStroke: "0.5px white" }}>
