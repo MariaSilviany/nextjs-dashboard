@@ -120,31 +120,39 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.CustomersScalarFieldEnum = {
+exports.Prisma.ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  price: 'price',
+  imageUrl: 'imageUrl',
+  soldCount: 'soldCount',
+  isFeatured: 'isFeatured',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
-  image_url: 'image_url'
+  createdAt: 'createdAt'
 };
 
-exports.Prisma.InvoicesScalarFieldEnum = {
+exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
-  customer_id: 'customer_id',
-  amount: 'amount',
+  userId: 'userId',
+  productId: 'productId',
+  quantity: 'quantity',
   status: 'status',
-  date: 'date'
+  total: 'total',
+  createdAt: 'createdAt'
 };
 
-exports.Prisma.RevenueScalarFieldEnum = {
-  month: 'month',
-  revenue: 'revenue'
-};
-
-exports.Prisma.UsersScalarFieldEnum = {
+exports.Prisma.TeamScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  email: 'email',
-  password: 'password'
+  role: 'role',
+  imageUrl: 'imageUrl',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -156,13 +164,17 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-
+exports.OrderStatus = exports.$Enums.OrderStatus = {
+  PROSES: 'PROSES',
+  DIKIRIM: 'DIKIRIM',
+  SELESAI: 'SELESAI'
+};
 
 exports.Prisma.ModelName = {
-  customers: 'customers',
-  invoices: 'invoices',
-  revenue: 'revenue',
-  users: 'users'
+  Product: 'Product',
+  User: 'User',
+  Order: 'Order',
+  Team: 'Team'
 };
 
 /**

@@ -4,114 +4,93 @@ import { invoices, customers, revenue, users } from '../lib/placeholder-data';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-async function seedUsers() {
-  await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-  await sql`
-    CREATE TABLE IF NOT EXISTS users (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      email TEXT NOT NULL UNIQUE,
-      password TEXT NOT NULL
-    );
-  `;
-
-  const insertedUsers = await Promise.all(
-    users.map(async (user) => {
-      const hashedPassword = await bcrypt.hash(user.password, 10);
-      return sql`
-        INSERT INTO users (id, name, email, password)
-        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
-        ON CONFLICT (id) DO NOTHING;
-      `;
-    }),
-  );
-
-  return insertedUsers;
-}
-
-async function seedInvoices() {
-  await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-
-  await sql`
-    CREATE TABLE IF NOT EXISTS invoices (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      customer_id UUID NOT NULL,
-      amount INT NOT NULL,
-      status VARCHAR(255) NOT NULL,
-      date DATE NOT NULL
-    );
-  `;
-
-  const insertedInvoices = await Promise.all(
-    invoices.map(
-      (invoice) => sql`
-        INSERT INTO invoices (customer_id, amount, status, date)
-        VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status}, ${invoice.date})
-        ON CONFLICT (id) DO NOTHING;
-      `,
-    ),
-  );
-
-  return insertedInvoices;
-}
-
-async function seedCustomers() {
-  await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-
-  await sql`
-    CREATE TABLE IF NOT EXISTS customers (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      email VARCHAR(255) NOT NULL,
-      image_url VARCHAR(255) NOT NULL
-    );
-  `;
-
-  const insertedCustomers = await Promise.all(
-    customers.map(
-      (customer) => sql`
-        INSERT INTO customers (id, name, email, image_url)
-        VALUES (${customer.id}, ${customer.name}, ${customer.email}, ${customer.image_url})
-        ON CONFLICT (id) DO NOTHING;
-      `,
-    ),
-  );
-
-  return insertedCustomers;
-}
-
-async function seedRevenue() {
-  await sql`
-    CREATE TABLE IF NOT EXISTS revenue (
-      month VARCHAR(4) NOT NULL UNIQUE,
-      revenue INT NOT NULL
-    );
-  `;
-
-  const insertedRevenue = await Promise.all(
-    revenue.map(
-      (rev) => sql`
-        INSERT INTO revenue (month, revenue)
-        VALUES (${rev.month}, ${rev.revenue})
-        ON CONFLICT (month) DO NOTHING;
-      `,
-    ),
-  );
-
-  return insertedRevenue;
-}
-
 export async function GET() {
   try {
-    const result = await sql.begin((sql) => [
-      seedUsers(),
-      seedCustomers(),
-      seedInvoices(),
-      seedRevenue(),
-    ]);
+    // Hapus data lama terlebih dahulu (opsional untuk seed ulang)
+    await prisma.order.deleteMany()
+    await prisma.product.deleteMany()
+    await prisma.user.deleteMany()
 
-    return Response.json({ message: 'Database seeded successfully' });
+    // Tambah produk unggulan
+    await prisma.product.createMany({
+      data: [
+        {
+          name: 'Lilin Aroma Misterius',
+          price: 50000,
+          imageUrl: '/img/lilin.jpg',
+          soldCount: 2300,
+          isFeatured: true,
+        },
+        {
+          name: 'Topeng Hantu Horor',
+          price: 75000,
+          imageUrl: '/img/topeng.jpg',
+          soldCount: 2300,
+          isFeatured: true,
+        },
+        {
+          name: 'Patung Pemujaan Kuno',
+          price: 150000,
+          imageUrl: '/img/patung.jpg',
+          soldCount: 2300,
+          isFeatured: true,
+        },
+        {
+          name: 'Boneka Seram',
+          price: 120000,
+          imageUrl: '/img/boneka.jpg',
+          soldCount: 2300,
+          isFeatured: true,
+        },
+      ],
+    })
+
+    // Tambah pengguna
+    const katharina = await prisma.user.create({
+      data: { name: 'Katharina', email: 'katharina@example.com' },
+    })
+    const john = await prisma.user.create({
+      data: { name: 'John', email: 'john@example.com' },
+    })
+    const lusia = await prisma.user.create({
+      data: { name: 'Lusia', email: 'lusia@example.com' },
+    })
+
+    // Tambah pesanan
+    const lilin = await prisma.product.findFirst({ where: { name: 'Lilin Aroma Misterius' } })
+    const boneka = await prisma.product.findFirst({ where: { name: 'Boneka Seram' } })
+
+    if (lilin && boneka) {
+      await prisma.order.createMany({
+        data: [
+          {
+            productId: lilin.id,
+            userId: katharina.id,
+            quantity: 3,
+            status: 'DIKIRIM',
+            total: 198000,
+          },
+          {
+            productId: lilin.id,
+            userId: john.id,
+            quantity: 1,
+            status: 'PROSES',
+            total: 66000,
+          },
+          {
+            productId: boneka.id,
+            userId: lusia.id,
+            quantity: 2,
+            status: 'SELESAI',
+            total: 132000,
+          },
+        ],
+      })
+    }
+
+    return NextResponse.json({ message: 'Seed data berhasil dimasukkan!' })
   } catch (error) {
-    return Response.json({ error }, { status: 500 });
+    console.error(error)
+    return NextResponse.json({ error: 'Gagal melakukan seed' }, { status: 500 })
   }
 }
