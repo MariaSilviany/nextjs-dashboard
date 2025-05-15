@@ -8,31 +8,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model customers {
-  id        String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name      String     @db.VarChar(255)
-  email     String     @db.VarChar(255)
-  image_url String     @db.VarChar(255)
-  invoices  invoices[]
+model products {
+  id         String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name       String           @db.VarChar(255)
+  price      Int
+  image_url  String           @db.VarChar(255)
+  sold_count Int              @default(0)
+  invoices   invoices_items[]
+  createdAt  DateTime         @default(now())
+}
+
+model invoices_items {
+  id         String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  invoice_id String @db.Uuid
+  product_id String @db.Uuid
+  quantity   Int
+  total      Int
+
+  // customer customers @relation(fields: [customer_id], references: [id])
+  invoice invoices @relation(fields: [invoice_id], references: [id])
+  product products @relation(fields: [product_id], references: [id])
+}
+
+// model revenue {
+//   month   String @unique @db.VarChar(4)
+//   revenue Int
+// }
+
+model store_metrics {
+  id             String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  rating         Float
+  total_sales    Int
+  new_customers  Int
+  total_products Int
+  updatedAt      DateTime @updatedAt
 }
 
 model invoices {
-  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  customer_id String    @db.Uuid
-  amount      Int
-  status      String    @db.VarChar(255)
-  date        DateTime  @db.Date
-  customer    customers @relation(fields: [customer_id], references: [id])
-}
-
-model revenue {
-  month   String @unique @db.VarChar(4)
-  revenue Int
-}
-
-model users {
-  id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name     String @db.VarChar(255)
-  email    String @unique
-  password String
+  id     String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  date   DateTime         @default(now())
+  amount Int
+  status String
+  // kamu bisa tambahkan relasi customer nanti kalau perlu
+  items  invoices_items[]
 }
