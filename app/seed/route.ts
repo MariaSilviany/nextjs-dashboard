@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'; 
 import postgres from 'postgres';
-import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+import { penjualan, pelanggan, pendapatan, users } from '../lib/placeholder-data';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -20,7 +20,7 @@ async function seedUsers() {
       const hashedPassword = await bcrypt.hash(user.password, 10);
       return sql`
         INSERT INTO users (id, name, email, password)
-        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+        VALUES (${user.id}, ${user.nama}, ${user.email}, ${hashedPassword})
         ON CONFLICT (id) DO NOTHING;
       `;
     }),
@@ -59,19 +59,20 @@ async function seedCustomers() {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
   await sql`
-    CREATE TABLE IF NOT EXISTS customers (
+    CREATE TABLE IF NOT EXISTS pelanggan (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
+      nama VARCHAR(255) NOT NULL,
       email VARCHAR(255) NOT NULL,
-      image_url VARCHAR(255) NOT NULL
+      alamat TEXT NOT NULL,
+      telepon VARCHAR(20) NOT NULL
     );
   `;
 
   const insertedCustomers = await Promise.all(
     customers.map(
       (customer) => sql`
-        INSERT INTO customers (id, name, email, image_url)
-        VALUES (${customer.id}, ${customer.name}, ${customer.email}, ${customer.image_url})
+        INSERT INTO pelanggan (id, nama, email, alamat, telepon)
+        VALUES (${customer.id}, ${customer.nama}, ${customer.email}, ${customer.alamat}, ${customer.telepon})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
