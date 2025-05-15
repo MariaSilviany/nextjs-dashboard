@@ -196,6 +196,30 @@ const pesanan = [
     tanggal: '2024-04-30T08:46:00',
     status: 'Sedang Diproses',
   },
+  {
+    id_pesanan: 'PSN005',
+    id_pelanggan: pelanggan[3].id,
+    produk: 'Lampu Hias gantung(1 Pcs)',
+    total: 120000,
+    tanggal: '2024-05-05T16:05:00',
+    status: 'Dibatalkan',
+  },
+  {
+    id_pesanan: 'PSN006',
+    id_pelanggan: pelanggan[3].id,
+    produk: 'Patung Pemujaan Kuno (1 Pcs), Boneka Seram (1 Pcs)',
+    total: 166000,
+    tanggal: '2024-09-16T13:05:00',
+    status: 'Selesai',
+  },
+  {
+    id_pesanan: 'PSN007',
+    id_pelanggan: pelanggan[3].id,
+    produk: 'Kotak Musik Berhantu (1 Pcs)',
+    total: 90000,
+    tanggal: '2024-06-04T16:58:00',
+    status: 'Selesai',
+  },
 ];
 
 export { users, pelanggan, produk, penjualan, pendapatan, rating_toko, pesanan };

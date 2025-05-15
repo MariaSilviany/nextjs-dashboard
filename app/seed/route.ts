@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import postgres from 'postgres';
-import { penjualan, pelanggan, pendapatan, users, produk } from '../lib/placeholder-data';
+import { penjualan, pelanggan, pendapatan, pesanan, users, produk } from '../lib/placeholder-data';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -126,6 +126,30 @@ async function seedPendapatan() {
   return insertedPendapatan;
 }
 
+async function seedPesanan() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS pesanan (
+      id_pesanan VARCHAR(10) PRIMARY KEY,
+      id_pelanggan UUID REFERENCES pelanggan(id),
+      produk TEXT NOT NULL,
+      total INTEGER NOT NULL,
+      tanggal TIMESTAMP NOT NULL,
+      status VARCHAR(50) NOT NULL
+    );
+  `;
+
+  const insertedPesanan = await Promise.all(
+    pesanan.map(
+      (pdt) => sql`
+        INSERT INTO pesanan (id_pesanan, id_pelanggan, produk, total, tanggal, status)
+        VALUES (${pdt.id_pesanan}, ${pdt.id_pelanggan}, ${pdt.produk}, ${pdt.total}, ${pdt.tanggal}, ${pdt.status})
+        ON CONFLICT (id_pesanan) DO NOTHING;
+      `,
+    ),
+  );
+  return insertedPesanan;
+}
+
 export async function GET() {
   try {
     const result = await sql.begin(async (sql) => {
@@ -134,6 +158,7 @@ export async function GET() {
       await seedProduk();
       await seedPenjualan();
       await seedPendapatan();
+      await seedPesanan();
     });
 
     return Response.json({ message: 'Database seeded successfully' });

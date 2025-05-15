@@ -60,3 +60,12 @@ model user {
   password String
   role     String @default("admin") @db.VarChar(20)
 }
+
+model pesanan {
+  id           String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nama         String @db.VarChar(255)
+  produk       produk    @relation(fields: [produk_id], references: [id])
+  total        Int
+  tanggal      DateTime  @default(now()) @db.Timestamp()
+  status       String    @db.VarChar(50)
+}
