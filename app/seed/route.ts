@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs'; 
+import bcrypt from 'bcryptjs';
 import postgres from 'postgres';
 import { penjualan, pelanggan, pendapatan, users } from '../lib/placeholder-data';
 
@@ -29,31 +29,55 @@ async function seedUsers() {
   return insertedUsers;
 }
 
-async function seedInvoices() {
-  await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-
+async function seedProduk() {
   await sql`
-    CREATE TABLE IF NOT EXISTS invoices (
+    CREATE TABLE IF NOT EXISTS produk (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      customer_id UUID NOT NULL,
-      amount INT NOT NULL,
-      status VARCHAR(255) NOT NULL,
-      date DATE NOT NULL
+      nama VARCHAR(255) NOT NULL,
+      harga INT NOT NULL,
+      deskripsi TEXT NOT NULL,
+      gambar_url TEXT NOT NULL,
+      kategori VARCHAR(100) NOT NULL,
+      stok INT NOT NULL,
+      terjual INT NOT NULL
     );
   `;
 
-  const insertedInvoices = await Promise.all(
-    invoices.map(
-      (invoice) => sql`
-        INSERT INTO invoices (customer_id, amount, status, date)
-        VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status}, ${invoice.date})
-        ON CONFLICT (id) DO NOTHING;
-      `,
-    ),
+  const insertedProduk = await Promise.all(
+    produk.map((item) => sql`
+      INSERT INTO produk (id, nama, harga, deskripsi, gambar_url, kategori, stok, terjual)
+      VALUES (${item.id}, ${item.nama}, ${item.harga}, ${item.deskripsi}, ${item.gambar_url}, ${item.kategori}, ${item.stok}, ${item.terjual})
+      ON CONFLICT (id) DO NOTHING;
+    `)
   );
 
-  return insertedInvoices;
+  return insertedProduk;
 }
+
+async function seedPenjualan() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS penjualan (
+      id TEXT PRIMARY KEY,
+      pelanggan_id UUID NOT NULL,
+      produk_id UUID NOT NULL,
+      jumlah INT NOT NULL,
+      total INT NOT NULL,
+      status VARCHAR(50) NOT NULL,
+      tanggal TIMESTAMP NOT NULL
+    );
+  `;
+
+  const insertedPenjualan = await Promise.all(
+    penjualan.map((trx) => sql`
+      INSERT INTO penjualan (id, pelanggan_id, produk_id, jumlah, total, status, tanggal)
+      VALUES (${trx.id}, ${trx.pelanggan_id}, ${trx.produk_id}, ${trx.jumlah}, ${trx.total}, ${trx.status}, ${trx.tanggal})
+      ON CONFLICT (id) DO NOTHING;
+    `)
+  );
+
+  return insertedPenjualan;
+}
+
 
 async function seedCustomers() {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -83,17 +107,17 @@ async function seedCustomers() {
 
 async function seedRevenue() {
   await sql`
-    CREATE TABLE IF NOT EXISTS revenue (
-      month VARCHAR(4) NOT NULL UNIQUE,
-      revenue INT NOT NULL
-    );
+    CREATE TABLE IF NOT EXISTS pendapatan (
+      bulan VARCHAR(7) PRIMARY KEY,
+      pendapatan INT NOT NULL
+  );
   `;
 
   const insertedRevenue = await Promise.all(
     revenue.map(
       (rev) => sql`
-        INSERT INTO revenue (month, revenue)
-        VALUES (${rev.month}, ${rev.revenue})
+        INSERT INTO pendapatan (bulan, pendapatan)
+        VALUES (${rev.bulan}, ${rev.pendapatan})
         ON CONFLICT (month) DO NOTHING;
       `,
     ),
@@ -105,11 +129,12 @@ async function seedRevenue() {
 export async function GET() {
   try {
     const result = await sql.begin((sql) => [
-      seedUsers(),
-      seedCustomers(),
-      seedInvoices(),
-      seedRevenue(),
-    ]);
+  seedUsers(),
+  seedCustomers(),     // alias seedPelanggan()
+  seedProduk(),
+  seedPenjualan(),
+  seedRevenue(),       // alias seedPendapatan()
+]);
 
     return Response.json({ message: 'Database seeded successfully' });
   } catch (error) {
