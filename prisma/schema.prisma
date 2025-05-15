@@ -70,6 +70,17 @@ enum OrderStatus {
 //   quantity    Int
 //   total       Int 
 
+// <<<<<<< HEAD
+// model invoices { 
+//   id       String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   customer String           @db.VarChar(255)
+//   date     DateTime         @default(now())
+//   amount   Int
+//   status   String
+//   // kamu bisa tambahkan relasi customer nanti kalau perlu
+//   items    invoices_items[]
+// }
+// =======
 //   // customer customers @relation(fields: [customer_id], references: [id])
 //   invoice   invoices @relation(fields: [invoice_id], references: [id])
 //   product products @relation(fields: [product_id], references: [id])
@@ -98,4 +109,11 @@ enum OrderStatus {
 //   status   String
 //   // kamu bisa tambahkan relasi customer nanti kalau perlu
 //   items    invoices_items[]
+<<<<<<< HEAD
 // }
+=======
+// }
+
+
+// >>>>>>> 64d20bdbcbe8d01623200514c9ac28eb6b530b63
+>>>>>>> e30e48d4bb6cf752326f75919e7a2a002174bd21
