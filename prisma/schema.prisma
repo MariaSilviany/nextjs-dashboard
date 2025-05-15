@@ -8,51 +8,96 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model products {
+model CardData {
   id        String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name      String @db.VarChar(255)
-  price     Int 
-  image_url String @db.VarChar(255)
-  sold_count Int @default(0)
-  invoices  invoices_items[]
+  month     String @db.VarChar(7)
+  storeRating Float
+  totalSales  Int
+  newCustomers Int
+  totalProducts Int
+  updatedAt DateTime @default(now())
+}
+
+model Revenue {
+  id        String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  product   String @db.VarChar(225)
+  buyer     String @db.VarChar(255)
+  quantity  Int
+  status    OrderStatus
+  total     Int
   createdAt DateTime @default(now())
 }
 
-model invoices_items {
-  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  invoice_id  String   @db.Uuid
-  product_id  String   @db.Uuid
-  quantity    Int
-  total       Int 
-
-  // customer customers @relation(fields: [customer_id], references: [id])
-  invoice   invoices @relation(fields: [invoice_id], references: [id])
-  product products @relation(fields: [product_id], references: [id])
-
+model Invoice {
+  id        String @id @default(dbgenerated("uuid_generated_v4()"))
+  product   String @db.VarChar(225)
+  price     Int
+  imageUrl  String
+  soldCount Int
+  createdAt DateTime @default(now())
 }
 
-// model revenue {
-//   month   String @unique @db.VarChar(4)
-//   revenue Int
+model User {
+  id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name     String @db.VarChar(255)
+  email    String @unique
+  password String
+  role     String @default("staff")
+  createdAt DateTime @default(now())
+}
+
+enum OrderStatus {
+  PROSES
+  DIKIRIM
+  SELESAI
+}
+
+
+// model products {
+//   id        String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   name      String @db.VarChar(255)
+//   price     Int 
+//   image_url String @db.VarChar(255)
+//   sold_count Int @default(0)
+//   invoices  invoices_items[]
+//   createdAt DateTime @default(now())
 // }
 
-model store_metrics {
-  id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  rating   Float 
-  total_sales Int
-  new_customers Int
-  total_products Int
-  updatedAt DateTime @updatedAt
-}
+// model invoices_items {
+//   id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   invoice_id  String   @db.Uuid
+//   product_id  String   @db.Uuid
+//   quantity    Int
+//   total       Int 
 
-model invoices { 
-  id       String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  customer String           @db.VarChar(255)
-  date     DateTime         @default(now())
-  amount   Int
-  status   String
-  // kamu bisa tambahkan relasi customer nanti kalau perlu
-  items    invoices_items[]
-}
+//   // customer customers @relation(fields: [customer_id], references: [id])
+//   invoice   invoices @relation(fields: [invoice_id], references: [id])
+//   product products @relation(fields: [product_id], references: [id])
+
+// }
+
+// // model revenue {
+// //   month   String @unique @db.VarChar(4)
+// //   revenue Int
+// // }
+
+// model store_metrics {
+//   id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   rating   Float 
+//   total_sales Int
+//   new_customers Int
+//   total_products Int
+//   updatedAt DateTime @updatedAt
+// }
+
+// model invoices { 
+//   id       String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   customer String           @db.VarChar(255)
+//   date     DateTime         @default(now())
+//   amount   Int
+//   status   String
+//   // kamu bisa tambahkan relasi customer nanti kalau perlu
+//   items    invoices_items[]
+// }
 
 
