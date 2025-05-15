@@ -120,31 +120,53 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.CustomersScalarFieldEnum = {
+exports.Prisma.ProdukScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  email: 'email',
-  image_url: 'image_url'
+  nama: 'nama',
+  harga: 'harga',
+  deskripsi: 'deskripsi',
+  gambar_url: 'gambar_url',
+  kategori: 'kategori',
+  stok: 'stok',
+  terjual: 'terjual'
 };
 
-exports.Prisma.InvoicesScalarFieldEnum = {
+exports.Prisma.PelangganScalarFieldEnum = {
   id: 'id',
-  customer_id: 'customer_id',
-  amount: 'amount',
+  nama: 'nama',
+  email: 'email',
+  alamat: 'alamat',
+  telepon: 'telepon'
+};
+
+exports.Prisma.PenjualanScalarFieldEnum = {
+  id: 'id',
+  pelanggan_id: 'pelanggan_id',
+  produk_id: 'produk_id',
+  jumlah: 'jumlah',
+  total: 'total',
   status: 'status',
-  date: 'date'
+  tanggal: 'tanggal'
 };
 
-exports.Prisma.RevenueScalarFieldEnum = {
-  month: 'month',
-  revenue: 'revenue'
+exports.Prisma.PendapatanScalarFieldEnum = {
+  bulan: 'bulan',
+  pendapatan: 'pendapatan'
 };
 
-exports.Prisma.UsersScalarFieldEnum = {
+exports.Prisma.Rating_tokoScalarFieldEnum = {
   id: 'id',
-  name: 'name',
+  nilai: 'nilai',
+  bulan: 'bulan',
+  created_at: 'created_at'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  nama: 'nama',
   email: 'email',
-  password: 'password'
+  password: 'password',
+  role: 'role'
 };
 
 exports.Prisma.SortOrder = {
@@ -157,12 +179,19 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  customers: 'customers',
-  invoices: 'invoices',
-  revenue: 'revenue',
-  users: 'users'
+  produk: 'produk',
+  pelanggan: 'pelanggan',
+  penjualan: 'penjualan',
+  pendapatan: 'pendapatan',
+  rating_toko: 'rating_toko',
+  user: 'user'
 };
 
 /**
