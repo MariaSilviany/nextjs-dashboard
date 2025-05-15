@@ -4,22 +4,23 @@ import Image from 'next/image';
 import { Nunito_Sans, Creepster, Jolly_Lodger } from 'next/font/google';
 import { StarIcon, ShoppingCartIcon, UsersIcon, ArchiveBoxIcon } from '@heroicons/react/24/solid';
 
-export const jollyLodger = Jolly_Lodger({
+//Font yang digunakan
+const jollyLodger = Jolly_Lodger({
   weight: '400',
   subsets: ['latin'],
 });
 
-export const creepster = Creepster({
+const creepster = Creepster({
   weight: '400',
   subsets: ['latin'],
 });
 
-export const nunitoSans = Nunito_Sans({
+const nunitoSans = Nunito_Sans({
   weight: ['400', '700'],
   subsets: ['latin'],
 });
 
-// Icon SVG
+// SVG Icon
 const DashboardIcon = () => (
   <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="22" height="22" fill="url(#pattern0_277_833)" />
@@ -262,7 +263,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Tabel Produk Unggulan Toko */}
+        {/* Tabel Produk Unggulan Toko HauntedHollow */}
         <div className="bg-[#B9BFC7] p-6 rounded-lg mb-6 items-start mx-auto ml-8 mt-10">
           <h3 className={`text-5xl text-red-900 font-bold mb-4 ${jollyLodger.className}`}>Produk Unggulan</h3>
           <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ${nunitoSans.className}`}>

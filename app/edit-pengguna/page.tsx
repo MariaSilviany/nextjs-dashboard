@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Jolly_Lodger } from "next/font/google";
 import { Creepster } from "next/font/google";
@@ -21,6 +21,7 @@ const creepster = Creepster({
 const EditProduk: React.FC = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+  const parsedId = id ? parseInt(id, 10) : null; //perbaikan
 
   // Mock user data
   const users = [
@@ -89,9 +90,9 @@ const EditProduk: React.FC = () => {
     },
   ];
 
-  const user = users.find((u) => u.id === parseInt(id || "", 10));
+  const user = users.find((u) => u.id === parsedId); //perbaikan
 
-  const [status, setStatus] = useState(user?.status === "Aktif");
+  const [status, setStatus] = useState(user?.status === "Aktif"); //perbaikan
 
   if (!user) {
     return <div className="text-white">Pengguna tidak ditemukan</div>;
@@ -344,4 +345,13 @@ const EditProduk: React.FC = () => {
   );
 };
 
-export default EditProduk;
+//perubahan
+const EditProdukWrapper: React.FC = () => {
+  return (
+    <Suspense fallback={<div className="text-white">Loading...</div>}>
+      <EditProduk />
+    </Suspense>
+  );
+};
+
+export default EditProdukWrapper;
