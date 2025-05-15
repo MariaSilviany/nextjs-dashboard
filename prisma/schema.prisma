@@ -54,5 +54,3 @@ model invoices {
   // kamu bisa tambahkan relasi customer nanti kalau perlu
   items    invoices_items[]
 }
-
-
