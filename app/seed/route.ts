@@ -118,7 +118,7 @@ async function seedPendapatan() {
       (rev) => sql`
         INSERT INTO pendapatan (bulan, pendapatan)
         VALUES (${rev.bulan}, ${rev.pendapatan})
-        ON CONFLICT (month) DO NOTHING;
+        ON CONFLICT (bulan) DO NOTHING;
       `,
     ),
   );
