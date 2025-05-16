@@ -1,11 +1,9 @@
-// import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "@/generated/prisma";
 import { LatestInvoice } from "./definitions";
 import { formatCurrency } from "./utils";
-// prisma.ts
-import { PrismaClient } from '@prisma/client';
-export const prisma = new PrismaClient();
 
-// const prisma = new PrismaClient();
+
+const prisma = new PrismaClient();
 
 export async function fetchRevenuePrisma() {
   try {
