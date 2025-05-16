@@ -281,7 +281,7 @@ const AdminPengguna = () => {
           <table className="w-full border-collapse h-full">
               <thead>
                 <tr className="bg-gray-400 text-left border-b border-gray-600">
-                  <th className="p-4">Nama pelanggan</th>
+                  <th className="p-4">Nama pengguna</th>
                   <th className="p-4">Role</th>
                   <th className="p-4">Email</th>
                   <th className="p-4">Status</th>
