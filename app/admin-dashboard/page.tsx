@@ -82,6 +82,7 @@ const SettingsIcon = () => (
 );
 
 export default function AdminDashboard() {
+  
   return (
     <div className="flex min-h-screen bg-[#1e2a3e]">
       {/* Left Sidebar */}
