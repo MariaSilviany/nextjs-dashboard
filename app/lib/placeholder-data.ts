@@ -1,225 +1,147 @@
-// seed-data.js - Data untuk aplikasi toko horor
-// Data ini akan digunakan untuk mengisi database
-
+// This file contains placeholder data that you'll be replacing with real data in the Data Fetching chapter:
+// https://nextjs.org/learn/dashboard-app/fetching-data
 const users = [
   {
     id: '410544b2-4001-4271-9855-fec4b6a6442a',
-    nama: 'Admin',
-    email: 'admin@horor-shop.com',
+    name: 'User',
+    email: 'user@nextmail.com',
     password: '123456',
-    role: 'admin'
   },
 ];
 
-const pelanggan = [
+const customers = [
   {
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    nama: 'Katharina',
-    email: 'katharina@email.com',
-    alamat: 'Jl. Hantu No. 13, Jakarta Selatan',
-    telepon: '081234567890'
+    name: 'Evil Rabbit',
+    email: 'evil@rabbit.com',
+    image_url: '/customers/evil-rabbit.png',
   },
   {
     id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    nama: 'John',
-    email: 'john@email.com',
-    alamat: 'Jl. Pocong No. 7, Bandung',
-    telepon: '081234567891'
+    name: 'Delba de Oliveira',
+    email: 'delba@oliveira.com',
+    image_url: '/customers/delba-de-oliveira.png',
   },
   {
     id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
-    nama: 'Lusia',
-    email: 'lusia@email.com',
-    alamat: 'Jl. Kuntilanak No. 9, Surabaya',
-    telepon: '081234567892'
+    name: 'Lee Robinson',
+    email: 'lee@robinson.com',
+    image_url: '/customers/lee-robinson.png',
   },
   {
     id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
-    nama: 'Michael',
-    email: 'michael@email.com',
-    alamat: 'Jl. Tuyul No. 21, Yogyakarta',
-    telepon: '081234567893'
+    name: 'Michael Novotny',
+    email: 'michael@novotny.com',
+    image_url: '/customers/michael-novotny.png',
   },
   {
     id: 'CC27C14A-0ACF-4F4A-A6C9-D45682C144B9',
-    nama: 'Sarah',
-    email: 'sarah@email.com',
-    alamat: 'Jl. Genderuwo No. 5, Semarang',
-    telepon: '081234567894'
+    name: 'Amy Burns',
+    email: 'amy@burns.com',
+    image_url: '/customers/amy-burns.png',
   },
   {
     id: '13D07535-C59E-4157-A011-F8D2EF4E0CBB',
-    nama: 'Anton',
-    email: 'anton@email.com',
-    alamat: 'Jl. Sundel Bolong No. 3, Malang',
-    telepon: '081234567895'
+    name: 'Balazs Orban',
+    email: 'balazs@orban.com',
+    image_url: '/customers/balazs-orban.png',
   },
 ];
 
-const produk = [
+const invoices = [
   {
-    id: 'fd105551-0f0d-4a9f-bc41-c559c8a17256',
-    nama: 'Lilin Aroma Misterius',
-    harga: 66000,
-    deskripsi: 'Lilin aromaterapi dengan aroma misterius yang dapat menciptakan suasana mistis dan menenangkan.',
-    gambar_url: '/products/lilin-aroma-misterius.jpg',
-    kategori: 'Dekorasi',
-    stok: 50,
-    terjual: 2300
+    customer_id: customers[0].id,
+    amount: 15795,
+    status: 'pending',
+    date: '2022-12-06',
   },
   {
-    id: 'fd105551-0f0d-4a9f-bc41-c559c8a17257',
-    nama: 'Topeng Hantu Horor',
-    harga: 75000,
-    deskripsi: 'Topeng dengan desain hantu yang menyeramkan, cocok untuk kostum Halloween atau dekorasi.',
-    gambar_url: '/products/topeng-hantu-horor.jpg',
-    kategori: 'Kostum',
-    stok: 30,
-    terjual: 2500
+    customer_id: customers[1].id,
+    amount: 20348,
+    status: 'pending',
+    date: '2022-11-14',
   },
   {
-    id: 'fd105551-0f0d-4a9f-bc41-c559c8a17258',
-    nama: 'Patung Pemujaan Kuno',
-    harga: 150000,
-    deskripsi: 'Replika patung pemujaan kuno dengan detail yang halus, memberikan nuansa mistis pada ruangan.',
-    gambar_url: '/products/patung-pemujaan-kuno.jpg',
-    kategori: 'Dekorasi',
-    stok: 15,
-    terjual: 2500
+    customer_id: customers[4].id,
+    amount: 3040,
+    status: 'paid',
+    date: '2022-10-29',
   },
   {
-    id: 'fd105551-0f0d-4a9f-bc41-c559c8a17259',
-    nama: 'Boneka Seram',
-    harga: 120000,
-    deskripsi: 'Boneka dengan tampilan menyeramkan yang terinspirasi dari film-film horor klasik.',
-    gambar_url: '/products/boneka-seram.jpg',
-    kategori: 'Mainan',
-    stok: 25,
-    terjual: 2500
-  },
-];
-
-const penjualan = [
-  {
-    id: 'INV-2023-0001',
-    pelanggan_id: pelanggan[0].id, // Katharina
-    produk_id: produk[0].id,       // Lilin Aroma Misterius
-    jumlah: 3,
-    total: 198000,                 // 66000 x 3
-    status: 'Dikirim',
-    tanggal: '2023-04-15T10:30:00Z'
+    customer_id: customers[3].id,
+    amount: 44800,
+    status: 'paid',
+    date: '2023-09-10',
   },
   {
-    id: 'INV-2023-0002',
-    pelanggan_id: pelanggan[1].id, // John
-    produk_id: produk[0].id,       // Lilin Aroma Misterius
-    jumlah: 1,
-    total: 66000,                  // 66000 x 1
-    status: 'Proses',
-    tanggal: '2023-04-16T14:45:00Z'
+    customer_id: customers[5].id,
+    amount: 34577,
+    status: 'pending',
+    date: '2023-08-05',
   },
   {
-    id: 'INV-2023-0003',
-    pelanggan_id: pelanggan[2].id, // Lusia
-    produk_id: produk[3].id,       // Boneka Seram
-    jumlah: 2,
-    total: 132000,                 // 66000 x 2
-    status: 'Selesai',
-    tanggal: '2023-04-14T09:15:00Z'
+    customer_id: customers[2].id,
+    amount: 54246,
+    status: 'pending',
+    date: '2023-07-16',
   },
   {
-    id: 'INV-2023-0004',
-    pelanggan_id: pelanggan[3].id, // Michael
-    produk_id: produk[1].id,       // Topeng Hantu Horor
-    jumlah: 2,
-    total: 150000,                 // 75000 x 2
-    status: 'Dikirim',
-    tanggal: '2023-04-13T16:20:00Z'
+    customer_id: customers[0].id,
+    amount: 666,
+    status: 'pending',
+    date: '2023-06-27',
   },
   {
-    id: 'INV-2023-0005',
-    pelanggan_id: pelanggan[4].id, // Sarah
-    produk_id: produk[2].id,       // Patung Pemujaan Kuno
-    jumlah: 1,
-    total: 150000,                 // 150000 x 1
-    status: 'Selesai',
-    tanggal: '2023-04-12T11:00:00Z'
+    customer_id: customers[3].id,
+    amount: 32545,
+    status: 'paid',
+    date: '2023-06-09',
+  },
+  {
+    customer_id: customers[4].id,
+    amount: 1250,
+    status: 'paid',
+    date: '2023-06-17',
+  },
+  {
+    customer_id: customers[5].id,
+    amount: 8546,
+    status: 'paid',
+    date: '2023-06-07',
+  },
+  {
+    customer_id: customers[1].id,
+    amount: 500,
+    status: 'paid',
+    date: '2023-08-19',
+  },
+  {
+    customer_id: customers[5].id,
+    amount: 8945,
+    status: 'paid',
+    date: '2023-06-03',
+  },
+  {
+    customer_id: customers[2].id,
+    amount: 1000,
+    status: 'paid',
+    date: '2022-06-05',
   },
 ];
 
-const pendapatan = [
-  { bulan: '2023-01', pendapatan: 5000000 },
-  { bulan: '2023-02', pendapatan: 6200000 },
-  { bulan: '2023-03', pendapatan: 7500000 },
-  { bulan: '2023-04', pendapatan: 1300000 }, // Total penjualan yang ditampilkan: Rp 1.3M
+const revenue = [
+  { month: 'Jan', revenue: 2000 },
+  { month: 'Feb', revenue: 1800 },
+  { month: 'Mar', revenue: 2200 },
+  { month: 'Apr', revenue: 2500 },
+  { month: 'May', revenue: 2300 },
+  { month: 'Jun', revenue: 3200 },
+  { month: 'Jul', revenue: 3500 },
+  { month: 'Aug', revenue: 3700 },
+  { month: 'Sep', revenue: 2500 },
+  { month: 'Oct', revenue: 2800 },
+  { month: 'Nov', revenue: 3000 },
+  { month: 'Dec', revenue: 4800 },
 ];
 
-const rating_toko = [
-  { 
-    id: '7f8d2fa0-d16c-4594-ac77-8b5d58bae7a5',
-    nilai: 4.7,      // Rating toko: 4.7
-    bulan: '2023-03',
-    created_at: '2023-03-31T23:59:59Z'
-  }
-];
-
-const pesanan = [
-  {
-    id_pesanan: 'PSN001',
-    id_pelanggan: pelanggan[0].id,
-    produk: 'Topeng Hantu Horor(1 Pcs)',
-    total: 80000,
-    tanggal: '2024-03-01T11:32:00',
-    status: 'Sedang Diproses',
-  },
-  {
-    id_pesanan: 'PSN002',
-    id_pelanggan: pelanggan[1].id,
-    produk: 'Topeng Hantu Horor(1 Pcs), Lilin Aroma Misterius(1 Pcs)',
-    total: 146000,
-    tanggal: '2024-09-06T14:32:00',
-    status: 'Menunggu Pembayaran',
-  },
-  {
-    id_pesanan: 'PSN003',
-    id_pelanggan: pelanggan[2].id,
-    produk: 'Boneka Seram (1 Pcs), Lilin Aroma Misterius(3 Pcs)',
-    total: 132000,
-    tanggal: '2024-09-25T10:22:00',
-    status: 'Menunggu Pembayaran',
-  },
-  {
-    id_pesanan: 'PSN004',
-    id_pelanggan: pelanggan[3].id,
-    produk: 'Karilan Arwah Kela (1 Pcs), Lampu Hias gantung(1 Pcs)',
-    total: 220000,
-    tanggal: '2024-04-30T08:46:00',
-    status: 'Sedang Diproses',
-  },
-  {
-    id_pesanan: 'PSN005',
-    id_pelanggan: pelanggan[3].id,
-    produk: 'Lampu Hias gantung(1 Pcs)',
-    total: 120000,
-    tanggal: '2024-05-05T16:05:00',
-    status: 'Dibatalkan',
-  },
-  {
-    id_pesanan: 'PSN006',
-    id_pelanggan: pelanggan[3].id,
-    produk: 'Patung Pemujaan Kuno (1 Pcs), Boneka Seram (1 Pcs)',
-    total: 166000,
-    tanggal: '2024-09-16T13:05:00',
-    status: 'Selesai',
-  },
-  {
-    id_pesanan: 'PSN007',
-    id_pelanggan: pelanggan[3].id,
-    produk: 'Kotak Musik Berhantu (1 Pcs)',
-    total: 90000,
-    tanggal: '2024-06-04T16:58:00',
-    status: 'Selesai',
-  },
-];
-
-export { users, pelanggan, produk, penjualan, pendapatan, rating_toko, pesanan };
+export { users, customers, invoices, revenue };

@@ -12,7 +12,7 @@ model produk {
   id         String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   nama       String      @db.VarChar(255)
   harga      Int
-  deskripsi  String?     @db.Text
+  deskripsi  String     @db.Text
   gambar_url String      @db.VarChar(255)
   kategori   String      @db.VarChar(100)
   stok       Int         @default(0)
@@ -24,8 +24,8 @@ model pelanggan {
   id        String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   nama      String      @db.VarChar(255)
   email     String      @unique @db.VarChar(255)
-  alamat    String?     @db.Text
-  telepon   String?     @db.VarChar(20)
+  alamat    String     @db.Text
+  telepon   String     @db.VarChar(20)
   penjualan penjualan[]
 }
 
@@ -42,14 +42,14 @@ model penjualan {
 }
 
 model pendapatan {
-  bulan      String @unique @db.VarChar(7) // Format: "YYYY-MM"
+  bulan      String @unique @db.VarChar(7) 
   pendapatan Int
 }
 
 model rating_toko {
   id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   nilai      Float
-  bulan      String   @db.VarChar(7) // Format: "YYYY-MM"
+  bulan      String   @db.VarChar(7) 
   created_at DateTime @default(now()) @db.Timestamp()
 }
 
