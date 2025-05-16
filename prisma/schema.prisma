@@ -9,12 +9,16 @@ datasource db {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e079e3aba8332ae85d95255c38bde687af6d7138
 model produk {
   id         String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   nama       String      @db.VarChar(255)
   harga      Int
   gambar_url String      @db.VarChar(255)
   stok       Int         @default(0)
+<<<<<<< HEAD
   status     String    @db.VarChar(50)
   penjualan  penjualan[]
   pesanan    pesanan[]
@@ -25,24 +29,62 @@ model customers {
   email     String @db.VarChar(255)
   image_url String @db.VarChar(255)
 >>>>>>> cd6971648e3524b85f140d3de0c514b30e03c32f
+=======
+  status       String    @db.VarChar(50)
+  penjualan  penjualan[]
+  pesanan    pesanan[]
+>>>>>>> e079e3aba8332ae85d95255c38bde687af6d7138
 }
 
-model invoices {
-  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  customer_id String   @db.Uuid
-  amount      Int
-  status      String   @db.VarChar(255)
-  date        DateTime @db.Date
+model pelanggan {
+  id        String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nama      String      @db.VarChar(255)
+  email     String      @unique @db.VarChar(255)
+  alamat    String     @db.Text
+  telepon   String     @db.VarChar(20)
+  penjualan penjualan[]
 }
 
-model revenue {
-  month   String @unique @db.VarChar(4)
-  revenue Int
+model penjualan {
+  id           String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pelanggan_id String    @db.Uuid
+  produk_id    String    @db.Uuid
+  jumlah       Int
+  total        Int
+  status       String    @db.VarChar(50) // "Dikirim", "Proses", "Selesai"
+  tanggal      DateTime  @default(now()) @db.Timestamp()
+  pelanggan    pelanggan @relation(fields: [pelanggan_id], references: [id])
+  produk       produk    @relation(fields: [produk_id], references: [id])
 }
 
-model users {
+model pendapatan {
+  bulan      String @unique @db.VarChar(7) 
+  pendapatan Int
+}
+
+model rating_toko {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nilai      Float
+  bulan      String   @db.VarChar(7) 
+  created_at DateTime @default(now()) @db.Timestamp()
+}
+
+model user {
   id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name     String @db.VarChar(255)
-  email    String @unique
-  password String
+  nama     String @db.VarChar(255)
+  role     String @default("admin") @db.VarChar(20)
+  email    String @unique @db.VarChar(255)
+  status   String @db.VarChar(50)
+  tanggal  DateTime @default(now()) @db.Timestamp()
 }
+
+model pesanan {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nama       String   @db.VarChar(255)
+  produk_id  String   @db.Uuid
+  produk     produk   @relation(fields: [produk_id], references: [id])
+  total      Int
+  tanggal    DateTime @default(now()) @db.Timestamp()
+  status     String   @db.VarChar(50)
+}
+
