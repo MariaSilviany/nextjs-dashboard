@@ -21,6 +21,7 @@ export async function fetchLatestInvoicesPrisma() {
       orderBy: {
         date: "desc",
       },
+      // Hapus include customer jika tidak ada relasi customer
       // include: {
       //   customer: {
       //     select: {
@@ -34,9 +35,10 @@ export async function fetchLatestInvoicesPrisma() {
 
     const latestInvoices = data.map((invoice) => ({
       amount: formatCurrency(invoice.amount),
-      // name: invoice.customer.name,
-      // image_url: invoice.customer.image_url,
-      // email: invoice.customer.email,
+      // Jika tidak ada relasi customer, gunakan field yang ada di invoices
+      // name: invoice.customer?.name,
+      // image_url: invoice.customer?.image_url,
+      // email: invoice.customer?.email,
       id: invoice.id,
     })) as unknown as LatestInvoice[];
 
@@ -80,3 +82,5 @@ export async function fetchCardDataPrisma() {
     throw new Error("Failed to fetch card data.");
   }
 }
+
+export default prisma;
