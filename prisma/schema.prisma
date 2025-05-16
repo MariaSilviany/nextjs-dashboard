@@ -8,32 +8,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e079e3aba8332ae85d95255c38bde687af6d7138
 model produk {
   id         String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   nama       String      @db.VarChar(255)
   harga      Int
   gambar_url String      @db.VarChar(255)
   stok       Int         @default(0)
-<<<<<<< HEAD
   status     String    @db.VarChar(50)
   penjualan  penjualan[]
   pesanan    pesanan[]
-=======
-model customers {
-  id        String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name      String @db.VarChar(255)
-  email     String @db.VarChar(255)
-  image_url String @db.VarChar(255)
->>>>>>> cd6971648e3524b85f140d3de0c514b30e03c32f
-=======
-  status       String    @db.VarChar(50)
-  penjualan  penjualan[]
-  pesanan    pesanan[]
->>>>>>> e079e3aba8332ae85d95255c38bde687af6d7138
 }
 
 model pelanggan {
