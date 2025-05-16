@@ -111,7 +111,7 @@ export default function Home() {
             <div className="col-span-4 row-span-2 relative bg-gray-400 rounded overflow-hidden">
               <img src="/kat1.png" alt="Kafan Arwah Kelam" className="w-full h-full object-cover" />
               <div className="absolute bottom-6 left-0 right-0 text-center">
-                <div className={`text-2xl text-red-500 font-semibold ${creepster.className}`}>Kafan Arwah Kelam</div>
+                <div className={`text-2xl text-white font-semibold ${creepster.className}`}>Kafan Arwah Kelam</div>
                 <div className="font-bold text-sm text-white mt-2">Sale Up To 30% Off</div>
                 <Link href="/detailproduk">
                     <button className={`bg-blue-800 hover:bg-red-700 text-white px-5 py-1 rounded ${jollyLodger.className}`}>
@@ -136,7 +136,7 @@ export default function Home() {
             <div className="col-span-4 relative bg-gray-400 rounded overflow-hidden">
               <img src="/kat5.png" alt="Kotak Musik Berhantu" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 left-0 right-0 text-center">
-                <div className={`text-2xl text-red-900 font-semibold ${creepster.className}`}>Kotak Musik Berhantu</div>
+                <div className={`text-2xl text-white font-semibold ${creepster.className}`}>Kotak Musik Berhantu</div>
                 <p className="text-white mt-2">Rp90.000</p>
               </div>
             </div>
@@ -145,7 +145,7 @@ export default function Home() {
             <div className="col-span-4 relative bg-gray-400 rounded overflow-hidden">
               <img src="/kat3.png" alt="Lilin Aroma Misterius" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 left-0 right-0 text-center">
-                <div className={`text-2xl text-red-900 font-semibold ${creepster.className}`}>Lilin Aroma Misterius</div>
+                <div className={`text-2xl text-white font-semibold ${creepster.className}`}>Lilin Aroma Misterius</div>
                 <p className="text-white mt-2">Rp66.000</p>
               </div>
             </div>
