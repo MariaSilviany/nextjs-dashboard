@@ -43,6 +43,11 @@ export type rating_toko = $Result.DefaultSelection<Prisma.$rating_tokoPayload>
  * 
  */
 export type user = $Result.DefaultSelection<Prisma.$userPayload>
+/**
+ * Model pesanan
+ * 
+ */
+export type pesanan = $Result.DefaultSelection<Prisma.$pesananPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -228,6 +233,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.userDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pesanan`: Exposes CRUD operations for the **pesanan** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Pesanans
+    * const pesanans = await prisma.pesanan.findMany()
+    * ```
+    */
+  get pesanan(): Prisma.pesananDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -673,7 +688,8 @@ export namespace Prisma {
     penjualan: 'penjualan',
     pendapatan: 'pendapatan',
     rating_toko: 'rating_toko',
-    user: 'user'
+    user: 'user',
+    pesanan: 'pesanan'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -692,7 +708,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "produk" | "pelanggan" | "penjualan" | "pendapatan" | "rating_toko" | "user"
+      modelProps: "produk" | "pelanggan" | "penjualan" | "pendapatan" | "rating_toko" | "user" | "pesanan"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1140,6 +1156,80 @@ export namespace Prisma {
           }
         }
       }
+      pesanan: {
+        payload: Prisma.$pesananPayload<ExtArgs>
+        fields: Prisma.pesananFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.pesananFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$pesananPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.pesananFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$pesananPayload>
+          }
+          findFirst: {
+            args: Prisma.pesananFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$pesananPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.pesananFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$pesananPayload>
+          }
+          findMany: {
+            args: Prisma.pesananFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$pesananPayload>[]
+          }
+          create: {
+            args: Prisma.pesananCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$pesananPayload>
+          }
+          createMany: {
+            args: Prisma.pesananCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.pesananCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$pesananPayload>[]
+          }
+          delete: {
+            args: Prisma.pesananDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$pesananPayload>
+          }
+          update: {
+            args: Prisma.pesananUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$pesananPayload>
+          }
+          deleteMany: {
+            args: Prisma.pesananDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.pesananUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.pesananUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$pesananPayload>[]
+          }
+          upsert: {
+            args: Prisma.pesananUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$pesananPayload>
+          }
+          aggregate: {
+            args: Prisma.PesananAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePesanan>
+          }
+          groupBy: {
+            args: Prisma.pesananGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PesananGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.pesananCountArgs<ExtArgs>
+            result: $Utils.Optional<PesananCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1230,6 +1320,7 @@ export namespace Prisma {
     pendapatan?: pendapatanOmit
     rating_toko?: rating_tokoOmit
     user?: userOmit
+    pesanan?: pesananOmit
   }
 
   /* Types for Logging */
@@ -1325,10 +1416,12 @@ export namespace Prisma {
 
   export type ProdukCountOutputType = {
     penjualan: number
+    pesanan: number
   }
 
   export type ProdukCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     penjualan?: boolean | ProdukCountOutputTypeCountPenjualanArgs
+    pesanan?: boolean | ProdukCountOutputTypeCountPesananArgs
   }
 
   // Custom InputTypes
@@ -1347,6 +1440,13 @@ export namespace Prisma {
    */
   export type ProdukCountOutputTypeCountPenjualanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: penjualanWhereInput
+  }
+
+  /**
+   * ProdukCountOutputType without action
+   */
+  export type ProdukCountOutputTypeCountPesananArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: pesananWhereInput
   }
 
 
@@ -1580,7 +1680,7 @@ export namespace Prisma {
     id: string
     nama: string
     harga: number
-    deskripsi: string | null
+    deskripsi: string
     gambar_url: string
     kategori: string
     stok: number
@@ -1616,6 +1716,7 @@ export namespace Prisma {
     stok?: boolean
     terjual?: boolean
     penjualan?: boolean | produk$penjualanArgs<ExtArgs>
+    pesanan?: boolean | produk$pesananArgs<ExtArgs>
     _count?: boolean | ProdukCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["produk"]>
 
@@ -1655,6 +1756,7 @@ export namespace Prisma {
   export type produkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nama" | "harga" | "deskripsi" | "gambar_url" | "kategori" | "stok" | "terjual", ExtArgs["result"]["produk"]>
   export type produkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     penjualan?: boolean | produk$penjualanArgs<ExtArgs>
+    pesanan?: boolean | produk$pesananArgs<ExtArgs>
     _count?: boolean | ProdukCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type produkIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1664,12 +1766,13 @@ export namespace Prisma {
     name: "produk"
     objects: {
       penjualan: Prisma.$penjualanPayload<ExtArgs>[]
+      pesanan: Prisma.$pesananPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       nama: string
       harga: number
-      deskripsi: string | null
+      deskripsi: string
       gambar_url: string
       kategori: string
       stok: number
@@ -2069,6 +2172,7 @@ export namespace Prisma {
   export interface Prisma__produkClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     penjualan<T extends produk$penjualanArgs<ExtArgs> = {}>(args?: Subset<T, produk$penjualanArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$penjualanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pesanan<T extends produk$pesananArgs<ExtArgs> = {}>(args?: Subset<T, produk$pesananArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2518,6 +2622,30 @@ export namespace Prisma {
   }
 
   /**
+   * produk.pesanan
+   */
+  export type produk$pesananArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananInclude<ExtArgs> | null
+    where?: pesananWhereInput
+    orderBy?: pesananOrderByWithRelationInput | pesananOrderByWithRelationInput[]
+    cursor?: pesananWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PesananScalarFieldEnum | PesananScalarFieldEnum[]
+  }
+
+  /**
    * produk without action
    */
   export type produkDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2673,8 +2801,8 @@ export namespace Prisma {
     id: string
     nama: string
     email: string
-    alamat: string | null
-    telepon: string | null
+    alamat: string
+    telepon: string
     _count: PelangganCountAggregateOutputType | null
     _min: PelangganMinAggregateOutputType | null
     _max: PelangganMaxAggregateOutputType | null
@@ -2745,8 +2873,8 @@ export namespace Prisma {
       id: string
       nama: string
       email: string
-      alamat: string | null
-      telepon: string | null
+      alamat: string
+      telepon: string
     }, ExtArgs["result"]["pelanggan"]>
     composites: {}
   }
@@ -7738,6 +7866,1111 @@ export namespace Prisma {
 
 
   /**
+   * Model pesanan
+   */
+
+  export type AggregatePesanan = {
+    _count: PesananCountAggregateOutputType | null
+    _avg: PesananAvgAggregateOutputType | null
+    _sum: PesananSumAggregateOutputType | null
+    _min: PesananMinAggregateOutputType | null
+    _max: PesananMaxAggregateOutputType | null
+  }
+
+  export type PesananAvgAggregateOutputType = {
+    total: number | null
+  }
+
+  export type PesananSumAggregateOutputType = {
+    total: number | null
+  }
+
+  export type PesananMinAggregateOutputType = {
+    id: string | null
+    nama: string | null
+    produk_id: string | null
+    total: number | null
+    tanggal: Date | null
+    status: string | null
+  }
+
+  export type PesananMaxAggregateOutputType = {
+    id: string | null
+    nama: string | null
+    produk_id: string | null
+    total: number | null
+    tanggal: Date | null
+    status: string | null
+  }
+
+  export type PesananCountAggregateOutputType = {
+    id: number
+    nama: number
+    produk_id: number
+    total: number
+    tanggal: number
+    status: number
+    _all: number
+  }
+
+
+  export type PesananAvgAggregateInputType = {
+    total?: true
+  }
+
+  export type PesananSumAggregateInputType = {
+    total?: true
+  }
+
+  export type PesananMinAggregateInputType = {
+    id?: true
+    nama?: true
+    produk_id?: true
+    total?: true
+    tanggal?: true
+    status?: true
+  }
+
+  export type PesananMaxAggregateInputType = {
+    id?: true
+    nama?: true
+    produk_id?: true
+    total?: true
+    tanggal?: true
+    status?: true
+  }
+
+  export type PesananCountAggregateInputType = {
+    id?: true
+    nama?: true
+    produk_id?: true
+    total?: true
+    tanggal?: true
+    status?: true
+    _all?: true
+  }
+
+  export type PesananAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which pesanan to aggregate.
+     */
+    where?: pesananWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of pesanans to fetch.
+     */
+    orderBy?: pesananOrderByWithRelationInput | pesananOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: pesananWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` pesanans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` pesanans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned pesanans
+    **/
+    _count?: true | PesananCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PesananAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PesananSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PesananMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PesananMaxAggregateInputType
+  }
+
+  export type GetPesananAggregateType<T extends PesananAggregateArgs> = {
+        [P in keyof T & keyof AggregatePesanan]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePesanan[P]>
+      : GetScalarType<T[P], AggregatePesanan[P]>
+  }
+
+
+
+
+  export type pesananGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: pesananWhereInput
+    orderBy?: pesananOrderByWithAggregationInput | pesananOrderByWithAggregationInput[]
+    by: PesananScalarFieldEnum[] | PesananScalarFieldEnum
+    having?: pesananScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PesananCountAggregateInputType | true
+    _avg?: PesananAvgAggregateInputType
+    _sum?: PesananSumAggregateInputType
+    _min?: PesananMinAggregateInputType
+    _max?: PesananMaxAggregateInputType
+  }
+
+  export type PesananGroupByOutputType = {
+    id: string
+    nama: string
+    produk_id: string
+    total: number
+    tanggal: Date
+    status: string
+    _count: PesananCountAggregateOutputType | null
+    _avg: PesananAvgAggregateOutputType | null
+    _sum: PesananSumAggregateOutputType | null
+    _min: PesananMinAggregateOutputType | null
+    _max: PesananMaxAggregateOutputType | null
+  }
+
+  type GetPesananGroupByPayload<T extends pesananGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PesananGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PesananGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PesananGroupByOutputType[P]>
+            : GetScalarType<T[P], PesananGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type pesananSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nama?: boolean
+    produk_id?: boolean
+    total?: boolean
+    tanggal?: boolean
+    status?: boolean
+    produk?: boolean | produkDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pesanan"]>
+
+  export type pesananSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nama?: boolean
+    produk_id?: boolean
+    total?: boolean
+    tanggal?: boolean
+    status?: boolean
+    produk?: boolean | produkDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pesanan"]>
+
+  export type pesananSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nama?: boolean
+    produk_id?: boolean
+    total?: boolean
+    tanggal?: boolean
+    status?: boolean
+    produk?: boolean | produkDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pesanan"]>
+
+  export type pesananSelectScalar = {
+    id?: boolean
+    nama?: boolean
+    produk_id?: boolean
+    total?: boolean
+    tanggal?: boolean
+    status?: boolean
+  }
+
+  export type pesananOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nama" | "produk_id" | "total" | "tanggal" | "status", ExtArgs["result"]["pesanan"]>
+  export type pesananInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    produk?: boolean | produkDefaultArgs<ExtArgs>
+  }
+  export type pesananIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    produk?: boolean | produkDefaultArgs<ExtArgs>
+  }
+  export type pesananIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    produk?: boolean | produkDefaultArgs<ExtArgs>
+  }
+
+  export type $pesananPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "pesanan"
+    objects: {
+      produk: Prisma.$produkPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      nama: string
+      produk_id: string
+      total: number
+      tanggal: Date
+      status: string
+    }, ExtArgs["result"]["pesanan"]>
+    composites: {}
+  }
+
+  type pesananGetPayload<S extends boolean | null | undefined | pesananDefaultArgs> = $Result.GetResult<Prisma.$pesananPayload, S>
+
+  type pesananCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<pesananFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PesananCountAggregateInputType | true
+    }
+
+  export interface pesananDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['pesanan'], meta: { name: 'pesanan' } }
+    /**
+     * Find zero or one Pesanan that matches the filter.
+     * @param {pesananFindUniqueArgs} args - Arguments to find a Pesanan
+     * @example
+     * // Get one Pesanan
+     * const pesanan = await prisma.pesanan.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends pesananFindUniqueArgs>(args: SelectSubset<T, pesananFindUniqueArgs<ExtArgs>>): Prisma__pesananClient<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Pesanan that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {pesananFindUniqueOrThrowArgs} args - Arguments to find a Pesanan
+     * @example
+     * // Get one Pesanan
+     * const pesanan = await prisma.pesanan.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends pesananFindUniqueOrThrowArgs>(args: SelectSubset<T, pesananFindUniqueOrThrowArgs<ExtArgs>>): Prisma__pesananClient<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Pesanan that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {pesananFindFirstArgs} args - Arguments to find a Pesanan
+     * @example
+     * // Get one Pesanan
+     * const pesanan = await prisma.pesanan.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends pesananFindFirstArgs>(args?: SelectSubset<T, pesananFindFirstArgs<ExtArgs>>): Prisma__pesananClient<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Pesanan that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {pesananFindFirstOrThrowArgs} args - Arguments to find a Pesanan
+     * @example
+     * // Get one Pesanan
+     * const pesanan = await prisma.pesanan.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends pesananFindFirstOrThrowArgs>(args?: SelectSubset<T, pesananFindFirstOrThrowArgs<ExtArgs>>): Prisma__pesananClient<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Pesanans that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {pesananFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Pesanans
+     * const pesanans = await prisma.pesanan.findMany()
+     * 
+     * // Get first 10 Pesanans
+     * const pesanans = await prisma.pesanan.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pesananWithIdOnly = await prisma.pesanan.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends pesananFindManyArgs>(args?: SelectSubset<T, pesananFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Pesanan.
+     * @param {pesananCreateArgs} args - Arguments to create a Pesanan.
+     * @example
+     * // Create one Pesanan
+     * const Pesanan = await prisma.pesanan.create({
+     *   data: {
+     *     // ... data to create a Pesanan
+     *   }
+     * })
+     * 
+     */
+    create<T extends pesananCreateArgs>(args: SelectSubset<T, pesananCreateArgs<ExtArgs>>): Prisma__pesananClient<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Pesanans.
+     * @param {pesananCreateManyArgs} args - Arguments to create many Pesanans.
+     * @example
+     * // Create many Pesanans
+     * const pesanan = await prisma.pesanan.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends pesananCreateManyArgs>(args?: SelectSubset<T, pesananCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Pesanans and returns the data saved in the database.
+     * @param {pesananCreateManyAndReturnArgs} args - Arguments to create many Pesanans.
+     * @example
+     * // Create many Pesanans
+     * const pesanan = await prisma.pesanan.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Pesanans and only return the `id`
+     * const pesananWithIdOnly = await prisma.pesanan.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends pesananCreateManyAndReturnArgs>(args?: SelectSubset<T, pesananCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Pesanan.
+     * @param {pesananDeleteArgs} args - Arguments to delete one Pesanan.
+     * @example
+     * // Delete one Pesanan
+     * const Pesanan = await prisma.pesanan.delete({
+     *   where: {
+     *     // ... filter to delete one Pesanan
+     *   }
+     * })
+     * 
+     */
+    delete<T extends pesananDeleteArgs>(args: SelectSubset<T, pesananDeleteArgs<ExtArgs>>): Prisma__pesananClient<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Pesanan.
+     * @param {pesananUpdateArgs} args - Arguments to update one Pesanan.
+     * @example
+     * // Update one Pesanan
+     * const pesanan = await prisma.pesanan.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends pesananUpdateArgs>(args: SelectSubset<T, pesananUpdateArgs<ExtArgs>>): Prisma__pesananClient<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Pesanans.
+     * @param {pesananDeleteManyArgs} args - Arguments to filter Pesanans to delete.
+     * @example
+     * // Delete a few Pesanans
+     * const { count } = await prisma.pesanan.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends pesananDeleteManyArgs>(args?: SelectSubset<T, pesananDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Pesanans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {pesananUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Pesanans
+     * const pesanan = await prisma.pesanan.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends pesananUpdateManyArgs>(args: SelectSubset<T, pesananUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Pesanans and returns the data updated in the database.
+     * @param {pesananUpdateManyAndReturnArgs} args - Arguments to update many Pesanans.
+     * @example
+     * // Update many Pesanans
+     * const pesanan = await prisma.pesanan.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Pesanans and only return the `id`
+     * const pesananWithIdOnly = await prisma.pesanan.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends pesananUpdateManyAndReturnArgs>(args: SelectSubset<T, pesananUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Pesanan.
+     * @param {pesananUpsertArgs} args - Arguments to update or create a Pesanan.
+     * @example
+     * // Update or create a Pesanan
+     * const pesanan = await prisma.pesanan.upsert({
+     *   create: {
+     *     // ... data to create a Pesanan
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Pesanan we want to update
+     *   }
+     * })
+     */
+    upsert<T extends pesananUpsertArgs>(args: SelectSubset<T, pesananUpsertArgs<ExtArgs>>): Prisma__pesananClient<$Result.GetResult<Prisma.$pesananPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Pesanans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {pesananCountArgs} args - Arguments to filter Pesanans to count.
+     * @example
+     * // Count the number of Pesanans
+     * const count = await prisma.pesanan.count({
+     *   where: {
+     *     // ... the filter for the Pesanans we want to count
+     *   }
+     * })
+    **/
+    count<T extends pesananCountArgs>(
+      args?: Subset<T, pesananCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PesananCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Pesanan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PesananAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PesananAggregateArgs>(args: Subset<T, PesananAggregateArgs>): Prisma.PrismaPromise<GetPesananAggregateType<T>>
+
+    /**
+     * Group by Pesanan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {pesananGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends pesananGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: pesananGroupByArgs['orderBy'] }
+        : { orderBy?: pesananGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, pesananGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPesananGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the pesanan model
+   */
+  readonly fields: pesananFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for pesanan.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__pesananClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    produk<T extends produkDefaultArgs<ExtArgs> = {}>(args?: Subset<T, produkDefaultArgs<ExtArgs>>): Prisma__produkClient<$Result.GetResult<Prisma.$produkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the pesanan model
+   */
+  interface pesananFieldRefs {
+    readonly id: FieldRef<"pesanan", 'String'>
+    readonly nama: FieldRef<"pesanan", 'String'>
+    readonly produk_id: FieldRef<"pesanan", 'String'>
+    readonly total: FieldRef<"pesanan", 'Int'>
+    readonly tanggal: FieldRef<"pesanan", 'DateTime'>
+    readonly status: FieldRef<"pesanan", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * pesanan findUnique
+   */
+  export type pesananFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananInclude<ExtArgs> | null
+    /**
+     * Filter, which pesanan to fetch.
+     */
+    where: pesananWhereUniqueInput
+  }
+
+  /**
+   * pesanan findUniqueOrThrow
+   */
+  export type pesananFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananInclude<ExtArgs> | null
+    /**
+     * Filter, which pesanan to fetch.
+     */
+    where: pesananWhereUniqueInput
+  }
+
+  /**
+   * pesanan findFirst
+   */
+  export type pesananFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananInclude<ExtArgs> | null
+    /**
+     * Filter, which pesanan to fetch.
+     */
+    where?: pesananWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of pesanans to fetch.
+     */
+    orderBy?: pesananOrderByWithRelationInput | pesananOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for pesanans.
+     */
+    cursor?: pesananWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` pesanans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` pesanans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of pesanans.
+     */
+    distinct?: PesananScalarFieldEnum | PesananScalarFieldEnum[]
+  }
+
+  /**
+   * pesanan findFirstOrThrow
+   */
+  export type pesananFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananInclude<ExtArgs> | null
+    /**
+     * Filter, which pesanan to fetch.
+     */
+    where?: pesananWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of pesanans to fetch.
+     */
+    orderBy?: pesananOrderByWithRelationInput | pesananOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for pesanans.
+     */
+    cursor?: pesananWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` pesanans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` pesanans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of pesanans.
+     */
+    distinct?: PesananScalarFieldEnum | PesananScalarFieldEnum[]
+  }
+
+  /**
+   * pesanan findMany
+   */
+  export type pesananFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananInclude<ExtArgs> | null
+    /**
+     * Filter, which pesanans to fetch.
+     */
+    where?: pesananWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of pesanans to fetch.
+     */
+    orderBy?: pesananOrderByWithRelationInput | pesananOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing pesanans.
+     */
+    cursor?: pesananWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` pesanans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` pesanans.
+     */
+    skip?: number
+    distinct?: PesananScalarFieldEnum | PesananScalarFieldEnum[]
+  }
+
+  /**
+   * pesanan create
+   */
+  export type pesananCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananInclude<ExtArgs> | null
+    /**
+     * The data needed to create a pesanan.
+     */
+    data: XOR<pesananCreateInput, pesananUncheckedCreateInput>
+  }
+
+  /**
+   * pesanan createMany
+   */
+  export type pesananCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many pesanans.
+     */
+    data: pesananCreateManyInput | pesananCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * pesanan createManyAndReturn
+   */
+  export type pesananCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * The data used to create many pesanans.
+     */
+    data: pesananCreateManyInput | pesananCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * pesanan update
+   */
+  export type pesananUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananInclude<ExtArgs> | null
+    /**
+     * The data needed to update a pesanan.
+     */
+    data: XOR<pesananUpdateInput, pesananUncheckedUpdateInput>
+    /**
+     * Choose, which pesanan to update.
+     */
+    where: pesananWhereUniqueInput
+  }
+
+  /**
+   * pesanan updateMany
+   */
+  export type pesananUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update pesanans.
+     */
+    data: XOR<pesananUpdateManyMutationInput, pesananUncheckedUpdateManyInput>
+    /**
+     * Filter which pesanans to update
+     */
+    where?: pesananWhereInput
+    /**
+     * Limit how many pesanans to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * pesanan updateManyAndReturn
+   */
+  export type pesananUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * The data used to update pesanans.
+     */
+    data: XOR<pesananUpdateManyMutationInput, pesananUncheckedUpdateManyInput>
+    /**
+     * Filter which pesanans to update
+     */
+    where?: pesananWhereInput
+    /**
+     * Limit how many pesanans to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * pesanan upsert
+   */
+  export type pesananUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananInclude<ExtArgs> | null
+    /**
+     * The filter to search for the pesanan to update in case it exists.
+     */
+    where: pesananWhereUniqueInput
+    /**
+     * In case the pesanan found by the `where` argument doesn't exist, create a new pesanan with this data.
+     */
+    create: XOR<pesananCreateInput, pesananUncheckedCreateInput>
+    /**
+     * In case the pesanan was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<pesananUpdateInput, pesananUncheckedUpdateInput>
+  }
+
+  /**
+   * pesanan delete
+   */
+  export type pesananDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananInclude<ExtArgs> | null
+    /**
+     * Filter which pesanan to delete.
+     */
+    where: pesananWhereUniqueInput
+  }
+
+  /**
+   * pesanan deleteMany
+   */
+  export type pesananDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which pesanans to delete
+     */
+    where?: pesananWhereInput
+    /**
+     * Limit how many pesanans to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * pesanan without action
+   */
+  export type pesananDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the pesanan
+     */
+    select?: pesananSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the pesanan
+     */
+    omit?: pesananOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: pesananInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -7818,6 +9051,18 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const PesananScalarFieldEnum: {
+    id: 'id',
+    nama: 'nama',
+    produk_id: 'produk_id',
+    total: 'total',
+    tanggal: 'tanggal',
+    status: 'status'
+  };
+
+  export type PesananScalarFieldEnum = (typeof PesananScalarFieldEnum)[keyof typeof PesananScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -7832,14 +9077,6 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-  export const NullsOrder: {
-    first: 'first',
-    last: 'last'
-  };
-
-  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -7913,24 +9150,26 @@ export namespace Prisma {
     id?: UuidFilter<"produk"> | string
     nama?: StringFilter<"produk"> | string
     harga?: IntFilter<"produk"> | number
-    deskripsi?: StringNullableFilter<"produk"> | string | null
+    deskripsi?: StringFilter<"produk"> | string
     gambar_url?: StringFilter<"produk"> | string
     kategori?: StringFilter<"produk"> | string
     stok?: IntFilter<"produk"> | number
     terjual?: IntFilter<"produk"> | number
     penjualan?: PenjualanListRelationFilter
+    pesanan?: PesananListRelationFilter
   }
 
   export type produkOrderByWithRelationInput = {
     id?: SortOrder
     nama?: SortOrder
     harga?: SortOrder
-    deskripsi?: SortOrderInput | SortOrder
+    deskripsi?: SortOrder
     gambar_url?: SortOrder
     kategori?: SortOrder
     stok?: SortOrder
     terjual?: SortOrder
     penjualan?: penjualanOrderByRelationAggregateInput
+    pesanan?: pesananOrderByRelationAggregateInput
   }
 
   export type produkWhereUniqueInput = Prisma.AtLeast<{
@@ -7940,19 +9179,20 @@ export namespace Prisma {
     NOT?: produkWhereInput | produkWhereInput[]
     nama?: StringFilter<"produk"> | string
     harga?: IntFilter<"produk"> | number
-    deskripsi?: StringNullableFilter<"produk"> | string | null
+    deskripsi?: StringFilter<"produk"> | string
     gambar_url?: StringFilter<"produk"> | string
     kategori?: StringFilter<"produk"> | string
     stok?: IntFilter<"produk"> | number
     terjual?: IntFilter<"produk"> | number
     penjualan?: PenjualanListRelationFilter
+    pesanan?: PesananListRelationFilter
   }, "id">
 
   export type produkOrderByWithAggregationInput = {
     id?: SortOrder
     nama?: SortOrder
     harga?: SortOrder
-    deskripsi?: SortOrderInput | SortOrder
+    deskripsi?: SortOrder
     gambar_url?: SortOrder
     kategori?: SortOrder
     stok?: SortOrder
@@ -7971,7 +9211,7 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter<"produk"> | string
     nama?: StringWithAggregatesFilter<"produk"> | string
     harga?: IntWithAggregatesFilter<"produk"> | number
-    deskripsi?: StringNullableWithAggregatesFilter<"produk"> | string | null
+    deskripsi?: StringWithAggregatesFilter<"produk"> | string
     gambar_url?: StringWithAggregatesFilter<"produk"> | string
     kategori?: StringWithAggregatesFilter<"produk"> | string
     stok?: IntWithAggregatesFilter<"produk"> | number
@@ -7985,8 +9225,8 @@ export namespace Prisma {
     id?: UuidFilter<"pelanggan"> | string
     nama?: StringFilter<"pelanggan"> | string
     email?: StringFilter<"pelanggan"> | string
-    alamat?: StringNullableFilter<"pelanggan"> | string | null
-    telepon?: StringNullableFilter<"pelanggan"> | string | null
+    alamat?: StringFilter<"pelanggan"> | string
+    telepon?: StringFilter<"pelanggan"> | string
     penjualan?: PenjualanListRelationFilter
   }
 
@@ -7994,8 +9234,8 @@ export namespace Prisma {
     id?: SortOrder
     nama?: SortOrder
     email?: SortOrder
-    alamat?: SortOrderInput | SortOrder
-    telepon?: SortOrderInput | SortOrder
+    alamat?: SortOrder
+    telepon?: SortOrder
     penjualan?: penjualanOrderByRelationAggregateInput
   }
 
@@ -8006,8 +9246,8 @@ export namespace Prisma {
     OR?: pelangganWhereInput[]
     NOT?: pelangganWhereInput | pelangganWhereInput[]
     nama?: StringFilter<"pelanggan"> | string
-    alamat?: StringNullableFilter<"pelanggan"> | string | null
-    telepon?: StringNullableFilter<"pelanggan"> | string | null
+    alamat?: StringFilter<"pelanggan"> | string
+    telepon?: StringFilter<"pelanggan"> | string
     penjualan?: PenjualanListRelationFilter
   }, "id" | "email">
 
@@ -8015,8 +9255,8 @@ export namespace Prisma {
     id?: SortOrder
     nama?: SortOrder
     email?: SortOrder
-    alamat?: SortOrderInput | SortOrder
-    telepon?: SortOrderInput | SortOrder
+    alamat?: SortOrder
+    telepon?: SortOrder
     _count?: pelangganCountOrderByAggregateInput
     _max?: pelangganMaxOrderByAggregateInput
     _min?: pelangganMinOrderByAggregateInput
@@ -8029,8 +9269,8 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter<"pelanggan"> | string
     nama?: StringWithAggregatesFilter<"pelanggan"> | string
     email?: StringWithAggregatesFilter<"pelanggan"> | string
-    alamat?: StringNullableWithAggregatesFilter<"pelanggan"> | string | null
-    telepon?: StringNullableWithAggregatesFilter<"pelanggan"> | string | null
+    alamat?: StringWithAggregatesFilter<"pelanggan"> | string
+    telepon?: StringWithAggregatesFilter<"pelanggan"> | string
   }
 
   export type penjualanWhereInput = {
@@ -8243,59 +9483,125 @@ export namespace Prisma {
     role?: StringWithAggregatesFilter<"user"> | string
   }
 
+  export type pesananWhereInput = {
+    AND?: pesananWhereInput | pesananWhereInput[]
+    OR?: pesananWhereInput[]
+    NOT?: pesananWhereInput | pesananWhereInput[]
+    id?: UuidFilter<"pesanan"> | string
+    nama?: StringFilter<"pesanan"> | string
+    produk_id?: UuidFilter<"pesanan"> | string
+    total?: IntFilter<"pesanan"> | number
+    tanggal?: DateTimeFilter<"pesanan"> | Date | string
+    status?: StringFilter<"pesanan"> | string
+    produk?: XOR<ProdukScalarRelationFilter, produkWhereInput>
+  }
+
+  export type pesananOrderByWithRelationInput = {
+    id?: SortOrder
+    nama?: SortOrder
+    produk_id?: SortOrder
+    total?: SortOrder
+    tanggal?: SortOrder
+    status?: SortOrder
+    produk?: produkOrderByWithRelationInput
+  }
+
+  export type pesananWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: pesananWhereInput | pesananWhereInput[]
+    OR?: pesananWhereInput[]
+    NOT?: pesananWhereInput | pesananWhereInput[]
+    nama?: StringFilter<"pesanan"> | string
+    produk_id?: UuidFilter<"pesanan"> | string
+    total?: IntFilter<"pesanan"> | number
+    tanggal?: DateTimeFilter<"pesanan"> | Date | string
+    status?: StringFilter<"pesanan"> | string
+    produk?: XOR<ProdukScalarRelationFilter, produkWhereInput>
+  }, "id">
+
+  export type pesananOrderByWithAggregationInput = {
+    id?: SortOrder
+    nama?: SortOrder
+    produk_id?: SortOrder
+    total?: SortOrder
+    tanggal?: SortOrder
+    status?: SortOrder
+    _count?: pesananCountOrderByAggregateInput
+    _avg?: pesananAvgOrderByAggregateInput
+    _max?: pesananMaxOrderByAggregateInput
+    _min?: pesananMinOrderByAggregateInput
+    _sum?: pesananSumOrderByAggregateInput
+  }
+
+  export type pesananScalarWhereWithAggregatesInput = {
+    AND?: pesananScalarWhereWithAggregatesInput | pesananScalarWhereWithAggregatesInput[]
+    OR?: pesananScalarWhereWithAggregatesInput[]
+    NOT?: pesananScalarWhereWithAggregatesInput | pesananScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"pesanan"> | string
+    nama?: StringWithAggregatesFilter<"pesanan"> | string
+    produk_id?: UuidWithAggregatesFilter<"pesanan"> | string
+    total?: IntWithAggregatesFilter<"pesanan"> | number
+    tanggal?: DateTimeWithAggregatesFilter<"pesanan"> | Date | string
+    status?: StringWithAggregatesFilter<"pesanan"> | string
+  }
+
   export type produkCreateInput = {
     id?: string
     nama: string
     harga: number
-    deskripsi?: string | null
+    deskripsi: string
     gambar_url: string
     kategori: string
     stok?: number
     terjual?: number
     penjualan?: penjualanCreateNestedManyWithoutProdukInput
+    pesanan?: pesananCreateNestedManyWithoutProdukInput
   }
 
   export type produkUncheckedCreateInput = {
     id?: string
     nama: string
     harga: number
-    deskripsi?: string | null
+    deskripsi: string
     gambar_url: string
     kategori: string
     stok?: number
     terjual?: number
     penjualan?: penjualanUncheckedCreateNestedManyWithoutProdukInput
+    pesanan?: pesananUncheckedCreateNestedManyWithoutProdukInput
   }
 
   export type produkUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
     kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
     terjual?: IntFieldUpdateOperationsInput | number
     penjualan?: penjualanUpdateManyWithoutProdukNestedInput
+    pesanan?: pesananUpdateManyWithoutProdukNestedInput
   }
 
   export type produkUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
     kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
     terjual?: IntFieldUpdateOperationsInput | number
     penjualan?: penjualanUncheckedUpdateManyWithoutProdukNestedInput
+    pesanan?: pesananUncheckedUpdateManyWithoutProdukNestedInput
   }
 
   export type produkCreateManyInput = {
     id?: string
     nama: string
     harga: number
-    deskripsi?: string | null
+    deskripsi: string
     gambar_url: string
     kategori: string
     stok?: number
@@ -8306,7 +9612,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
     kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
@@ -8317,7 +9623,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
     kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
@@ -8328,8 +9634,8 @@ export namespace Prisma {
     id?: string
     nama: string
     email: string
-    alamat?: string | null
-    telepon?: string | null
+    alamat: string
+    telepon: string
     penjualan?: penjualanCreateNestedManyWithoutPelangganInput
   }
 
@@ -8337,8 +9643,8 @@ export namespace Prisma {
     id?: string
     nama: string
     email: string
-    alamat?: string | null
-    telepon?: string | null
+    alamat: string
+    telepon: string
     penjualan?: penjualanUncheckedCreateNestedManyWithoutPelangganInput
   }
 
@@ -8346,8 +9652,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    alamat?: NullableStringFieldUpdateOperationsInput | string | null
-    telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    alamat?: StringFieldUpdateOperationsInput | string
+    telepon?: StringFieldUpdateOperationsInput | string
     penjualan?: penjualanUpdateManyWithoutPelangganNestedInput
   }
 
@@ -8355,8 +9661,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    alamat?: NullableStringFieldUpdateOperationsInput | string | null
-    telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    alamat?: StringFieldUpdateOperationsInput | string
+    telepon?: StringFieldUpdateOperationsInput | string
     penjualan?: penjualanUncheckedUpdateManyWithoutPelangganNestedInput
   }
 
@@ -8364,24 +9670,24 @@ export namespace Prisma {
     id?: string
     nama: string
     email: string
-    alamat?: string | null
-    telepon?: string | null
+    alamat: string
+    telepon: string
   }
 
   export type pelangganUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    alamat?: NullableStringFieldUpdateOperationsInput | string | null
-    telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    alamat?: StringFieldUpdateOperationsInput | string
+    telepon?: StringFieldUpdateOperationsInput | string
   }
 
   export type pelangganUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    alamat?: NullableStringFieldUpdateOperationsInput | string | null
-    telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    alamat?: StringFieldUpdateOperationsInput | string
+    telepon?: StringFieldUpdateOperationsInput | string
   }
 
   export type penjualanCreateInput = {
@@ -8592,6 +9898,68 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
   }
 
+  export type pesananCreateInput = {
+    id?: string
+    nama: string
+    total: number
+    tanggal?: Date | string
+    status: string
+    produk: produkCreateNestedOneWithoutPesananInput
+  }
+
+  export type pesananUncheckedCreateInput = {
+    id?: string
+    nama: string
+    produk_id: string
+    total: number
+    tanggal?: Date | string
+    status: string
+  }
+
+  export type pesananUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    total?: IntFieldUpdateOperationsInput | number
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    produk?: produkUpdateOneRequiredWithoutPesananNestedInput
+  }
+
+  export type pesananUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    produk_id?: StringFieldUpdateOperationsInput | string
+    total?: IntFieldUpdateOperationsInput | number
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type pesananCreateManyInput = {
+    id?: string
+    nama: string
+    produk_id: string
+    total: number
+    tanggal?: Date | string
+    status: string
+  }
+
+  export type pesananUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    total?: IntFieldUpdateOperationsInput | number
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type pesananUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    produk_id?: StringFieldUpdateOperationsInput | string
+    total?: IntFieldUpdateOperationsInput | number
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
   export type UuidFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -8630,33 +9998,23 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type PenjualanListRelationFilter = {
     every?: penjualanWhereInput
     some?: penjualanWhereInput
     none?: penjualanWhereInput
   }
 
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
+  export type PesananListRelationFilter = {
+    every?: pesananWhereInput
+    some?: pesananWhereInput
+    none?: pesananWhereInput
   }
 
   export type penjualanOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type pesananOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8752,24 +10110,6 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type pelangganCountOrderByAggregateInput = {
@@ -8974,6 +10314,41 @@ export namespace Prisma {
     role?: SortOrder
   }
 
+  export type pesananCountOrderByAggregateInput = {
+    id?: SortOrder
+    nama?: SortOrder
+    produk_id?: SortOrder
+    total?: SortOrder
+    tanggal?: SortOrder
+    status?: SortOrder
+  }
+
+  export type pesananAvgOrderByAggregateInput = {
+    total?: SortOrder
+  }
+
+  export type pesananMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nama?: SortOrder
+    produk_id?: SortOrder
+    total?: SortOrder
+    tanggal?: SortOrder
+    status?: SortOrder
+  }
+
+  export type pesananMinOrderByAggregateInput = {
+    id?: SortOrder
+    nama?: SortOrder
+    produk_id?: SortOrder
+    total?: SortOrder
+    tanggal?: SortOrder
+    status?: SortOrder
+  }
+
+  export type pesananSumOrderByAggregateInput = {
+    total?: SortOrder
+  }
+
   export type penjualanCreateNestedManyWithoutProdukInput = {
     create?: XOR<penjualanCreateWithoutProdukInput, penjualanUncheckedCreateWithoutProdukInput> | penjualanCreateWithoutProdukInput[] | penjualanUncheckedCreateWithoutProdukInput[]
     connectOrCreate?: penjualanCreateOrConnectWithoutProdukInput | penjualanCreateOrConnectWithoutProdukInput[]
@@ -8981,11 +10356,25 @@ export namespace Prisma {
     connect?: penjualanWhereUniqueInput | penjualanWhereUniqueInput[]
   }
 
+  export type pesananCreateNestedManyWithoutProdukInput = {
+    create?: XOR<pesananCreateWithoutProdukInput, pesananUncheckedCreateWithoutProdukInput> | pesananCreateWithoutProdukInput[] | pesananUncheckedCreateWithoutProdukInput[]
+    connectOrCreate?: pesananCreateOrConnectWithoutProdukInput | pesananCreateOrConnectWithoutProdukInput[]
+    createMany?: pesananCreateManyProdukInputEnvelope
+    connect?: pesananWhereUniqueInput | pesananWhereUniqueInput[]
+  }
+
   export type penjualanUncheckedCreateNestedManyWithoutProdukInput = {
     create?: XOR<penjualanCreateWithoutProdukInput, penjualanUncheckedCreateWithoutProdukInput> | penjualanCreateWithoutProdukInput[] | penjualanUncheckedCreateWithoutProdukInput[]
     connectOrCreate?: penjualanCreateOrConnectWithoutProdukInput | penjualanCreateOrConnectWithoutProdukInput[]
     createMany?: penjualanCreateManyProdukInputEnvelope
     connect?: penjualanWhereUniqueInput | penjualanWhereUniqueInput[]
+  }
+
+  export type pesananUncheckedCreateNestedManyWithoutProdukInput = {
+    create?: XOR<pesananCreateWithoutProdukInput, pesananUncheckedCreateWithoutProdukInput> | pesananCreateWithoutProdukInput[] | pesananUncheckedCreateWithoutProdukInput[]
+    connectOrCreate?: pesananCreateOrConnectWithoutProdukInput | pesananCreateOrConnectWithoutProdukInput[]
+    createMany?: pesananCreateManyProdukInputEnvelope
+    connect?: pesananWhereUniqueInput | pesananWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -8998,10 +10387,6 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type penjualanUpdateManyWithoutProdukNestedInput = {
@@ -9018,6 +10403,20 @@ export namespace Prisma {
     deleteMany?: penjualanScalarWhereInput | penjualanScalarWhereInput[]
   }
 
+  export type pesananUpdateManyWithoutProdukNestedInput = {
+    create?: XOR<pesananCreateWithoutProdukInput, pesananUncheckedCreateWithoutProdukInput> | pesananCreateWithoutProdukInput[] | pesananUncheckedCreateWithoutProdukInput[]
+    connectOrCreate?: pesananCreateOrConnectWithoutProdukInput | pesananCreateOrConnectWithoutProdukInput[]
+    upsert?: pesananUpsertWithWhereUniqueWithoutProdukInput | pesananUpsertWithWhereUniqueWithoutProdukInput[]
+    createMany?: pesananCreateManyProdukInputEnvelope
+    set?: pesananWhereUniqueInput | pesananWhereUniqueInput[]
+    disconnect?: pesananWhereUniqueInput | pesananWhereUniqueInput[]
+    delete?: pesananWhereUniqueInput | pesananWhereUniqueInput[]
+    connect?: pesananWhereUniqueInput | pesananWhereUniqueInput[]
+    update?: pesananUpdateWithWhereUniqueWithoutProdukInput | pesananUpdateWithWhereUniqueWithoutProdukInput[]
+    updateMany?: pesananUpdateManyWithWhereWithoutProdukInput | pesananUpdateManyWithWhereWithoutProdukInput[]
+    deleteMany?: pesananScalarWhereInput | pesananScalarWhereInput[]
+  }
+
   export type penjualanUncheckedUpdateManyWithoutProdukNestedInput = {
     create?: XOR<penjualanCreateWithoutProdukInput, penjualanUncheckedCreateWithoutProdukInput> | penjualanCreateWithoutProdukInput[] | penjualanUncheckedCreateWithoutProdukInput[]
     connectOrCreate?: penjualanCreateOrConnectWithoutProdukInput | penjualanCreateOrConnectWithoutProdukInput[]
@@ -9030,6 +10429,20 @@ export namespace Prisma {
     update?: penjualanUpdateWithWhereUniqueWithoutProdukInput | penjualanUpdateWithWhereUniqueWithoutProdukInput[]
     updateMany?: penjualanUpdateManyWithWhereWithoutProdukInput | penjualanUpdateManyWithWhereWithoutProdukInput[]
     deleteMany?: penjualanScalarWhereInput | penjualanScalarWhereInput[]
+  }
+
+  export type pesananUncheckedUpdateManyWithoutProdukNestedInput = {
+    create?: XOR<pesananCreateWithoutProdukInput, pesananUncheckedCreateWithoutProdukInput> | pesananCreateWithoutProdukInput[] | pesananUncheckedCreateWithoutProdukInput[]
+    connectOrCreate?: pesananCreateOrConnectWithoutProdukInput | pesananCreateOrConnectWithoutProdukInput[]
+    upsert?: pesananUpsertWithWhereUniqueWithoutProdukInput | pesananUpsertWithWhereUniqueWithoutProdukInput[]
+    createMany?: pesananCreateManyProdukInputEnvelope
+    set?: pesananWhereUniqueInput | pesananWhereUniqueInput[]
+    disconnect?: pesananWhereUniqueInput | pesananWhereUniqueInput[]
+    delete?: pesananWhereUniqueInput | pesananWhereUniqueInput[]
+    connect?: pesananWhereUniqueInput | pesananWhereUniqueInput[]
+    update?: pesananUpdateWithWhereUniqueWithoutProdukInput | pesananUpdateWithWhereUniqueWithoutProdukInput[]
+    updateMany?: pesananUpdateManyWithWhereWithoutProdukInput | pesananUpdateManyWithWhereWithoutProdukInput[]
+    deleteMany?: pesananScalarWhereInput | pesananScalarWhereInput[]
   }
 
   export type penjualanCreateNestedManyWithoutPelangganInput = {
@@ -9114,6 +10527,20 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type produkCreateNestedOneWithoutPesananInput = {
+    create?: XOR<produkCreateWithoutPesananInput, produkUncheckedCreateWithoutPesananInput>
+    connectOrCreate?: produkCreateOrConnectWithoutPesananInput
+    connect?: produkWhereUniqueInput
+  }
+
+  export type produkUpdateOneRequiredWithoutPesananNestedInput = {
+    create?: XOR<produkCreateWithoutPesananInput, produkUncheckedCreateWithoutPesananInput>
+    connectOrCreate?: produkCreateOrConnectWithoutPesananInput
+    upsert?: produkUpsertWithoutPesananInput
+    connect?: produkWhereUniqueInput
+    update?: XOR<XOR<produkUpdateToOneWithWhereWithoutPesananInput, produkUpdateWithoutPesananInput>, produkUncheckedUpdateWithoutPesananInput>
+  }
+
   export type NestedUuidFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -9148,20 +10575,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
@@ -9220,34 +10633,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -9319,6 +10704,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type pesananCreateWithoutProdukInput = {
+    id?: string
+    nama: string
+    total: number
+    tanggal?: Date | string
+    status: string
+  }
+
+  export type pesananUncheckedCreateWithoutProdukInput = {
+    id?: string
+    nama: string
+    total: number
+    tanggal?: Date | string
+    status: string
+  }
+
+  export type pesananCreateOrConnectWithoutProdukInput = {
+    where: pesananWhereUniqueInput
+    create: XOR<pesananCreateWithoutProdukInput, pesananUncheckedCreateWithoutProdukInput>
+  }
+
+  export type pesananCreateManyProdukInputEnvelope = {
+    data: pesananCreateManyProdukInput | pesananCreateManyProdukInput[]
+    skipDuplicates?: boolean
+  }
+
   export type penjualanUpsertWithWhereUniqueWithoutProdukInput = {
     where: penjualanWhereUniqueInput
     update: XOR<penjualanUpdateWithoutProdukInput, penjualanUncheckedUpdateWithoutProdukInput>
@@ -9346,6 +10757,34 @@ export namespace Prisma {
     total?: IntFilter<"penjualan"> | number
     status?: StringFilter<"penjualan"> | string
     tanggal?: DateTimeFilter<"penjualan"> | Date | string
+  }
+
+  export type pesananUpsertWithWhereUniqueWithoutProdukInput = {
+    where: pesananWhereUniqueInput
+    update: XOR<pesananUpdateWithoutProdukInput, pesananUncheckedUpdateWithoutProdukInput>
+    create: XOR<pesananCreateWithoutProdukInput, pesananUncheckedCreateWithoutProdukInput>
+  }
+
+  export type pesananUpdateWithWhereUniqueWithoutProdukInput = {
+    where: pesananWhereUniqueInput
+    data: XOR<pesananUpdateWithoutProdukInput, pesananUncheckedUpdateWithoutProdukInput>
+  }
+
+  export type pesananUpdateManyWithWhereWithoutProdukInput = {
+    where: pesananScalarWhereInput
+    data: XOR<pesananUpdateManyMutationInput, pesananUncheckedUpdateManyWithoutProdukInput>
+  }
+
+  export type pesananScalarWhereInput = {
+    AND?: pesananScalarWhereInput | pesananScalarWhereInput[]
+    OR?: pesananScalarWhereInput[]
+    NOT?: pesananScalarWhereInput | pesananScalarWhereInput[]
+    id?: UuidFilter<"pesanan"> | string
+    nama?: StringFilter<"pesanan"> | string
+    produk_id?: UuidFilter<"pesanan"> | string
+    total?: IntFilter<"pesanan"> | number
+    tanggal?: DateTimeFilter<"pesanan"> | Date | string
+    status?: StringFilter<"pesanan"> | string
   }
 
   export type penjualanCreateWithoutPelangganInput = {
@@ -9396,16 +10835,16 @@ export namespace Prisma {
     id?: string
     nama: string
     email: string
-    alamat?: string | null
-    telepon?: string | null
+    alamat: string
+    telepon: string
   }
 
   export type pelangganUncheckedCreateWithoutPenjualanInput = {
     id?: string
     nama: string
     email: string
-    alamat?: string | null
-    telepon?: string | null
+    alamat: string
+    telepon: string
   }
 
   export type pelangganCreateOrConnectWithoutPenjualanInput = {
@@ -9417,22 +10856,24 @@ export namespace Prisma {
     id?: string
     nama: string
     harga: number
-    deskripsi?: string | null
+    deskripsi: string
     gambar_url: string
     kategori: string
     stok?: number
     terjual?: number
+    pesanan?: pesananCreateNestedManyWithoutProdukInput
   }
 
   export type produkUncheckedCreateWithoutPenjualanInput = {
     id?: string
     nama: string
     harga: number
-    deskripsi?: string | null
+    deskripsi: string
     gambar_url: string
     kategori: string
     stok?: number
     terjual?: number
+    pesanan?: pesananUncheckedCreateNestedManyWithoutProdukInput
   }
 
   export type produkCreateOrConnectWithoutPenjualanInput = {
@@ -9455,16 +10896,16 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    alamat?: NullableStringFieldUpdateOperationsInput | string | null
-    telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    alamat?: StringFieldUpdateOperationsInput | string
+    telepon?: StringFieldUpdateOperationsInput | string
   }
 
   export type pelangganUncheckedUpdateWithoutPenjualanInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    alamat?: NullableStringFieldUpdateOperationsInput | string | null
-    telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    alamat?: StringFieldUpdateOperationsInput | string
+    telepon?: StringFieldUpdateOperationsInput | string
   }
 
   export type produkUpsertWithoutPenjualanInput = {
@@ -9482,22 +10923,88 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
     kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
     terjual?: IntFieldUpdateOperationsInput | number
+    pesanan?: pesananUpdateManyWithoutProdukNestedInput
   }
 
   export type produkUncheckedUpdateWithoutPenjualanInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
     kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
     terjual?: IntFieldUpdateOperationsInput | number
+    pesanan?: pesananUncheckedUpdateManyWithoutProdukNestedInput
+  }
+
+  export type produkCreateWithoutPesananInput = {
+    id?: string
+    nama: string
+    harga: number
+    deskripsi: string
+    gambar_url: string
+    kategori: string
+    stok?: number
+    terjual?: number
+    penjualan?: penjualanCreateNestedManyWithoutProdukInput
+  }
+
+  export type produkUncheckedCreateWithoutPesananInput = {
+    id?: string
+    nama: string
+    harga: number
+    deskripsi: string
+    gambar_url: string
+    kategori: string
+    stok?: number
+    terjual?: number
+    penjualan?: penjualanUncheckedCreateNestedManyWithoutProdukInput
+  }
+
+  export type produkCreateOrConnectWithoutPesananInput = {
+    where: produkWhereUniqueInput
+    create: XOR<produkCreateWithoutPesananInput, produkUncheckedCreateWithoutPesananInput>
+  }
+
+  export type produkUpsertWithoutPesananInput = {
+    update: XOR<produkUpdateWithoutPesananInput, produkUncheckedUpdateWithoutPesananInput>
+    create: XOR<produkCreateWithoutPesananInput, produkUncheckedCreateWithoutPesananInput>
+    where?: produkWhereInput
+  }
+
+  export type produkUpdateToOneWithWhereWithoutPesananInput = {
+    where?: produkWhereInput
+    data: XOR<produkUpdateWithoutPesananInput, produkUncheckedUpdateWithoutPesananInput>
+  }
+
+  export type produkUpdateWithoutPesananInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    harga?: IntFieldUpdateOperationsInput | number
+    deskripsi?: StringFieldUpdateOperationsInput | string
+    gambar_url?: StringFieldUpdateOperationsInput | string
+    kategori?: StringFieldUpdateOperationsInput | string
+    stok?: IntFieldUpdateOperationsInput | number
+    terjual?: IntFieldUpdateOperationsInput | number
+    penjualan?: penjualanUpdateManyWithoutProdukNestedInput
+  }
+
+  export type produkUncheckedUpdateWithoutPesananInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    harga?: IntFieldUpdateOperationsInput | number
+    deskripsi?: StringFieldUpdateOperationsInput | string
+    gambar_url?: StringFieldUpdateOperationsInput | string
+    kategori?: StringFieldUpdateOperationsInput | string
+    stok?: IntFieldUpdateOperationsInput | number
+    terjual?: IntFieldUpdateOperationsInput | number
+    penjualan?: penjualanUncheckedUpdateManyWithoutProdukNestedInput
   }
 
   export type penjualanCreateManyProdukInput = {
@@ -9507,6 +11014,14 @@ export namespace Prisma {
     total: number
     status: string
     tanggal?: Date | string
+  }
+
+  export type pesananCreateManyProdukInput = {
+    id?: string
+    nama: string
+    total: number
+    tanggal?: Date | string
+    status: string
   }
 
   export type penjualanUpdateWithoutProdukInput = {
@@ -9534,6 +11049,30 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type pesananUpdateWithoutProdukInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    total?: IntFieldUpdateOperationsInput | number
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type pesananUncheckedUpdateWithoutProdukInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    total?: IntFieldUpdateOperationsInput | number
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type pesananUncheckedUpdateManyWithoutProdukInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    total?: IntFieldUpdateOperationsInput | number
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type penjualanCreateManyPelangganInput = {

@@ -18,6 +18,7 @@ model produk {
   stok       Int         @default(0)
   terjual    Int         @default(0)
   penjualan  penjualan[]
+  pesanan    pesanan[]
 }
 
 model pelanggan {
@@ -62,10 +63,11 @@ model user {
 }
 
 model pesanan {
-  id      String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nama    String   @db.VarChar(255)
-  produk  produk   @relation(fields: [produk_id], references: [id])
-  total   Int
-  tanggal DateTime @default(now()) @db.Timestamp()
-  status  String   @db.VarChar(50)
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nama       String   @db.VarChar(255)
+  produk_id  String   @db.Uuid
+  produk     produk   @relation(fields: [produk_id], references: [id])
+  total      Int
+  tanggal    DateTime @default(now()) @db.Timestamp()
+  status     String   @db.VarChar(50)
 }
