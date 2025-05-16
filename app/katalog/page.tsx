@@ -127,7 +127,7 @@ export default function Home() {
               <img src="/kat2.png" alt="Lampu Hias Gantung" className="w-1/2 h-full object-cover" />
               <div className="w-1/2 p-4 flex flex-col justify-center">
                 <div className="font-bold text-sm text-white bg-red-900/70 px-2 py-1 rounded self-start">20% Off</div>
-                <div className={`text-2xl text-red-500 font-semibold ${creepster.className} mt-4`}>Lampu Hias Gantung</div>
+                <div className={`text-2xl text-red-900 font-semibold ${creepster.className} mt-4`}>Lampu Hias Gantung</div>
                 <p className="text-white mt-2">Berkelip samar, seakan ada sosok yang mengawasi dalam kegelapan.</p>
               </div>
             </div>
@@ -136,7 +136,7 @@ export default function Home() {
             <div className="col-span-4 relative bg-gray-400 rounded overflow-hidden">
               <img src="/kat5.png" alt="Kotak Musik Berhantu" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 left-0 right-0 text-center">
-                <div className={`text-2xl text-red-500 font-semibold ${creepster.className}`}>Kotak Musik Berhantu</div>
+                <div className={`text-2xl text-red-900 font-semibold ${creepster.className}`}>Kotak Musik Berhantu</div>
               </div>
             </div>
             
@@ -144,14 +144,14 @@ export default function Home() {
             <div className="col-span-4 relative bg-gray-400 rounded overflow-hidden">
               <img src="/kat3.png" alt="Lilin Aroma Misterius" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 left-0 right-0 text-center">
-                <div className={`text-2xl text-red-500 font-semibold ${creepster.className}`}>Lilin Aroma Misterius</div>
+                <div className={`text-2xl text-red-900 font-semibold ${creepster.className}`}>Lilin Aroma Misterius</div>
               </div>
             </div>
             
             {/* Kalung Perak Anti Kutukan */}
             <div className="col-span-4 flex bg-gray-400 rounded overflow-hidden">
               <div className="w-1/2 p-4 flex flex-col justify-center">
-                <div className={`text-2xl text-red-500 font-semibold ${creepster.className}`}>Kalung Perak Anti Kutukan</div>
+                <div className={`text-2xl text-red-900 font-semibold ${creepster.className}`}>Kalung Perak Anti Kutukan</div>
                 <p className="text-white mt-2">Dipercaya menangkal kutukan, namun bisikan samar terkadang terdengar saat dipakai.</p>
               </div>
               <img src="/kat4.png" alt="Kalung Perak Anti Kutukan" className="w-1/2 h-full object-cover" />

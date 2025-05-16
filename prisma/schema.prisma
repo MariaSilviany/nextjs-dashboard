@@ -14,7 +14,7 @@ model produk {
   harga      Int
   gambar_url String      @db.VarChar(255)
   stok       Int         @default(0)
-  status       String    @db.VarChar(50)
+  status     String    @db.VarChar(50)
   penjualan  penjualan[]
   pesanan    pesanan[]
 }
