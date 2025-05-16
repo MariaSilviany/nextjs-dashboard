@@ -9,24 +9,24 @@ datasource db {
 }
 
 model produk {
-  id         String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nama       String       @db.VarChar(255)
+  id         String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nama       String      @db.VarChar(255)
   harga      Int
-  deskripsi  String?      @db.Text
-  gambar_url String       @db.VarChar(255)
-  kategori   String       @db.VarChar(100)
-  stok       Int          @default(0)
-  terjual    Int          @default(0)
+  deskripsi  String?     @db.Text
+  gambar_url String      @db.VarChar(255)
+  kategori   String      @db.VarChar(100)
+  stok       Int         @default(0)
+  terjual    Int         @default(0)
   penjualan  penjualan[]
 }
 
 model pelanggan {
-  id         String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nama       String      @db.VarChar(255)
-  email      String      @unique @db.VarChar(255)
-  alamat     String?     @db.Text
-  telepon    String?     @db.VarChar(20)
-  penjualan  penjualan[]
+  id        String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nama      String      @db.VarChar(255)
+  email     String      @unique @db.VarChar(255)
+  alamat    String?     @db.Text
+  telepon   String?     @db.VarChar(20)
+  penjualan penjualan[]
 }
 
 model penjualan {
@@ -42,7 +42,7 @@ model penjualan {
 }
 
 model pendapatan {
-  bulan     String @unique @db.VarChar(7) // Format: "YYYY-MM"
+  bulan      String @unique @db.VarChar(7) // Format: "YYYY-MM"
   pendapatan Int
 }
 
@@ -61,47 +61,47 @@ model user {
   role     String @default("admin") @db.VarChar(20)
 }
 
-model pesanan {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  id           String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nama         String @db.VarChar(255)
-  produk       produk    @relation(fields: [produk_id], references: [id])
-  total        Int
-  tanggal      DateTime  @default(now()) @db.Timestamp()
-  status       String    @db.VarChar(50)
-=======
-  id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nama    String @db.VarChar(225)
-  produk
->>>>>>> Stashed changes
-=======
-  id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nama    String @db.VarChar(225)
-  produk
->>>>>>> Stashed changes
-=======
-  id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nama    String @db.VarChar(225)
-  produk
->>>>>>> Stashed changes
-=======
-  id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nama    String @db.VarChar(225)
-  produk
->>>>>>> Stashed changes
-=======
-  id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nama    String @db.VarChar(225)
-  produk
->>>>>>> Stashed changes
-=======
-  id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nama    String @db.VarChar(225)
-  produk
->>>>>>> Stashed changes
-}
+// model pesanan {
+//   <<<<<<< Updated upstream
+//   <<<<<<< Updated upstream
+//   <<<<<<< Updated upstream
+//   <<<<<<< Updated upstream
+//   <<<<<<< Updated upstream
+//   <<<<<<< Updated upstream
+//   id      String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   nama    String   @db.VarChar(255)
+//   produk  produk   @relation(fields: [produk_id], references: [id])
+//   total   Int
+//   tanggal DateTime @default(now()) @db.Timestamp()
+//   status  String   @db.VarChar(50)
+//   =======
+//   id      String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   nama    String   @db.VarChar(225)
+//   produk
+//   >>>>>>> Stashed changes
+//   =======
+//   id      String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   nama    String   @db.VarChar(225)
+//   produk
+//   >>>>>>> Stashed changes
+//   =======
+//   id      String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   nama    String   @db.VarChar(225)
+//   produk
+//   >>>>>>> Stashed changes
+//   =======
+//   id      String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   nama    String   @db.VarChar(225)
+//   produk
+//   >>>>>>> Stashed changes
+//   =======
+//   id      String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   nama    String   @db.VarChar(225)
+//   produk
+//   >>>>>>> Stashed changes
+//   =======
+//   id      String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   nama    String   @db.VarChar(225)
+//   produk
+//   >>>>>>> Stashed changes
+// }
