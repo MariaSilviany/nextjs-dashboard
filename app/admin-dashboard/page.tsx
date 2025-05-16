@@ -82,9 +82,52 @@ const SettingsIcon = () => (
   </svg>
 );
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+  const totalProduk = await prisma.produk.count();
+
+  const totalRevenueAgg = await prisma.penjualan.aggregate({
+    _sum: { total: true },
+  });
+
+  const produkTerlarisAgg = await prisma.penjualan.groupBy({
+    by: ['produk_id'],
+    _sum: { jumlah: true },
+    orderBy: { _sum: { jumlah: 'desc' } },
+    take: 1,
+  });
+
+  let produkTerlaris = null;
+  if (produkTerlarisAgg.length > 0) {
+    const produk = await prisma.produk.findUnique({
+      where: { id: produkTerlarisAgg[0].produk_id },
+    });
+    produkTerlaris = produk?.nama ?? 'Tidak ditemukan';
+  }
+
+  const totalRevenue = totalRevenueAgg._sum.total || 0;
+
   return (
-    <div className="flex min-h-screen bg-[#1e2a3e]">
+    <>
+      {/* Tempelkan blok JSX analitik Anda di sini */}
+      <div className="bg-[#B9BFC7] p-6 rounded-lg mb-6 items-start mx-auto ml-8 mt-10">
+        <h3 className={`text-5xl text-red-900 mb-4 ${jollyLodger.className}`}>Analitik Penjualan</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-800">
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h4 className="text-lg font-semibold">Total Produk</h4>
+            <p className="text-2xl font-bold">{totalProduk}</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h4 className="text-lg font-semibold">Total Revenue</h4>
+            <p className="text-2xl font-bold">Rp{totalRevenue.toLocaleString()}</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h4 className="text-lg font-semibold">Produk Terlaris</h4>
+            <p className="text-xl">{produkTerlaris}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex min-h-screen bg-[#1e2a3e]">
       {/* Left Sidebar */}
       <div className="w-56 bg-[#65181b] shadow-sm flex flex-col fixed h-full">
         <div className="p-4">
@@ -265,56 +308,6 @@ export default function AdminDashboard() {
           </div>
         </div> */}
 
-        export default async function AdminDashboard() {
-  const totalProduk = await prisma.produk.count();
-
-  const totalRevenueAgg = await prisma.penjualan.aggregate({
-    _sum: { total: true },
-  });
-
-  const produkTerlarisAgg = await prisma.penjualan.groupBy({
-    by: ['produk_id'],
-    _sum: { jumlah: true },
-    orderBy: { _sum: { jumlah: 'desc' } },
-    take: 1,
-  });
-
-  let produkTerlaris = null;
-  if (produkTerlarisAgg.length > 0) {
-    const produk = await prisma.produk.findUnique({
-      where: { id: produkTerlarisAgg[0].produk_id },
-    });
-    produkTerlaris = produk?.nama ?? 'Tidak ditemukan';
-  }
-
-  const totalRevenue = totalRevenueAgg._sum.total || 0;
-
-  return (
-    <>
-      {/* Tempelkan blok JSX analitik Anda di sini */}
-      <div className="bg-[#B9BFC7] p-6 rounded-lg mb-6 items-start mx-auto ml-8 mt-10">
-        <h3 className={`text-5xl text-red-900 mb-4 ${jollyLodger.className}`}>Analitik Penjualan</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-800">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h4 className="text-lg font-semibold">Total Produk</h4>
-            <p className="text-2xl font-bold">{totalProduk}</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h4 className="text-lg font-semibold">Total Revenue</h4>
-            <p className="text-2xl font-bold">Rp{totalRevenue.toLocaleString()}</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h4 className="text-lg font-semibold">Produk Terlaris</h4>
-            <p className="text-xl">{produkTerlaris}</p>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
-
-
         {/* Tabel Produk Unggulan Toko HauntedHollow */}
         <div className="bg-[#B9BFC7] p-6 rounded-lg mb-6 items-start mx-auto ml-8 mt-10">
           <h3 className={`text-5xl text-red-900 font-bold mb-4 ${jollyLodger.className}`}>Produk Unggulan</h3>
@@ -347,5 +340,11 @@ export default function AdminDashboard() {
         </div>
       </div>
     </div>
+    </>
+
+    
   );
 }
+
+  
+  
