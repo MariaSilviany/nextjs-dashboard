@@ -124,11 +124,9 @@ exports.Prisma.ProdukScalarFieldEnum = {
   id: 'id',
   nama: 'nama',
   harga: 'harga',
-  deskripsi: 'deskripsi',
   gambar_url: 'gambar_url',
-  kategori: 'kategori',
   stok: 'stok',
-  terjual: 'terjual'
+  status: 'status'
 };
 
 exports.Prisma.PelangganScalarFieldEnum = {
@@ -164,9 +162,10 @@ exports.Prisma.Rating_tokoScalarFieldEnum = {
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   nama: 'nama',
+  role: 'role',
   email: 'email',
-  password: 'password',
-  role: 'role'
+  status: 'status',
+  tanggal: 'tanggal'
 };
 
 exports.Prisma.PesananScalarFieldEnum = {

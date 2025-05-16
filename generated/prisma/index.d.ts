@@ -1500,46 +1500,38 @@ export namespace Prisma {
   export type ProdukAvgAggregateOutputType = {
     harga: number | null
     stok: number | null
-    terjual: number | null
   }
 
   export type ProdukSumAggregateOutputType = {
     harga: number | null
     stok: number | null
-    terjual: number | null
   }
 
   export type ProdukMinAggregateOutputType = {
     id: string | null
     nama: string | null
     harga: number | null
-    deskripsi: string | null
     gambar_url: string | null
-    kategori: string | null
     stok: number | null
-    terjual: number | null
+    status: string | null
   }
 
   export type ProdukMaxAggregateOutputType = {
     id: string | null
     nama: string | null
     harga: number | null
-    deskripsi: string | null
     gambar_url: string | null
-    kategori: string | null
     stok: number | null
-    terjual: number | null
+    status: string | null
   }
 
   export type ProdukCountAggregateOutputType = {
     id: number
     nama: number
     harga: number
-    deskripsi: number
     gambar_url: number
-    kategori: number
     stok: number
-    terjual: number
+    status: number
     _all: number
   }
 
@@ -1547,46 +1539,38 @@ export namespace Prisma {
   export type ProdukAvgAggregateInputType = {
     harga?: true
     stok?: true
-    terjual?: true
   }
 
   export type ProdukSumAggregateInputType = {
     harga?: true
     stok?: true
-    terjual?: true
   }
 
   export type ProdukMinAggregateInputType = {
     id?: true
     nama?: true
     harga?: true
-    deskripsi?: true
     gambar_url?: true
-    kategori?: true
     stok?: true
-    terjual?: true
+    status?: true
   }
 
   export type ProdukMaxAggregateInputType = {
     id?: true
     nama?: true
     harga?: true
-    deskripsi?: true
     gambar_url?: true
-    kategori?: true
     stok?: true
-    terjual?: true
+    status?: true
   }
 
   export type ProdukCountAggregateInputType = {
     id?: true
     nama?: true
     harga?: true
-    deskripsi?: true
     gambar_url?: true
-    kategori?: true
     stok?: true
-    terjual?: true
+    status?: true
     _all?: true
   }
 
@@ -1680,11 +1664,9 @@ export namespace Prisma {
     id: string
     nama: string
     harga: number
-    deskripsi: string
     gambar_url: string
-    kategori: string
     stok: number
-    terjual: number
+    status: string
     _count: ProdukCountAggregateOutputType | null
     _avg: ProdukAvgAggregateOutputType | null
     _sum: ProdukSumAggregateOutputType | null
@@ -1710,11 +1692,9 @@ export namespace Prisma {
     id?: boolean
     nama?: boolean
     harga?: boolean
-    deskripsi?: boolean
     gambar_url?: boolean
-    kategori?: boolean
     stok?: boolean
-    terjual?: boolean
+    status?: boolean
     penjualan?: boolean | produk$penjualanArgs<ExtArgs>
     pesanan?: boolean | produk$pesananArgs<ExtArgs>
     _count?: boolean | ProdukCountOutputTypeDefaultArgs<ExtArgs>
@@ -1724,36 +1704,30 @@ export namespace Prisma {
     id?: boolean
     nama?: boolean
     harga?: boolean
-    deskripsi?: boolean
     gambar_url?: boolean
-    kategori?: boolean
     stok?: boolean
-    terjual?: boolean
+    status?: boolean
   }, ExtArgs["result"]["produk"]>
 
   export type produkSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nama?: boolean
     harga?: boolean
-    deskripsi?: boolean
     gambar_url?: boolean
-    kategori?: boolean
     stok?: boolean
-    terjual?: boolean
+    status?: boolean
   }, ExtArgs["result"]["produk"]>
 
   export type produkSelectScalar = {
     id?: boolean
     nama?: boolean
     harga?: boolean
-    deskripsi?: boolean
     gambar_url?: boolean
-    kategori?: boolean
     stok?: boolean
-    terjual?: boolean
+    status?: boolean
   }
 
-  export type produkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nama" | "harga" | "deskripsi" | "gambar_url" | "kategori" | "stok" | "terjual", ExtArgs["result"]["produk"]>
+  export type produkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nama" | "harga" | "gambar_url" | "stok" | "status", ExtArgs["result"]["produk"]>
   export type produkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     penjualan?: boolean | produk$penjualanArgs<ExtArgs>
     pesanan?: boolean | produk$pesananArgs<ExtArgs>
@@ -1772,11 +1746,9 @@ export namespace Prisma {
       id: string
       nama: string
       harga: number
-      deskripsi: string
       gambar_url: string
-      kategori: string
       stok: number
-      terjual: number
+      status: string
     }, ExtArgs["result"]["produk"]>
     composites: {}
   }
@@ -2205,11 +2177,9 @@ export namespace Prisma {
     readonly id: FieldRef<"produk", 'String'>
     readonly nama: FieldRef<"produk", 'String'>
     readonly harga: FieldRef<"produk", 'Int'>
-    readonly deskripsi: FieldRef<"produk", 'String'>
     readonly gambar_url: FieldRef<"produk", 'String'>
-    readonly kategori: FieldRef<"produk", 'String'>
     readonly stok: FieldRef<"produk", 'Int'>
-    readonly terjual: FieldRef<"produk", 'Int'>
+    readonly status: FieldRef<"produk", 'String'>
   }
     
 
@@ -6883,25 +6853,28 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     id: string | null
     nama: string | null
-    email: string | null
-    password: string | null
     role: string | null
+    email: string | null
+    status: string | null
+    tanggal: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
     nama: string | null
-    email: string | null
-    password: string | null
     role: string | null
+    email: string | null
+    status: string | null
+    tanggal: Date | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     nama: number
-    email: number
-    password: number
     role: number
+    email: number
+    status: number
+    tanggal: number
     _all: number
   }
 
@@ -6909,25 +6882,28 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     id?: true
     nama?: true
-    email?: true
-    password?: true
     role?: true
+    email?: true
+    status?: true
+    tanggal?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     nama?: true
-    email?: true
-    password?: true
     role?: true
+    email?: true
+    status?: true
+    tanggal?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     nama?: true
-    email?: true
-    password?: true
     role?: true
+    email?: true
+    status?: true
+    tanggal?: true
     _all?: true
   }
 
@@ -7006,9 +6982,10 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     nama: string
-    email: string
-    password: string
     role: string
+    email: string
+    status: string
+    tanggal: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -7031,36 +7008,40 @@ export namespace Prisma {
   export type userSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nama?: boolean
-    email?: boolean
-    password?: boolean
     role?: boolean
+    email?: boolean
+    status?: boolean
+    tanggal?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type userSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nama?: boolean
-    email?: boolean
-    password?: boolean
     role?: boolean
+    email?: boolean
+    status?: boolean
+    tanggal?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type userSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nama?: boolean
-    email?: boolean
-    password?: boolean
     role?: boolean
+    email?: boolean
+    status?: boolean
+    tanggal?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type userSelectScalar = {
     id?: boolean
     nama?: boolean
-    email?: boolean
-    password?: boolean
     role?: boolean
+    email?: boolean
+    status?: boolean
+    tanggal?: boolean
   }
 
-  export type userOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nama" | "email" | "password" | "role", ExtArgs["result"]["user"]>
+  export type userOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nama" | "role" | "email" | "status" | "tanggal", ExtArgs["result"]["user"]>
 
   export type $userPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "user"
@@ -7068,9 +7049,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       nama: string
-      email: string
-      password: string
       role: string
+      email: string
+      status: string
+      tanggal: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -7496,9 +7478,10 @@ export namespace Prisma {
   interface userFieldRefs {
     readonly id: FieldRef<"user", 'String'>
     readonly nama: FieldRef<"user", 'String'>
-    readonly email: FieldRef<"user", 'String'>
-    readonly password: FieldRef<"user", 'String'>
     readonly role: FieldRef<"user", 'String'>
+    readonly email: FieldRef<"user", 'String'>
+    readonly status: FieldRef<"user", 'String'>
+    readonly tanggal: FieldRef<"user", 'DateTime'>
   }
     
 
@@ -8988,11 +8971,9 @@ export namespace Prisma {
     id: 'id',
     nama: 'nama',
     harga: 'harga',
-    deskripsi: 'deskripsi',
     gambar_url: 'gambar_url',
-    kategori: 'kategori',
     stok: 'stok',
-    terjual: 'terjual'
+    status: 'status'
   };
 
   export type ProdukScalarFieldEnum = (typeof ProdukScalarFieldEnum)[keyof typeof ProdukScalarFieldEnum]
@@ -9043,9 +9024,10 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     nama: 'nama',
+    role: 'role',
     email: 'email',
-    password: 'password',
-    role: 'role'
+    status: 'status',
+    tanggal: 'tanggal'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -9150,11 +9132,9 @@ export namespace Prisma {
     id?: UuidFilter<"produk"> | string
     nama?: StringFilter<"produk"> | string
     harga?: IntFilter<"produk"> | number
-    deskripsi?: StringFilter<"produk"> | string
     gambar_url?: StringFilter<"produk"> | string
-    kategori?: StringFilter<"produk"> | string
     stok?: IntFilter<"produk"> | number
-    terjual?: IntFilter<"produk"> | number
+    status?: StringFilter<"produk"> | string
     penjualan?: PenjualanListRelationFilter
     pesanan?: PesananListRelationFilter
   }
@@ -9163,11 +9143,9 @@ export namespace Prisma {
     id?: SortOrder
     nama?: SortOrder
     harga?: SortOrder
-    deskripsi?: SortOrder
     gambar_url?: SortOrder
-    kategori?: SortOrder
     stok?: SortOrder
-    terjual?: SortOrder
+    status?: SortOrder
     penjualan?: penjualanOrderByRelationAggregateInput
     pesanan?: pesananOrderByRelationAggregateInput
   }
@@ -9179,11 +9157,9 @@ export namespace Prisma {
     NOT?: produkWhereInput | produkWhereInput[]
     nama?: StringFilter<"produk"> | string
     harga?: IntFilter<"produk"> | number
-    deskripsi?: StringFilter<"produk"> | string
     gambar_url?: StringFilter<"produk"> | string
-    kategori?: StringFilter<"produk"> | string
     stok?: IntFilter<"produk"> | number
-    terjual?: IntFilter<"produk"> | number
+    status?: StringFilter<"produk"> | string
     penjualan?: PenjualanListRelationFilter
     pesanan?: PesananListRelationFilter
   }, "id">
@@ -9192,11 +9168,9 @@ export namespace Prisma {
     id?: SortOrder
     nama?: SortOrder
     harga?: SortOrder
-    deskripsi?: SortOrder
     gambar_url?: SortOrder
-    kategori?: SortOrder
     stok?: SortOrder
-    terjual?: SortOrder
+    status?: SortOrder
     _count?: produkCountOrderByAggregateInput
     _avg?: produkAvgOrderByAggregateInput
     _max?: produkMaxOrderByAggregateInput
@@ -9211,11 +9185,9 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter<"produk"> | string
     nama?: StringWithAggregatesFilter<"produk"> | string
     harga?: IntWithAggregatesFilter<"produk"> | number
-    deskripsi?: StringWithAggregatesFilter<"produk"> | string
     gambar_url?: StringWithAggregatesFilter<"produk"> | string
-    kategori?: StringWithAggregatesFilter<"produk"> | string
     stok?: IntWithAggregatesFilter<"produk"> | number
-    terjual?: IntWithAggregatesFilter<"produk"> | number
+    status?: StringWithAggregatesFilter<"produk"> | string
   }
 
   export type pelangganWhereInput = {
@@ -9437,17 +9409,19 @@ export namespace Prisma {
     NOT?: userWhereInput | userWhereInput[]
     id?: UuidFilter<"user"> | string
     nama?: StringFilter<"user"> | string
-    email?: StringFilter<"user"> | string
-    password?: StringFilter<"user"> | string
     role?: StringFilter<"user"> | string
+    email?: StringFilter<"user"> | string
+    status?: StringFilter<"user"> | string
+    tanggal?: DateTimeFilter<"user"> | Date | string
   }
 
   export type userOrderByWithRelationInput = {
     id?: SortOrder
     nama?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
     role?: SortOrder
+    email?: SortOrder
+    status?: SortOrder
+    tanggal?: SortOrder
   }
 
   export type userWhereUniqueInput = Prisma.AtLeast<{
@@ -9457,16 +9431,18 @@ export namespace Prisma {
     OR?: userWhereInput[]
     NOT?: userWhereInput | userWhereInput[]
     nama?: StringFilter<"user"> | string
-    password?: StringFilter<"user"> | string
     role?: StringFilter<"user"> | string
+    status?: StringFilter<"user"> | string
+    tanggal?: DateTimeFilter<"user"> | Date | string
   }, "id" | "email">
 
   export type userOrderByWithAggregationInput = {
     id?: SortOrder
     nama?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
     role?: SortOrder
+    email?: SortOrder
+    status?: SortOrder
+    tanggal?: SortOrder
     _count?: userCountOrderByAggregateInput
     _max?: userMaxOrderByAggregateInput
     _min?: userMinOrderByAggregateInput
@@ -9478,9 +9454,10 @@ export namespace Prisma {
     NOT?: userScalarWhereWithAggregatesInput | userScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"user"> | string
     nama?: StringWithAggregatesFilter<"user"> | string
-    email?: StringWithAggregatesFilter<"user"> | string
-    password?: StringWithAggregatesFilter<"user"> | string
     role?: StringWithAggregatesFilter<"user"> | string
+    email?: StringWithAggregatesFilter<"user"> | string
+    status?: StringWithAggregatesFilter<"user"> | string
+    tanggal?: DateTimeWithAggregatesFilter<"user"> | Date | string
   }
 
   export type pesananWhereInput = {
@@ -9549,11 +9526,9 @@ export namespace Prisma {
     id?: string
     nama: string
     harga: number
-    deskripsi: string
     gambar_url: string
-    kategori: string
     stok?: number
-    terjual?: number
+    status: string
     penjualan?: penjualanCreateNestedManyWithoutProdukInput
     pesanan?: pesananCreateNestedManyWithoutProdukInput
   }
@@ -9562,11 +9537,9 @@ export namespace Prisma {
     id?: string
     nama: string
     harga: number
-    deskripsi: string
     gambar_url: string
-    kategori: string
     stok?: number
-    terjual?: number
+    status: string
     penjualan?: penjualanUncheckedCreateNestedManyWithoutProdukInput
     pesanan?: pesananUncheckedCreateNestedManyWithoutProdukInput
   }
@@ -9575,11 +9548,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
-    kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
-    terjual?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
     penjualan?: penjualanUpdateManyWithoutProdukNestedInput
     pesanan?: pesananUpdateManyWithoutProdukNestedInput
   }
@@ -9588,11 +9559,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
-    kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
-    terjual?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
     penjualan?: penjualanUncheckedUpdateManyWithoutProdukNestedInput
     pesanan?: pesananUncheckedUpdateManyWithoutProdukNestedInput
   }
@@ -9601,33 +9570,27 @@ export namespace Prisma {
     id?: string
     nama: string
     harga: number
-    deskripsi: string
     gambar_url: string
-    kategori: string
     stok?: number
-    terjual?: number
+    status: string
   }
 
   export type produkUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
-    kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
-    terjual?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type produkUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
-    kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
-    terjual?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type pelangganCreateInput = {
@@ -9845,57 +9808,64 @@ export namespace Prisma {
   export type userCreateInput = {
     id?: string
     nama: string
-    email: string
-    password: string
     role?: string
+    email: string
+    status: string
+    tanggal?: Date | string
   }
 
   export type userUncheckedCreateInput = {
     id?: string
     nama: string
-    email: string
-    password: string
     role?: string
+    email: string
+    status: string
+    tanggal?: Date | string
   }
 
   export type userUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type userUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type userCreateManyInput = {
     id?: string
     nama: string
-    email: string
-    password: string
     role?: string
+    email: string
+    status: string
+    tanggal?: Date | string
   }
 
   export type userUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type userUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type pesananCreateInput = {
@@ -10022,45 +9992,37 @@ export namespace Prisma {
     id?: SortOrder
     nama?: SortOrder
     harga?: SortOrder
-    deskripsi?: SortOrder
     gambar_url?: SortOrder
-    kategori?: SortOrder
     stok?: SortOrder
-    terjual?: SortOrder
+    status?: SortOrder
   }
 
   export type produkAvgOrderByAggregateInput = {
     harga?: SortOrder
     stok?: SortOrder
-    terjual?: SortOrder
   }
 
   export type produkMaxOrderByAggregateInput = {
     id?: SortOrder
     nama?: SortOrder
     harga?: SortOrder
-    deskripsi?: SortOrder
     gambar_url?: SortOrder
-    kategori?: SortOrder
     stok?: SortOrder
-    terjual?: SortOrder
+    status?: SortOrder
   }
 
   export type produkMinOrderByAggregateInput = {
     id?: SortOrder
     nama?: SortOrder
     harga?: SortOrder
-    deskripsi?: SortOrder
     gambar_url?: SortOrder
-    kategori?: SortOrder
     stok?: SortOrder
-    terjual?: SortOrder
+    status?: SortOrder
   }
 
   export type produkSumOrderByAggregateInput = {
     harga?: SortOrder
     stok?: SortOrder
-    terjual?: SortOrder
   }
 
   export type UuidWithAggregatesFilter<$PrismaModel = never> = {
@@ -10293,25 +10255,28 @@ export namespace Prisma {
   export type userCountOrderByAggregateInput = {
     id?: SortOrder
     nama?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
     role?: SortOrder
+    email?: SortOrder
+    status?: SortOrder
+    tanggal?: SortOrder
   }
 
   export type userMaxOrderByAggregateInput = {
     id?: SortOrder
     nama?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
     role?: SortOrder
+    email?: SortOrder
+    status?: SortOrder
+    tanggal?: SortOrder
   }
 
   export type userMinOrderByAggregateInput = {
     id?: SortOrder
     nama?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
     role?: SortOrder
+    email?: SortOrder
+    status?: SortOrder
+    tanggal?: SortOrder
   }
 
   export type pesananCountOrderByAggregateInput = {
@@ -10856,11 +10821,9 @@ export namespace Prisma {
     id?: string
     nama: string
     harga: number
-    deskripsi: string
     gambar_url: string
-    kategori: string
     stok?: number
-    terjual?: number
+    status: string
     pesanan?: pesananCreateNestedManyWithoutProdukInput
   }
 
@@ -10868,11 +10831,9 @@ export namespace Prisma {
     id?: string
     nama: string
     harga: number
-    deskripsi: string
     gambar_url: string
-    kategori: string
     stok?: number
-    terjual?: number
+    status: string
     pesanan?: pesananUncheckedCreateNestedManyWithoutProdukInput
   }
 
@@ -10923,11 +10884,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
-    kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
-    terjual?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
     pesanan?: pesananUpdateManyWithoutProdukNestedInput
   }
 
@@ -10935,11 +10894,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
-    kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
-    terjual?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
     pesanan?: pesananUncheckedUpdateManyWithoutProdukNestedInput
   }
 
@@ -10947,11 +10904,9 @@ export namespace Prisma {
     id?: string
     nama: string
     harga: number
-    deskripsi: string
     gambar_url: string
-    kategori: string
     stok?: number
-    terjual?: number
+    status: string
     penjualan?: penjualanCreateNestedManyWithoutProdukInput
   }
 
@@ -10959,11 +10914,9 @@ export namespace Prisma {
     id?: string
     nama: string
     harga: number
-    deskripsi: string
     gambar_url: string
-    kategori: string
     stok?: number
-    terjual?: number
+    status: string
     penjualan?: penjualanUncheckedCreateNestedManyWithoutProdukInput
   }
 
@@ -10987,11 +10940,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
-    kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
-    terjual?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
     penjualan?: penjualanUpdateManyWithoutProdukNestedInput
   }
 
@@ -10999,11 +10950,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nama?: StringFieldUpdateOperationsInput | string
     harga?: IntFieldUpdateOperationsInput | number
-    deskripsi?: StringFieldUpdateOperationsInput | string
     gambar_url?: StringFieldUpdateOperationsInput | string
-    kategori?: StringFieldUpdateOperationsInput | string
     stok?: IntFieldUpdateOperationsInput | number
-    terjual?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
     penjualan?: penjualanUncheckedUpdateManyWithoutProdukNestedInput
   }
 
