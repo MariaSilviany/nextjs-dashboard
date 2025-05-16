@@ -12,11 +12,9 @@ model produk {
   id         String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   nama       String      @db.VarChar(255)
   harga      Int
-  deskripsi  String     @db.Text
   gambar_url String      @db.VarChar(255)
-  kategori   String      @db.VarChar(100)
   stok       Int         @default(0)
-  terjual    Int         @default(0)
+  status       String    @db.VarChar(50)
   penjualan  penjualan[]
   pesanan    pesanan[]
 }
@@ -57,9 +55,10 @@ model rating_toko {
 model user {
   id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   nama     String @db.VarChar(255)
-  email    String @unique @db.VarChar(255)
-  password String
   role     String @default("admin") @db.VarChar(20)
+  email    String @unique @db.VarChar(255)
+  status   String @db.VarChar(50)
+  tanggal  DateTime @default(now()) @db.Timestamp()
 }
 
 model pesanan {
@@ -71,3 +70,4 @@ model pesanan {
   tanggal    DateTime @default(now()) @db.Timestamp()
   status     String   @db.VarChar(50)
 }
+
