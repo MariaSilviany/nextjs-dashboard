@@ -78,6 +78,7 @@ export default async function AdminDashboard() {
     .sort((a, b) => b.jumlahTerjual - a.jumlahTerjual)
     .slice(0, 4);
 
+
   // SVG Icon
   const DashboardIcon = () => (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -140,7 +141,6 @@ export default async function AdminDashboard() {
   );
 
   export default function AdminDashboard() {
-
     return (
       <div className="flex min-h-screen bg-[#1e2a3e]">
         {/* Left Sidebar */}
@@ -303,33 +303,6 @@ export default async function AdminDashboard() {
                       <td className="p-2">Rp {p.total.toLocaleString('id-ID')}</td>
                     </tr>
                   ))}
-                  {/* <tr className="border-b border-gray-300">
-                  <td className="py-4 pl-4 pr-2 text-gray-600">Lilin Aroma Misterius</td>
-                  <td className="py-4 px-2 text-gray-600">Katharina</td>
-                  <td className="py-4 px-2 text-gray-600">3 Pcs</td>
-                  <td className="py-4 px-2">
-                    <span className="bg-green-400 text-white px-3 py-1 rounded-md text-sm">Dikirim</span>
-                  </td>
-                  <td className="py-4 pr-4 text-gray-600 text-center">Rp198.000</td>
-                </tr>
-                <tr className="border-b border-gray-300">
-                  <td className="py-4 pl-4 pr-2 text-gray-600">Lilin Aroma Misterius</td>
-                  <td className="py-4 px-2 text-gray-600">John</td>
-                  <td className="py-4 px-2 text-gray-600">1 Pcs</td>
-                  <td className="py-4 px-2">
-                    <span className="bg-yellow-400 text-white px-3 py-1 rounded-md text-sm">Proses</span>
-                  </td>
-                  <td className="py-4 pr-4 text-gray-600 text-center">Rp66.000</td>
-                </tr>
-                <tr className="border-b border-gray-300">
-                  <td className="py-4 pl-4 pr-2 text-gray-600">Boneka Seram</td>
-                  <td className="py-4 px-2 text-gray-600">Lusia</td>
-                  <td className="py-4 px-2 text-gray-600">2 Pcs</td>
-                  <td className="py-4 px-2">
-                    <span className="bg-blue-400 text-white px-3 py-1 rounded-md text-sm">Selesai</span>
-                  </td>
-                  <td className="py-4 pr-4 text-gray-600 text-center">Rp132.000</td>
-                </tr> */}
                 </tbody>
               </table>
             </div>
@@ -347,30 +320,6 @@ export default async function AdminDashboard() {
                   <p className="text-xs text-gray-500">{p.jumlahTerjual} terjual</p>
                 </div>
               ))}
-              {/* <div className="bg-[#8b98ab] p-4 rounded-lg">
-              <img src="/produk1.png" alt="Lilin Aroma Misterius" className="w-full h-32 object-cover rounded" />
-              <h4 className="text-lg font-bold mt-2">Lilin Aroma Misterius</h4>
-              <p className="text-sm">Rp50.000</p>
-              <p className="text-xs text-gray-300">2,300 terjual</p>
-            </div>
-            <div className="bg-[#8b98ab] p-4 rounded-lg">
-              <img src="/produk2.png" alt="Topeng Hantu Horor" className="w-full h-32 object-cover rounded" />
-              <h4 className="text-lg font-bold mt-2">Topeng Hantu Horor</h4>
-              <p className="text-sm">Rp75.000</p>
-              <p className="text-xs text-gray-300">2,300 terjual</p>
-            </div>
-            <div className="bg-[#8b98ab] p-4 rounded-lg">
-              <img src="/produk3.png" alt="Patung Pemujaan Kuno" className="w-full h-32 object-cover rounded" />
-              <h4 className="text-lg font-bold mt-2">Patung Pemujaan Kuno</h4>
-              <p className="text-sm">Rp150.000</p>
-              <p className="text-xs text-gray-300">2,300 terjual</p>
-            </div>
-            <div className="bg-[#8b98ab] p-4 rounded-lg">
-              <img src="/produk4.png" alt="Boneka Seram" className="w-full h-32 object-cover rounded" />
-              <h4 className="text-lg font-bold mt-2">Boneka Seram</h4>
-              <p className="text-sm">Rp120.000</p>
-              <p className="text-xs text-gray-300">2,300 terjual</p>
-            </div> */}
             </div>
           </div>
         </div>
