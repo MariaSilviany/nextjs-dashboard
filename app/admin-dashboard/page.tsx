@@ -248,8 +248,10 @@ async function getDashboardData() {
                 <StarIcon className="h-6 w-6 text-black" />
                 <h3 className={`text-lg text-red-500 ${creepster.className}`}>Rating Toko</h3>
               </div>
-              <p className={`text-2xl font-bold text-red-700 ${nunitoSans.className}`}>4.7</p>
-              <p className="text-2xl font-bold text-red-600">{rating?.nilai.toFixed(1) ?? '-'}</p>
+              {/* <p className={`text-2xl font-bold text-red-700 ${nunitoSans.className}`}>4.7</p> */}
+              <p className="text-2xl font-bold text-red-600">
+                {typeof rating?.nilai === 'number' ? rating.nilai.toFixed(1) : '-'}
+              </p>
               <p className={`text-xs text-gray-500 mt-1 ${nunitoSans.className}`}>dari bulan lalu</p>
             </div>
             <div className="bg-[#B9BFC7] p-4 rounded-lg flex flex-col gap-2">
@@ -257,7 +259,7 @@ async function getDashboardData() {
                 <ShoppingCartIcon className="h-6 w-6 text-black" />
                 <h3 className={`text-lg text-red-500 ${creepster.className}`}>Total Penjualan</h3>
               </div>
-              <p className={`text-2xl font-bold text-red-700 ${nunitoSans.className}`}>Rp 1.3 M</p>
+              {/* <p className={`text-2xl font-bold text-red-700 ${nunitoSans.className}`}>Rp 1.3 M</p> */}
               <p className="text-2xl font-bold text-red-600">Rp {totalPenjualan.toLocaleString('id-ID')}</p>
               <p className={`text-xs text-gray-500 mt-1 ${nunitoSans.className}`}>dari bulan lalu</p>
             </div>
@@ -266,7 +268,7 @@ async function getDashboardData() {
                 <UsersIcon className="h-6 w-6 text-black" />
                 <h3 className={`text-lg text-red-500 ${creepster.className}`}>Pelanggan Baru</h3>
               </div>
-              <p className={`text-2xl font-bold text-red-700 ${nunitoSans.className}`}>432</p>
+              {/* <p className={`text-2xl font-bold text-red-700 ${nunitoSans.className}`}>432</p> */}
               <p className="text-2xl font-bold text-red-600">{pelangganBaru}</p>
               <p className={`text-xs text-gray-500 mt-1 ${nunitoSans.className}`}>dari bulan lalu</p>
             </div>
@@ -275,7 +277,7 @@ async function getDashboardData() {
                 <ArchiveBoxIcon className="h-6 w-6 text-black" />
                 <h3 className={`text-lg text-red-500 ${creepster.className}`}>Total Produk</h3>
               </div>
-              <p className={`text-2xl font-bold text-red-700 ${nunitoSans.className}`}>140</p>
+              {/* <p className={`text-2xl font-bold text-red-700 ${nunitoSans.className}`}>140</p> */}
               <p className="text-2xl font-bold text-red-600">{totalProduk}</p>
               <p className={`text-xs text-gray-500 mt-1 ${nunitoSans.className}`}>dari bulan lalu</p>
             </div>
