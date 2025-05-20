@@ -81,7 +81,6 @@ async function getDashboardData() {
   };
 }
 
-
   // SVG Icon
   const DashboardIcon = () => (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -143,16 +142,7 @@ async function getDashboardData() {
     </svg>
   );
 
-  export default async function AdminDashboard() {
-  const {
-    totalProduk,
-    totalPenjualan,
-    rating,
-    pelangganBaru,
-    penjualanTerakhir,
-    produkUnggulan,
-  } = await getDashboardData();
-
+  export default function AdminDashboard() {
     return (
       <div className="flex min-h-screen bg-[#1e2a3e]">
         {/* Left Sidebar */}
@@ -338,4 +328,3 @@ async function getDashboardData() {
       </div>
     );
   }
-}
