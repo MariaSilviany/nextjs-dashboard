@@ -142,7 +142,7 @@ async function getDashboardData() {
     </svg>
   );
 
-  export default function AdminDashboard() {
+  export default async function AdminDashboard() {
     const {
       totalProduk,
       totalPenjualan,
