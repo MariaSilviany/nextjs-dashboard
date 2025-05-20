@@ -372,7 +372,7 @@ const HauntedHallowAdmin = () => {
 
         {/* Product table */}
         <div className="p-5 mt-10">
-          <div className="bg-gray-400 rounded shadow-lg overflow-hidden ">
+          <div className="bg-white rounded shadow-lg overflow-hidden ">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-gray-400 text-left border-b border-gray-600">
@@ -388,7 +388,7 @@ const HauntedHallowAdmin = () => {
                 {products.map((product) => (
                   <tr
                     key={product.id}
-                    className="border-b border-gray-600 hover:bg-gray-600"
+                    className="border-b border-gray-600 hover:bg-blue-300"
                   >
                     <td className="p-4">
                       <div className="w-16 h-16 bg-gray-600 rounded flex items-center justify-center overflow-hidden">
