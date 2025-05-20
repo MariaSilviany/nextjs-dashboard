@@ -36,17 +36,7 @@ async function getDashboardData() {
     orderBy: { created_at: 'desc' },
   });
 
-  const pelangganBaru = await prisma.pelanggan.count({
-    where: {
-      penjualan: {
-        some: {
-          tanggal: {
-            gte: awalBulan,
-          },
-        },
-      },
-    },
-  });
+  const pelangganBaru = await prisma.pelanggan.count();
 
   const penjualanTerakhir = await prisma.penjualan.findMany({
     orderBy: { tanggal: 'desc' },
