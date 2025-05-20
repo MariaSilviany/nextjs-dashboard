@@ -249,9 +249,7 @@ async function getDashboardData() {
                 <h3 className={`text-lg text-red-500 ${creepster.className}`}>Rating Toko</h3>
               </div>
               {/* <p className={`text-2xl font-bold text-red-700 ${nunitoSans.className}`}>4.7</p> */}
-              <p className="text-2xl font-bold text-red-600">
-                {typeof rating?.nilai === 'number' ? rating.nilai.toFixed(1) : '-'}
-              </p>
+              <p className="text-2xl font-bold text-red-600"> {rating?.nilai != null ? Number(rating.nilai).toFixed(1) : '-'} </p>
               <p className={`text-xs text-gray-500 mt-1 ${nunitoSans.className}`}>dari bulan lalu</p>
             </div>
             <div className="bg-[#B9BFC7] p-4 rounded-lg flex flex-col gap-2">
