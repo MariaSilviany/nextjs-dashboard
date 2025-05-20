@@ -22,25 +22,20 @@ const nunitoSans = Nunito_Sans({
   subsets: ['latin'],
 });
 
-// Utility: awal bulan
-const awalBulan = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+async function getDashboardData() {
+  const awalBulan = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
 
-export default async function AdminDashboard() {
-  // Total produk
   const totalProduk = await prisma.produk.count();
 
-  // Total penjualan (jumlah uang)
   const penjualanAggregate = await prisma.penjualan.aggregate({
     _sum: { total: true },
   });
   const totalPenjualan = penjualanAggregate._sum.total || 0;
 
-  // Rating toko terbaru
   const rating = await prisma.rating_toko.findFirst({
     orderBy: { created_at: 'desc' },
   });
 
-  // Pelanggan baru bulan ini (yang punya penjualan di bulan ini)
   const pelangganBaru = await prisma.pelanggan.count({
     where: {
       penjualan: {
@@ -53,7 +48,6 @@ export default async function AdminDashboard() {
     },
   });
 
-  // Penjualan terakhir (5 data terakhir)
   const penjualanTerakhir = await prisma.penjualan.findMany({
     orderBy: { tanggal: 'desc' },
     take: 5,
@@ -63,7 +57,6 @@ export default async function AdminDashboard() {
     },
   });
 
-  // Produk unggulan (top 4 berdasarkan jumlah total terjual)
   const semuaProduk = await prisma.produk.findMany({
     include: {
       penjualan: true,
@@ -77,6 +70,16 @@ export default async function AdminDashboard() {
     }))
     .sort((a, b) => b.jumlahTerjual - a.jumlahTerjual)
     .slice(0, 4);
+
+  return {
+    totalProduk,
+    totalPenjualan,
+    rating,
+    pelangganBaru,
+    penjualanTerakhir,
+    produkUnggulan,
+  };
+}
 
 
   // SVG Icon
@@ -140,7 +143,16 @@ export default async function AdminDashboard() {
     </svg>
   );
 
-  export default function AdminDashboard() {
+  export default async function AdminDashboard() {
+  const {
+    totalProduk,
+    totalPenjualan,
+    rating,
+    pelangganBaru,
+    penjualanTerakhir,
+    produkUnggulan,
+  } = await getDashboardData();
+
     return (
       <div className="flex min-h-screen bg-[#1e2a3e]">
         {/* Left Sidebar */}
