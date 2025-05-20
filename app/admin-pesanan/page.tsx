@@ -269,10 +269,10 @@ const AdminPesanan = () => {
         
         {/* Orders Table */}
         <div className="p-5 mt-10">
-          <div className="bg-gray-400 rounded shadow-lg overflow-hidden ">
+          <div className="bg-white rounded shadow-lg overflow-hidden ">
             <table className="w-full border-collapse">
               <thead>
-                <tr className="bg-gray-400 text-left border-b border-gray-600">
+                <tr className="bg-white text-left border-b border-gray-600">
                   <th className="p-4 font-semibold">ID Pesanan</th>
                   <th className="p-4 font-semibold">Nama Pelanggan</th>
                   <th className="p-4 font-semibold">Produk</th>
@@ -286,7 +286,7 @@ const AdminPesanan = () => {
             
             {/* Table Body */}
             {orders.map((order) => (
-              <div key={order.id} className="grid grid-cols-7 border-b border-gray-400 last:border-b-0 hover:bg-gray-200">
+              <div key={order.id} className="grid grid-cols-7 border-b border-gray-400 last:border-b-0 hover:bg-blue-200">
                 <div className="p-4">{order.id}</div>
                 <div className="p-4">{order.customer}</div>
                 <div className="p-4">{renderProducts(order.products)}</div>

@@ -277,10 +277,10 @@ const AdminPengguna = () => {
         
         {/* user table */}
         <div className="p-5">
-        <div className="bg-gray-400 rounded shadow-lg overflow-hidden h-[750px] mt-10">
+        <div className="bg-white rounded shadow-lg overflow-hidden h-[750px] mt-10">
           <table className="w-full border-collapse h-full">
               <thead>
-                <tr className="bg-gray-400 text-left border-b border-gray-600">
+                <tr className="bg-white text-left border-b border-gray-600">
                   <th className="p-4">Nama pengguna</th>
                   <th className="p-4">Role</th>
                   <th className="p-4">Email</th>
