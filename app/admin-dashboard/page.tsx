@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Nunito_Sans, Creepster, Jolly_Lodger } from 'next/font/google';
 import { StarIcon, ShoppingCartIcon, UsersIcon, ArchiveBoxIcon } from '@heroicons/react/24/solid';
-import { Prisma } from '@/generated/prisma';
+import prisma from '../lib/prisma';
 
 
 //Font yang digunakan
