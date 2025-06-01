@@ -265,6 +265,21 @@ export default function AdminPesanan1() {
                 <path d="M21 21l-4.35-4.35"></path>
               </svg>
             </div>
+
+            <a
+              href="/tambah-pengguna"
+              className="px-4 py-2 bg-red-600 text-white rounded flex items-center hover:bg-red-700"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fillRule="evenodd"
+                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Tambah Pengguna
+            </a>
+            
           </div>
         </div>
         <div className="mt-6">
