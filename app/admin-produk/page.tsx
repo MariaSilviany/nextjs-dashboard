@@ -179,7 +179,7 @@ export default function HauntedHallowAdmin1() {
         </div>
 
         <nav className="flex-1 px-2 py-4 space-y-1">
-          <div className="flex items-center px-4 py-3 bg-gray-800 text-white rounded">
+          <div className="flex items-center px-4 py-3 text-gray-300 hover:bg-[#6a2c27] rounded">
             <a href="/admin-dashboard" className="flex items-center w-full">
               <div className="mr-3">
                 <DashboardIcon />
@@ -188,7 +188,7 @@ export default function HauntedHallowAdmin1() {
             </a>
           </div>
 
-          <div className="flex items-center px-4 py-3 text-gray-300 hover:bg-[#6a2c27] rounded">
+          <div className="flex items-center px-4 py-3 bg-gray-800 text-white rounded">
             <a href="/admin-produk" className="flex items-center w-full">
               <div className="mr-3">
                 <ProdukIcon />
@@ -267,6 +267,9 @@ export default function HauntedHallowAdmin1() {
               </svg>
             </div>
           </div>
+        </div>
+        <div className="mt-6">
+      <HauntedHallowAdmin />
         </div>
       </div>
     </div>
