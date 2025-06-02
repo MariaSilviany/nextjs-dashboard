@@ -298,10 +298,14 @@ const HauntedHallowAdmin: React.FC = () => {
     { id: 5, name: "Lampu Hias gantung", position: "Rp120.000", contact: "20 Pcs", status: "Aktif", image: "/kat2.png" },
     { id: 6, name: "Patung Pemujaan Kuno", position: "Rp150.000", contact: "80 Pcs", status: "Aktif", image: "/produk3.png" },
     { id: 7, name: "Kotak Musik Berhantu", position: "Rp90.000", contact: "30 Pcs", status: "Aktif", image: "/kat5.png" },
+    { id: 8, name: "Kalung Perak Anti Kutukan", position: "Rp150.000", contact: "10 Pcs", status: "Aktif", image: "/kat4.png" },
+    { id: 9, name: "Cermin Pemanggil Roh", position: "Rp110.000", contact: "17 Pcs", status: "Aktif", image: "/lukisan.png" },
+    { id: 10, name: "Lukisan Menatapmu", position: "Rp95.000", contact: "8 Pcs", status: "Aktif", image: "/cermin.png" },
   ];
 
   const [loading, setLoading] = useState(true);
   const [productData, setProductData] = useState<Product[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     setTimeout(() => {
@@ -310,53 +314,86 @@ const HauntedHallowAdmin: React.FC = () => {
     }, 2000);
   }, []);
 
+  // Fungsi untuk menangani perubahan input pencarian
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    console.log(value); // Log nilai input ke konsol
+  };
+
+  // Filter produk berdasarkan pencarian
+  const filteredProducts = productData.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-      <div className="bg-white rounded shadow-lg overflow-hidden text-black">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-100 border-b border-gray-300">
-              <th className="p-4">Gambar</th>
-              <th className="p-4">Nama</th>
-              <th className="p-4">Harga</th>
-              <th className="p-4">Stok</th>
-              <th className="p-4">Status</th>
-              <th className="p-4">Tindakan</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan={6}><SkeletonDaftarProduk /></td>
-              </tr>
-            ) : (
-              productData.map((product) => (
-                <tr key={product.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="p-4">
-                    <div className="w-16 h-16 bg-gray-200 rounded overflow-hidden flex items-center justify-center">
-                      <img src={product.image} alt={product.name} className="object-cover w-full h-full" />
-                    </div>
-                  </td>
-                  <td className="p-4">{product.name}</td>
-                  <td className="p-4">{product.position}</td>
-                  <td className="p-4">{product.contact}</td>
-                  <td className="p-4">
-                    <span className="px-3 py-1 bg-green-500 text-white font-medium rounded-full text-sm">
-                      {product.status}
-                    </span>
-                  </td>
-                  <td className="p-4">
-                    <div className="flex gap-2">
-                      <Link href={`/edit-produk?id=${product.id}`} className="p-1 text-green-600 hover:text-green-800">
-                        ✏
-                      </Link>
-                      <button className="p-1 text-red-600 hover:text-red-800">🗑</button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+    <div className="bg-white rounded shadow-lg overflow-hidden text-black">
+      {/* Search Bar */}
+      <div className="p-4">
+        <input
+          type="text"
+          placeholder="Cari produk..."
+          value={searchTerm}
+          onChange={handleSearchChange} // Panggil fungsi handleSearchChange
+          className="w-full pl-4 pr-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </div>
+
+      {/* Tabel Produk */}
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="bg-gray-100 border-b border-gray-300">
+            <th className="p-4">Gambar</th>
+            <th className="p-4">Nama</th>
+            <th className="p-4">Harga</th>
+            <th className="p-4">Stok</th>
+            <th className="p-4">Status</th>
+            <th className="p-4">Tindakan</th>
+          </tr>
+        </thead>
+        <tbody>
+          {loading ? (
+            <tr>
+              <td colSpan={6}>
+                <SkeletonDaftarProduk />
+              </td>
+            </tr>
+          ) : filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
+              <tr key={product.id} className="border-b border-gray-200 hover:bg-gray-100">
+                <td className="p-4">
+                  <div className="w-16 h-16 bg-gray-200 rounded overflow-hidden flex items-center justify-center">
+                    <img src={product.image} alt={product.name} className="object-cover w-full h-full" />
+                  </div>
+                </td>
+                <td className="p-4">{product.name}</td>
+                <td className="p-4">{product.position}</td>
+                <td className="p-4">{product.contact}</td>
+                <td className="p-4">
+                  <span className="px-3 py-1 bg-green-500 text-white font-medium rounded-full text-sm">
+                    {product.status}
+                  </span>
+                </td>
+                <td className="p-4">
+                  <div className="flex gap-2">
+                    <Link href={`/edit-produk?id=${product.id}`} className="p-1 text-green-600 hover:text-green-800">
+                      Ubah
+                    </Link>
+                    <button className="p-1 text-red-600 hover:text-red-800">Hapus</button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={6} className="text-center p-4">
+                Tidak ada produk ditemukan.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 };
+
