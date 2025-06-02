@@ -299,8 +299,8 @@ const HauntedHallowAdmin: React.FC = () => {
     { id: 6, name: "Patung Pemujaan Kuno", position: "Rp150.000", contact: "80 Pcs", status: "Aktif", image: "/produk3.png" },
     { id: 7, name: "Kotak Musik Berhantu", position: "Rp90.000", contact: "30 Pcs", status: "Aktif", image: "/kat5.png" },
     { id: 8, name: "Kalung Perak Anti Kutukan", position: "Rp150.000", contact: "10 Pcs", status: "Aktif", image: "/kat4.png" },
-    { id: 9, name: "Cermin Pemanggil Roh", position: "Rp110.000", contact: "17 Pcs", status: "Aktif", image: "/lukisan.png" },
-    { id: 10, name: "Lukisan Menatapmu", position: "Rp95.000", contact: "8 Pcs", status: "Aktif", image: "/cermin.png" },
+    { id: 9, name: "Cermin Pemanggil Roh", position: "Rp110.000", contact: "17 Pcs", status: "Aktif", image: "/lukisan.jpg" },
+    { id: 10, name: "Lukisan Menatapmu", position: "Rp95.000", contact: "8 Pcs", status: "Aktif", image: "/cermin.jpg" },
   ];
 
   const [loading, setLoading] = useState(true);
