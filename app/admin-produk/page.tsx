@@ -246,26 +246,6 @@ export default function HauntedHallowAdmin1() {
             >
               DAFTAR PRODUK
             </h1>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search"
-                className="pl-10 pr-4 py-2 rounded bg-gray-200 text-white border border-gray-600 focus:outline-none"
-              />
-              <svg
-                className="absolute left-3 top-2.5 w-5 h-5 text-gray-500"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="M21 21l-4.35-4.35"></path>
-              </svg>
-            </div>
             <a
               href="/tambah-produk"
               className="px-4 py-2 bg-red-600 text-white rounded flex items-center hover:bg-red-700"
@@ -299,8 +279,8 @@ const HauntedHallowAdmin: React.FC = () => {
     { id: 6, name: "Patung Pemujaan Kuno", position: "Rp150.000", contact: "80 Pcs", status: "Aktif", image: "/produk3.png" },
     { id: 7, name: "Kotak Musik Berhantu", position: "Rp90.000", contact: "30 Pcs", status: "Aktif", image: "/kat5.png" },
     { id: 8, name: "Kalung Perak Anti Kutukan", position: "Rp150.000", contact: "10 Pcs", status: "Aktif", image: "/kat4.png" },
-    { id: 9, name: "Cermin Pemanggil Roh", position: "Rp110.000", contact: "17 Pcs", status: "Aktif", image: "/lukisan.jpg" },
-    { id: 10, name: "Lukisan Menatapmu", position: "Rp95.000", contact: "8 Pcs", status: "Aktif", image: "/cermin.jpg" },
+    { id: 9, name: "Cermin Pemanggil Roh", position: "Rp110.000", contact: "17 Pcs", status: "Aktif", image: "/cermin.jpg" },
+    { id: 10, name: "Lukisan Menatapmu", position: "Rp95.000", contact: "8 Pcs", status: "Aktif", image: "/lukisan.jpg" },
   ];
 
   const [loading, setLoading] = useState(true);

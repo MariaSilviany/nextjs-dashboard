@@ -180,7 +180,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/mnt/d/HauntedHollow/nextjs-dashboard/generated/prisma",
+      "value": "/mnt/c/HauntedHollow/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -189,13 +189,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-
-    "sourceFilePath": "/mnt/d/HauntedHollow/nextjs-dashboard/prisma/schema.prisma",
+    "sourceFilePath": "/mnt/c/HauntedHollow/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
