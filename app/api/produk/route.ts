@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
         harga: parseInt(harga),
         stok: parseInt(stok),
         status,
-        gambar_url: `/${fileName}`, // gambar akan diakses via http://localhost:3000/<fileName>
+        gambar_url: `/${fileName}`, 
       },
     });
 
@@ -42,3 +42,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Terjadi kesalahan saat menambah produk" }, { status: 500 });
   }
 }
+
+export async function GET(req: NextRequest) {
+  try {
+    const produk = await prisma.produk.findMany(); // Ambil semua produk dari database
+    return NextResponse.json(produk, { status: 200 });
+  } catch (error) {
+    console.error("Gagal mengambil produk:", error);
+    return NextResponse.json({ error: "Terjadi kesalahan saat mengambil produk" }, { status: 500 });
+  }
+}
+
+

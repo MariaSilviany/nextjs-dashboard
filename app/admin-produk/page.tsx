@@ -11,11 +11,11 @@ const creepster = Creepster({ weight: "400", subsets: ["latin"], display: "swap"
 
 interface Product {
   id: number;
-  name: string;
-  position: string;
-  contact: string;
+  nama: string;
+  harga: string;
+  stok: string;
   status: string;
-  image: string;
+  gambar_url: string;
 }
 
 // SVG Icon
@@ -271,40 +271,54 @@ export default function HauntedHallowAdmin1() {
 
 const HauntedHallowAdmin: React.FC = () => {
   const products: Product[] = [
-    { id: 1, name: "Lilin Aroma Misterius", position: "Rp66.000", contact: "50 Pcs", status: "Aktif", image: "/produk1.png" },
-    { id: 2, name: "Topeng Hantu Horor", position: "Rp80.000", contact: "80 Pcs", status: "Aktif", image: "/produk2.png" },
-    { id: 3, name: "Boneka Seram", position: "Rp66.000", contact: "30 Pcs", status: "Aktif", image: "/produk4.png" },
-    { id: 4, name: "Kafan Arwah Kelam", position: "Rp100.000", contact: "48 Pcs", status: "Aktif", image: "/kat1.png" },
-    { id: 5, name: "Lampu Hias gantung", position: "Rp120.000", contact: "20 Pcs", status: "Aktif", image: "/kat2.png" },
-    { id: 6, name: "Patung Pemujaan Kuno", position: "Rp150.000", contact: "80 Pcs", status: "Aktif", image: "/produk3.png" },
-    { id: 7, name: "Kotak Musik Berhantu", position: "Rp90.000", contact: "30 Pcs", status: "Aktif", image: "/kat5.png" },
-    { id: 8, name: "Kalung Perak Anti Kutukan", position: "Rp150.000", contact: "10 Pcs", status: "Aktif", image: "/kat4.png" },
-    { id: 9, name: "Cermin Pemanggil Roh", position: "Rp110.000", contact: "17 Pcs", status: "Aktif", image: "/cermin.jpg" },
-    { id: 10, name: "Lukisan Menatapmu", position: "Rp95.000", contact: "8 Pcs", status: "Aktif", image: "/lukisan.jpg" },
+    { id: 1, nama: "Lilin Aroma Misterius", harga: "Rp66.000", stok: "50 Pcs", status: "Aktif", gambar_url: "/produk1.png" },
+    { id: 2, nama: "Topeng Hantu Horor", harga: "Rp80.000", stok: "80 Pcs", status: "Aktif", gambar_url: "/produk2.png" },
+    { id: 3, nama: "Boneka Seram", harga: "Rp66.000", stok: "30 Pcs", status: "Aktif", gambar_url: "/produk4.png" },
+    { id: 4, nama: "Kafan Arwah Kelam", harga: "Rp100.000", stok: "48 Pcs", status: "Aktif", gambar_url: "/kat1.png" },
+    { id: 5, nama: "Lampu Hias gantung", harga: "Rp120.000", stok: "20 Pcs", status: "Aktif", gambar_url: "/kat2.png" },
+    { id: 6, nama: "Patung Pemujaan Kuno", harga: "Rp150.000", stok: "80 Pcs", status: "Aktif", gambar_url: "/produk3.png" },
+    { id: 7, nama: "Kotak Musik Berhantu", harga: "Rp90.000", stok: "30 Pcs", status: "Aktif", gambar_url: "/kat5.png" },
+    { id: 8, nama: "Kalung Perak Anti Kutukan", harga: "Rp150.000", stok: "10 Pcs", status: "Aktif", gambar_url: "/kat4.png" },
+    { id: 9, nama: "Cermin Pemanggil Roh", harga: "Rp110.000", stok: "17 Pcs", status: "Aktif", gambar_url: "/cermin.jpg" },
+    { id: 10, nama: "Lukisan Menatapmu", harga: "Rp95.000", stok: "8 Pcs", status: "Aktif", gambar_url: "/lukisan.jpg" },
   ];
 
   const [loading, setLoading] = useState(true);
   const [productData, setProductData] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
+  // Fungsi untuk memuat data produk dari API
   useEffect(() => {
-    setTimeout(() => {
-      setProductData(products);
-      setLoading(false);
-    }, 2000);
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("/api/produk"); // Panggil endpoint GET
+        if (!res.ok) {
+          throw new Error("Gagal memuat data produk");
+        }
+        const data = await res.json();
+        setProductData(data); // Simpan data produk ke state
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
+
 
   // Fungsi untuk menangani perubahan input pencarian
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
-    console.log(value); // Log nilai input ke konsol
   };
 
   // Filter produk berdasarkan pencarian
-  const filteredProducts = productData.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredProducts = productData.filter((product) => {
+    const productName = product.nama || ""; // Pastikan product.name terdefinisi
+    return productName.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div className="bg-white rounded shadow-lg overflow-hidden text-black">
@@ -343,12 +357,12 @@ const HauntedHallowAdmin: React.FC = () => {
               <tr key={product.id} className="border-b border-gray-200 hover:bg-gray-100">
                 <td className="p-4">
                   <div className="w-16 h-16 bg-gray-200 rounded overflow-hidden flex items-center justify-center">
-                    <img src={product.image} alt={product.name} className="object-cover w-full h-full" />
+                    <img src={product.gambar_url} alt={product.nama} className="object-cover w-full h-full" />
                   </div>
                 </td>
-                <td className="p-4">{product.name}</td>
-                <td className="p-4">{product.position}</td>
-                <td className="p-4">{product.contact}</td>
+                <td className="p-4">{product.nama}</td>
+                <td className="p-4">{product.harga}</td>
+                <td className="p-4">{product.stok}</td>
                 <td className="p-4">
                   <span className="px-3 py-1 bg-green-500 text-white font-medium rounded-full text-sm">
                     {product.status}
