@@ -304,14 +304,35 @@ const HauntedHallowAdmin: React.FC = () => {
       }
     };
 
-    fetchProducts();
+    fetchProducts();6
   }, []);
-
 
   // Fungsi untuk menangani perubahan input pencarian
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
+  };
+
+  // Fungsi untuk menghapus produk
+  const handleDeleteProduct = async (id: string) => {
+    const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus produk ini?");
+    if (confirmDelete) {
+      try {
+        const res = await fetch(`/api/produk/${id}`, {
+     method: "DELETE",
+   });
+   if (!res.ok) {
+     const errorMessage = await res.text(); // Ambil pesan kesalahan dari respons
+     console.error("Error deleting product:", errorMessage);
+     throw new Error("Gagal menghapus produk");
+   }
+
+        // Setelah berhasil menghapus, perbarui state produk
+        setProductData((prevProducts) => prevProducts.filter((product) => product.id !== id));
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   // Filter produk berdasarkan pencarian
@@ -373,7 +394,12 @@ const HauntedHallowAdmin: React.FC = () => {
                     <Link href={`/edit-produk?id=${product.id}`} className="p-1 text-green-600 hover:text-green-800">
                       Ubah
                     </Link>
-                    <button className="p-1 text-red-600 hover:text-red-800">Hapus</button>
+                    <button 
+                      className="p-1 text-red-600 hover:text-red-800" 
+                      onClick={() => handleDeleteProduct(product.id.toString())} // Panggil fungsi hapus
+                    >
+                      Hapus
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -390,4 +416,3 @@ const HauntedHallowAdmin: React.FC = () => {
     </div>
   );
 };
-

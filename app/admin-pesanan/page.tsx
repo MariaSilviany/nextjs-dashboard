@@ -267,7 +267,7 @@ export default function AdminPesanan1() {
             </div>
 
             <a
-              href="/tambah-pengguna"
+              href="/tambah-pesanan"
               className="px-4 py-2 bg-red-600 text-white rounded flex items-center hover:bg-red-700"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -277,7 +277,7 @@ export default function AdminPesanan1() {
                   clipRule="evenodd"
                 />
               </svg>
-              Tambah Pengguna
+              Tambah Pesanan
             </a>
             
           </div>

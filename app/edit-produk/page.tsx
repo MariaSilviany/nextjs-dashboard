@@ -31,7 +31,7 @@ const EditProduk: React.FC = () => {
           namaProduk: data.nama,
           harga: String(data.harga),
           stok: data.stok,
-          status: data.status === "Aktif",
+          status: data.status === "Aktif", // di useEffect
           gambar: null,
           gambarLama: data.gambar_url,
         });
@@ -63,46 +63,43 @@ const EditProduk: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.namaProduk || !formData.harga || formData.stok < 0) {
-      setError("Semua kolom wajib diisi!");
-      return;
-    }
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    try {
-      const data = new FormData();
-      data.append("nama", formData.namaProduk);
-      data.append("harga", formData.harga);
-      data.append("stok", String(formData.stok));
-      data.append("status", formData.status ? "Aktif" : "Nonaktif");
-      if (formData.gambar) {
-        data.append("gambar", formData.gambar);
-      }
-
-      const res = await fetch(`/api/produk/${id}`, {
-        method: "PUT",
-        body: data,
-      });
-
-      if (!res.ok) {
-  let errorMessage = "Gagal memperbarui produk";
-  try {
-    const err = await res.json();
-    errorMessage = err.error || errorMessage;
-  } catch (e) {
-    // response bukan JSON, tetap pakai error default
+  if (!formData.namaProduk || !formData.harga || formData.stok < 0) {
+    setError("Semua kolom wajib diisi!");
+    return;
   }
-  throw new Error(errorMessage);
-}
 
+  try {
+    const data = new FormData();
+    data.append("nama", formData.namaProduk);
+    data.append("harga", formData.harga);
+    data.append("stok", String(formData.stok));
+    data.append("status", formData.status ? "Aktif" : "Nonaktif"); // saat submit
+    data.append("gambarLama", formData.gambarLama);
 
-      setSuccess("Produk berhasil diupdate!");
-      setTimeout(() => router.push("/admin-produk"), 1500);
-    } catch (err: any) {
-      setError(err.message || "Terjadi kesalahan saat update produk");
+    if (formData.gambar) {
+      data.append("gambar", formData.gambar);
     }
-  };
+
+    const res = await fetch(`/api/produk/${id}`, {
+      method: "PUT",
+      body: data,
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || "Gagal memperbarui produk");
+    }
+
+    setSuccess("Produk berhasil diupdate!");
+    setTimeout(() => router.push("/admin-produk"), 1500);
+  } catch (err: any) {
+    setError(err.message || "Terjadi kesalahan saat update produk");
+  }
+};
+
 
   return (
     <div className="flex min-h-screen bg-[#1e2a3e]">

@@ -52,5 +52,3 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Terjadi kesalahan saat mengambil produk" }, { status: 500 });
   }
 }
-
-
