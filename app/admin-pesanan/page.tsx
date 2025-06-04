@@ -187,7 +187,7 @@ export default function AdminPesanan1() {
             </a>
           </div>
 
-          <div className="flex items-center px-4 py-3 text-gray-300 hover:bg-[#6a2c27] rounded">
+          <div className="flex items-center px-4 py-3 bg-gray-800 text-white rounded">
             <a href="/admin-produk" className="flex items-center w-full">
               <div className="mr-3">
                 <ProdukIcon />
@@ -205,7 +205,7 @@ export default function AdminPesanan1() {
             </a>
           </div>
 
-          <div className="flex items-center px-4 py-3 bg-gray-800 text-white rounded">
+          <div className="flex items-center px-4 py-3 text-gray-300 hover:bg-[#6a2c27] rounded">
             <a href="admin-pesanan" className="flex items-center w-full">
               <div className="mr-3">
                 <PesananIcon />
@@ -235,7 +235,7 @@ export default function AdminPesanan1() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 pl-56 p-6 ">
+       <div className="flex-1 pl-56 p-6 ">
         {/* Header */}
         <div className="flex justify-between items-center p-4 bg-[#1b2838] border-b border-gray-700">
           <div className="flex items-center w-full">
@@ -245,8 +245,10 @@ export default function AdminPesanan1() {
             >
               DAFTAR PESANAN
             </h1>
-              href="/tambah-pesanan"
+            <a
+              href="/tambah-produk"
               className="px-4 py-2 bg-red-600 text-white rounded flex items-center hover:bg-red-700"
+            >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path
                   fillRule="evenodd"
@@ -255,8 +257,7 @@ export default function AdminPesanan1() {
                 />
               </svg>
               Tambah Pesanan
-
-            
+            </a>
           </div>
         </div>
         <div className="mt-6">
@@ -267,9 +268,11 @@ export default function AdminPesanan1() {
   );
 }
 
+
 const AdminPesanan: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     const dummyData: Order[] = [
@@ -288,24 +291,57 @@ const AdminPesanan: React.FC = () => {
     }, 2000);
   }, []);
 
-  const renderProducts = (productText: string) => {
-    return productText.split("\n").map((item, i) => <div key={i}>{item}</div>);
+  // Function to handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setSearchTerm(e.target.value); // Mengambil nilai dari input dan memperbarui state searchTerm
+};
+
+  // Filter orders based on search term
+  const filteredOrders = orders.filter((order) =>
+    order.customer.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // ✅ Tambahkan fungsi renderProducts
+  const renderProducts = (products: string) => {
+    return (
+      <ul className="list-disc list-inside">
+        {products.split("\n").map((product, index) => (
+          <div key={index}>{product}</div>
+        ))}
+      </ul>
+    );
   };
 
-  const getStatusStyle = (status: string): string => {
-    switch (status) {
-      case "Menunggu Pembayaran": return "bg-yellow-300 text-yellow-800";
-      case "Sedang Diproses": return "bg-blue-300 text-blue-800";
-      case "Selesai": return "bg-green-300 text-green-800";
-      case "Dibatalkan": return "bg-red-300 text-red-800";
-      default: return "bg-gray-300 text-gray-800";
+  // ✅ Tambahkan fungsi getStatusStyle
+  const getStatusStyle = (status: string) => {
+    switch (status.toLowerCase()) {
+      case "selesai":
+        return "bg-green-200 text-green-800";
+      case "sedang diproses":
+        return "bg-yellow-200 text-yellow-800";
+      case "menunggu pembayaran":
+        return "bg-blue-200 text-blue-800";
+      case "dibatalkan":
+        return "bg-red-200 text-red-800";
+      default:
+        return "bg-gray-200 text-gray-800";
     }
   };
-
+  
   return (
     <div className="min-h-screen bg-[#1e2a3e] p-8 text-white">
-
       <div className="bg-white rounded shadow-lg overflow-hidden text-black">
+        {/* Search Bar */}
+        <div className="p-4">
+          <input
+            type="text"
+            placeholder="Cari pesanan..."
+            value={searchTerm}
+            onChange={handleSearchChange} // Call the search change handler
+            className="w-full pl-4 pr-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-100 border-b border-gray-300">
@@ -315,7 +351,7 @@ const AdminPesanan: React.FC = () => {
               <th className="p-4">Total</th>
               <th className="p-4">Tanggal</th>
               <th className="p-4">Status</th>
-              <th className="p-4">Tindakan</th>
+              {/* <th className="p-4">Tindakan</th> */}
             </tr>
           </thead>
           <tbody>
@@ -324,7 +360,7 @@ const AdminPesanan: React.FC = () => {
                 <td colSpan={7}><SkeletonAdminPesanan /></td>
               </tr>
             ) : (
-              orders.map((order) => (
+              filteredOrders.map((order) => (
                 <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-100">
                   <td className="p-4">{order.id}</td>
                   <td className="p-4">{order.customer}</td>
@@ -334,9 +370,9 @@ const AdminPesanan: React.FC = () => {
                   <td className="p-4">
                     <span className={`px-3 py-1 rounded-full text-sm ${getStatusStyle(order.status)}`}>{order.status}</span>
                   </td>
-                  <td className="p-4">
-                    <button className="text-red-600 hover:text-red-800">🗑</button>
-                  </td>
+                  {/* <td className="p-4">
+                    <button className="text-red-600 hover:text-red-800">ðŸ—‘</button>
+                  </td> */}
                 </tr>
               ))
             )}
@@ -346,3 +382,4 @@ const AdminPesanan: React.FC = () => {
     </div>
   );
 };
+
