@@ -245,31 +245,8 @@ export default function AdminPesanan1() {
             >
               DAFTAR PESANAN
             </h1>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search"
-                className="pl-10 pr-4 py-2 rounded bg-gray-200 text-white border border-gray-600 focus:outline-none"
-              />
-              <svg
-                className="absolute left-3 top-2.5 w-5 h-5 text-gray-500"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="M21 21l-4.35-4.35"></path>
-              </svg>
-            </div>
-
-            <a
               href="/tambah-pesanan"
               className="px-4 py-2 bg-red-600 text-white rounded flex items-center hover:bg-red-700"
-            >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path
                   fillRule="evenodd"
@@ -278,7 +255,7 @@ export default function AdminPesanan1() {
                 />
               </svg>
               Tambah Pesanan
-            </a>
+
             
           </div>
         </div>
