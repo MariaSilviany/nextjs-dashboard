@@ -304,7 +304,7 @@ const HauntedHallowAdmin: React.FC = () => {
       }
     };
 
-    fetchProducts();
+    fetchProducts();6
   }, []);
 
   // Fungsi untuk menangani perubahan input pencarian
@@ -314,7 +314,7 @@ const HauntedHallowAdmin: React.FC = () => {
   };
 
   // Fungsi untuk menghapus produk
-  const handleDeleteProduct = async (id: number) => {
+  const handleDeleteProduct = async (id: string) => {
     const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus produk ini?");
     if (confirmDelete) {
       try {
@@ -396,7 +396,7 @@ const HauntedHallowAdmin: React.FC = () => {
                     </Link>
                     <button 
                       className="p-1 text-red-600 hover:text-red-800" 
-                      onClick={() => handleDeleteProduct(product.id)} // Panggil fungsi hapus
+                      onClick={() => handleDeleteProduct(product.id.toString())} // Panggil fungsi hapus
                     >
                       Hapus
                     </button>
