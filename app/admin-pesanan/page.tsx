@@ -187,7 +187,7 @@ export default function AdminPesanan1() {
             </a>
           </div>
 
-          <div className="flex items-center px-4 py-3 bg-gray-800 text-white rounded">
+          <div className="flex items-center px-4 py-3 text-gray-300 hover:bg-[#6a2c27] rounded">
             <a href="/admin-produk" className="flex items-center w-full">
               <div className="mr-3">
                 <ProdukIcon />
@@ -204,9 +204,10 @@ export default function AdminPesanan1() {
               <span>Pengguna</span>
             </a>
           </div>
-
           <div className="flex items-center px-4 py-3 text-gray-300 hover:bg-[#6a2c27] rounded">
             <a href="/admin-pesanan" className="flex items-center w-full">
+          <div className="flex items-center px-4 py-3 bg-gray-800 text-white rounded">
+            <a href="admin-pesanan" className="flex items-center w-full">
               <div className="mr-3">
                 <PesananIcon />
               </div>
@@ -382,3 +383,4 @@ const AdminPesanan: React.FC = () => {
     </div>
   );
 };
+
