@@ -206,7 +206,7 @@ export default function AdminPesanan1() {
           </div>
 
           <div className="flex items-center px-4 py-3 text-gray-300 hover:bg-[#6a2c27] rounded">
-            <a href="admin-pesanan" className="flex items-center w-full">
+            <a href="/admin-pesanan" className="flex items-center w-full">
               <div className="mr-3">
                 <PesananIcon />
               </div>
