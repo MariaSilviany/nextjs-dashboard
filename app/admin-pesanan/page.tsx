@@ -187,7 +187,7 @@ export default function AdminPesanan1() {
             </a>
           </div>
 
-          <div className="flex items-center px-4 py-3 bg-gray-800 text-white rounded">
+          <div className="flex items-center px-4 py-3 text-gray-300 hover:bg-[#6a2c27] rounded">
             <a href="/admin-produk" className="flex items-center w-full">
               <div className="mr-3">
                 <ProdukIcon />
@@ -205,7 +205,7 @@ export default function AdminPesanan1() {
             </a>
           </div>
 
-          <div className="flex items-center px-4 py-3 text-gray-300 hover:bg-[#6a2c27] rounded">
+          <div className="flex items-center px-4 py-3 bg-gray-800 text-white rounded">
             <a href="admin-pesanan" className="flex items-center w-full">
               <div className="mr-3">
                 <PesananIcon />
@@ -246,7 +246,7 @@ export default function AdminPesanan1() {
               DAFTAR PESANAN
             </h1>
             <a
-              href="/tambah-produk"
+              href="/tambah-pesanan"
               className="px-4 py-2 bg-red-600 text-white rounded flex items-center hover:bg-red-700"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
