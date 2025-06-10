@@ -3,6 +3,24 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+export async function GET() {
+  try {
+    const pesanan = await prisma.pesanan.findMany({
+      include: {
+        produk: true, // ambil data produk terkait
+      },
+      orderBy: {
+        tanggal: "desc", // supaya terbaru dulu
+      },
+    });
+    return NextResponse.json(pesanan);
+  } catch (error) {
+    console.error("Error fetching pesanan:", error);
+    return NextResponse.json({ error: "Gagal mengambil pesanan" }, { status: 500 });
+  }
+}
+
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -16,7 +34,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Semua field wajib diisi" }, { status: 400 });
     }
 
-    // Ambil produk dan harga untuk hitung total
+    // ✅ Validasi UUID
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(produk_id)) {
+      return NextResponse.json(
+        { error: 'produk_id is not a valid UUID' },
+        { status: 400 }
+      );
+    }
+
     const produk = await prisma.produk.findUnique({
       where: { id: produk_id },
     });
@@ -40,23 +66,5 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Gagal tambah pesanan:", error);
     return NextResponse.json({ error: "Terjadi kesalahan saat menambah pesanan" }, { status: 500 });
-  }
-}
-
-export async function GET(req: NextRequest) {
-  try {
-    const pesanan = await prisma.pesanan.findMany({
-      include: {
-        produk: true, // join produk
-      },
-      orderBy: {
-        tanggal: 'desc',
-      },
-    });
-
-    return NextResponse.json(pesanan, { status: 200 });
-  } catch (error) {
-    console.error("Gagal mengambil pesanan:", error);
-    return NextResponse.json({ error: "Terjadi kesalahan saat mengambil pesanan" }, { status: 500 });
   }
 }

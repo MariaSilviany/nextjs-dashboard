@@ -289,23 +289,44 @@ const HauntedHallowAdmin: React.FC = () => {
 
   // Fungsi untuk memuat data produk dari API
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch("/api/produk"); // Panggil endpoint GET
-        if (!res.ok) {
-          throw new Error("Gagal memuat data produk");
-        }
-        const data = await res.json();
-        setProductData(data); // Simpan data produk ke state
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch("/api/produk"); // Panggil endpoint GET
+      if (!res.ok) {
+        throw new Error("Gagal memuat data produk");
       }
-    };
+      const data = await res.json();
 
-    fetchProducts();6
-  }, []);
+      // ✅ Formatkan tanggal jika ada field created_at, updated_at, atau lainnya
+      const formattedData = data.map((item: any) => {
+        const rawDate = item.created_at || item.tanggal || "";
+        let formattedDate = "Tanggal tidak tersedia";
+
+        if (rawDate) {
+          const isoDate = rawDate.includes("T") ? rawDate : rawDate.replace(" ", "T");
+          const parsedDate = new Date(isoDate);
+          if (!isNaN(parsedDate.getTime())) {
+            formattedDate = parsedDate.toLocaleString("id-ID");
+          }
+        }
+
+        return {
+          ...item,
+          formattedDate, // kamu bisa gunakan field ini nanti
+        };
+      });
+
+      setProductData(formattedData); // Simpan ke state
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchProducts();
+}, []);
+
 
   // Fungsi untuk menangani perubahan input pencarian
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -355,7 +376,7 @@ const HauntedHallowAdmin: React.FC = () => {
       </div>
 
       {/* Tabel Produk */}
-      <table className="w-full border-collapse">
+      <table className="w-full border-collapse text-center">
         <thead>
           <tr className="bg-gray-100 border-b border-gray-300">
             <th className="p-4">Gambar</th>

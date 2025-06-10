@@ -204,8 +204,7 @@ export default function AdminPesanan1() {
               <span>Pengguna</span>
             </a>
           </div>
-          <div className="flex items-center px-4 py-3 text-gray-300 hover:bg-[#6a2c27] rounded">
-            <a href="/admin-pesanan" className="flex items-center w-full">
+
           <div className="flex items-center px-4 py-3 bg-gray-800 text-white rounded">
             <a href="admin-pesanan" className="flex items-center w-full">
               <div className="mr-3">
@@ -274,23 +273,38 @@ const AdminPesanan: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  
 
   useEffect(() => {
-    const dummyData: Order[] = [
-      { id: "PSN001", customer: "Khatarina", products: "Topeng Hantu Horor(1 Pcs)", total: "Rp80.000", date: "01-03-2024 11:32", status: "Sedang Diproses" },
-      { id: "PSN002", customer: "John Ferry", products: "Topeng Hantu Horor(1 Pcs)\nLilin Aroma Misterius(1 Pcs)", total: "Rp146.000", date: "06-09-2024 14:32", status: "Menunggu Pembayaran" },
-      { id: "PSN003", customer: "Lusia Nadia", products: "Boneka Seram (1 Pcs)\nLilin Aroma Misterius(3 Pcs)", total: "Rp132.000", date: "25-09-2024 10:22", status: "Menunggu Pembayaran" },
-      { id: "PSN004", customer: "Maria Iata", products: "Karlan Arwah Kela (1 Pcs)\nLampu Hias gantung(1 Pcs)", total: "Rp220.000", date: "30-04-2024 08:46", status: "Sedang Diproses" },
-      { id: "PSN005", customer: "Lea Ginara", products: "Lampu Hias gantung (1 Pcs)", total: "Rp120.000", date: "05-05-2024 16:05", status: "Dibatalkan" },
-      { id: "PSN006", customer: "Valensia", products: "Patung Pemujaan Kuno (1 Pcs)\nBoneka Seram (1 Pcs)", total: "Rp166.000", date: "16-09-2024 13:05", status: "Selesai" },
-      { id: "PAN007", customer: "Bagus Yogi", products: "Kotak Musik Berhantu (3 Pcs)", total: "Rp90.000", date: "04-06-2024 16:58", status: "Selesai" },
-    ];
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch("/api/pesanan");
+      const data = await response.json();
+      
+      // Mapping data agar cocok dengan tipe Order
+      const formattedData: Order[] = data.map((item: any, index: number) => ({
+      id: `PSN${String(index + 1).padStart(3, '3')}`,
+      customer: item.nama || "Tidak Diketahui",
+      products: item.produk?.nama + ` (${item.jumlah || 1} Pcs)` || "Produk Tidak Ditemukan",
+      total: `Rp${item.total.toLocaleString("id-ID")}`,
+      date: item.tanggal
+        ? new Date(item.tanggal).toLocaleString("id-ID")
+        : "Tanggal Tidak Tersedia",
+      status: item.status || "Tidak Diketahui",
+    }));
 
-    setTimeout(() => {
-      setOrders(dummyData);
+
+      setOrders(formattedData);
+    } catch (error) {
+      console.error("Gagal mengambil data pesanan:", error);
+    } finally {
       setLoading(false);
-    }, 2000);
-  }, []);
+    }
+  };
+
+  fetchOrders();
+}, []);
+
 
   // Function to handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -299,7 +313,7 @@ const AdminPesanan: React.FC = () => {
 
   // Filter orders based on search term
   const filteredOrders = orders.filter((order) =>
-    order.customer.toLowerCase().includes(searchTerm.toLowerCase())
+    order.products.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // ✅ Tambahkan fungsi renderProducts
@@ -343,7 +357,7 @@ const AdminPesanan: React.FC = () => {
           />
         </div>
 
-        <table className="w-full border-collapse">
+        <table className="w-full border-collapse text-center">
           <thead>
             <tr className="bg-gray-100 border-b border-gray-300">
               <th className="p-4">ID Pesanan</th>
