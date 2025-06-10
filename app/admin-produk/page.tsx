@@ -270,22 +270,24 @@ export default function HauntedHallowAdmin1() {
 }
 
 const HauntedHallowAdmin: React.FC = () => {
-  const products: Product[] = [
-    { id: 1, nama: "Lilin Aroma Misterius", harga: "Rp66.000", stok: "50 Pcs", status: "Aktif", gambar_url: "/produk1.png" },
-    { id: 2, nama: "Topeng Hantu Horor", harga: "Rp80.000", stok: "80 Pcs", status: "Aktif", gambar_url: "/produk2.png" },
-    { id: 3, nama: "Boneka Seram", harga: "Rp66.000", stok: "30 Pcs", status: "Aktif", gambar_url: "/produk4.png" },
-    { id: 4, nama: "Kafan Arwah Kelam", harga: "Rp100.000", stok: "48 Pcs", status: "Aktif", gambar_url: "/kat1.png" },
-    { id: 5, nama: "Lampu Hias gantung", harga: "Rp120.000", stok: "20 Pcs", status: "Aktif", gambar_url: "/kat2.png" },
-    { id: 6, nama: "Patung Pemujaan Kuno", harga: "Rp150.000", stok: "80 Pcs", status: "Aktif", gambar_url: "/produk3.png" },
-    { id: 7, nama: "Kotak Musik Berhantu", harga: "Rp90.000", stok: "30 Pcs", status: "Aktif", gambar_url: "/kat5.png" },
-    { id: 8, nama: "Kalung Perak Anti Kutukan", harga: "Rp150.000", stok: "10 Pcs", status: "Aktif", gambar_url: "/kat4.png" },
-    { id: 9, nama: "Cermin Pemanggil Roh", harga: "Rp110.000", stok: "17 Pcs", status: "Aktif", gambar_url: "/cermin.jpg" },
-    { id: 10, nama: "Lukisan Menatapmu", harga: "Rp95.000", stok: "8 Pcs", status: "Aktif", gambar_url: "/lukisan.jpg" },
-  ];
+  // const products: Product[] = [
+  //   { id: 1, nama: "Lilin Aroma Misterius", harga: "Rp66.000", stok: "50 Pcs", status: "Aktif", gambar_url: "/produk1.png" },
+  //   { id: 2, nama: "Topeng Hantu Horor", harga: "Rp80.000", stok: "80 Pcs", status: "Aktif", gambar_url: "/produk2.png" },
+  //   { id: 3, nama: "Boneka Seram", harga: "Rp66.000", stok: "30 Pcs", status: "Aktif", gambar_url: "/produk4.png" },
+  //   { id: 4, nama: "Kafan Arwah Kelam", harga: "Rp100.000", stok: "48 Pcs", status: "Aktif", gambar_url: "/kat1.png" },
+  //   { id: 5, nama: "Lampu Hias gantung", harga: "Rp120.000", stok: "20 Pcs", status: "Aktif", gambar_url: "/kat2.png" },
+  //   { id: 6, nama: "Patung Pemujaan Kuno", harga: "Rp150.000", stok: "80 Pcs", status: "Aktif", gambar_url: "/produk3.png" },
+  //   { id: 7, nama: "Kotak Musik Berhantu", harga: "Rp90.000", stok: "30 Pcs", status: "Aktif", gambar_url: "/kat5.png" },
+  //   { id: 8, nama: "Kalung Perak Anti Kutukan", harga: "Rp150.000", stok: "10 Pcs", status: "Aktif", gambar_url: "/kat4.png" },
+  //   { id: 9, nama: "Cermin Pemanggil Roh", harga: "Rp110.000", stok: "17 Pcs", status: "Aktif", gambar_url: "/cermin.jpg" },
+  //   { id: 10, nama: "Lukisan Menatapmu", harga: "Rp95.000", stok: "8 Pcs", status: "Aktif", gambar_url: "/lukisan.jpg" },
+  // ];
 
   const [loading, setLoading] = useState(true);
   const [productData, setProductData] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   // Fungsi untuk memuat data produk dari API
   useEffect(() => {
@@ -332,6 +334,7 @@ const HauntedHallowAdmin: React.FC = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
+    setCurrentPage(1); // Reset ke halaman pertama
   };
 
   // Fungsi untuk menghapus produk
@@ -358,9 +361,19 @@ const HauntedHallowAdmin: React.FC = () => {
 
   // Filter produk berdasarkan pencarian
   const filteredProducts = productData.filter((product) => {
-    const productName = product.nama || ""; // Pastikan product.name terdefinisi
+    const productName = product.nama || "";
     return productName.toLowerCase().includes(searchTerm.toLowerCase());
   });
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+
+  // Potong data sesuai halaman
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
 
   return (
     <div className="bg-white rounded shadow-lg overflow-hidden text-black">
@@ -395,7 +408,7 @@ const HauntedHallowAdmin: React.FC = () => {
               </td>
             </tr>
           ) : filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => (
+            paginatedProducts.map((product) => (
               <tr key={product.id} className="border-b border-gray-200 hover:bg-gray-100">
                 <td className="p-4">
                   <div className="w-16 h-16 bg-gray-200 rounded overflow-hidden flex items-center justify-center">
@@ -434,6 +447,29 @@ const HauntedHallowAdmin: React.FC = () => {
           )}
         </tbody>
       </table>
+      <div className="flex justify-center mt-4">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-white border border-gray-300 text-sm text-gray-700 rounded-md hover:bg-gray-100 disabled:opacity-50"
+          >
+            « Prev
+          </button>
+
+          <span className="text-sm text-gray-600">
+            Halaman {currentPage} dari {totalPages}
+          </span>
+
+          <button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-white border border-gray-300 text-sm text-gray-700 rounded-md hover:bg-gray-100 disabled:opacity-50"
+          >
+            Next »
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
