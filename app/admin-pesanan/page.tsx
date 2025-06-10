@@ -283,7 +283,8 @@ const AdminPesanan: React.FC = () => {
       
       // Mapping data agar cocok dengan tipe Order
       const formattedData: Order[] = data.map((item: any, index: number) => ({
-      id: `PSN${String(index + 1).padStart(3, '3')}`,
+      id: item.id, // UUID dari database (penting untuk delete!)
+      kode: `PSN${String(index + 1).padStart(3, '3')}`, // hanya untuk tampilan
       customer: item.nama || "Tidak Diketahui",
       products: item.produk?.nama + ` (${item.jumlah || 1} Pcs)` || "Produk Tidak Ditemukan",
       total: `Rp${item.total.toLocaleString("id-ID")}`,
@@ -310,6 +311,42 @@ const AdminPesanan: React.FC = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   setSearchTerm(e.target.value); // Mengambil nilai dari input dan memperbarui state searchTerm
 };
+
+// Function untuk menghapus pesanan
+const handleDeleteOrder = async (id: string) => {
+  const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus pesanan ini?");
+  if (confirmDelete) {
+    try {
+      const res = await fetch(`/api/pesanan/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        let errorMessage = "Gagal menghapus pesanan";
+        try {
+          const data = await res.json();
+          errorMessage = data?.error || errorMessage;
+        } catch (_) {
+          const fallback = await res.text();
+          if (fallback) errorMessage = fallback;
+        }
+
+        console.error("Error deleting order:", errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      alert("Pesanan berhasil dihapus!");
+      
+      // ⬇️ Update state orders agar UI ikut berubah
+      setOrders(prevOrders => prevOrders.filter(order => order.id !== id));
+
+    } catch (error) {
+      console.error("Terjadi kesalahan:", error);
+      alert("Terjadi kesalahan saat menghapus pesanan.");
+    }
+  }
+};
+
 
   // Filter orders based on search term
   const filteredOrders = orders.filter((order) =>
@@ -366,7 +403,7 @@ const AdminPesanan: React.FC = () => {
               <th className="p-4">Total</th>
               <th className="p-4">Tanggal</th>
               <th className="p-4">Status</th>
-              {/* <th className="p-4">Tindakan</th> */}
+              <th className="p-4">Tindakan</th>
             </tr>
           </thead>
           <tbody>
@@ -377,18 +414,25 @@ const AdminPesanan: React.FC = () => {
             ) : (
               filteredOrders.map((order) => (
                 <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="p-4">{order.id}</td>
-                  <td className="p-4">{order.customer}</td>
-                  <td className="p-4">{renderProducts(order.products)}</td>
-                  <td className="p-4">{order.total}</td>
-                  <td className="p-4">{order.date}</td>
-                  <td className="p-4">
-                    <span className={`px-3 py-1 rounded-full text-sm ${getStatusStyle(order.status)}`}>{order.status}</span>
-                  </td>
-                  {/* <td className="p-4">
-                    <button className="text-red-600 hover:text-red-800">ðŸ—‘</button>
-                  </td> */}
-                </tr>
+                <td className="p-4">{order.id}</td>
+                <td className="p-4">{order.customer}</td>
+                <td className="p-4">{renderProducts(order.products)}</td>
+                <td className="p-4">{order.total}</td>
+                <td className="p-4">{order.date}</td>
+                <td className="p-4">
+                  <span className={`px-3 py-1 rounded-full text-sm ${getStatusStyle(order.status)}`}>
+                    {order.status}
+                  </span>
+                </td>
+                <td className="p-4">
+                  <button 
+                    className="p-1 text-red-600 hover:text-red-800" 
+                    onClick={() => handleDeleteOrder(order.id)} // ini UUID asli
+                  >
+                    Hapus
+                  </button>
+                </td>
+              </tr>
               ))
             )}
           </tbody>
