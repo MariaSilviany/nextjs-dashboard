@@ -173,9 +173,49 @@ const Pengaturan = () => {
             <SettingItem title="Tema Warna" value="Sesuaikan warna tema toko" buttonText="Ubah" />
           </SettingSection>
 
-          <SettingSection title="Pengaturan Pembayaran">
-            <SettingItem title="Metode Pembayaran" value="Atur metode pembayaran yang tersedia" buttonText="Kelola" />
-            <SettingItem title="Biaya Pengiriman" value="Atur tarif pengiriman" buttonText="Kelola" />
+          <SettingSection title="Kelola Admin">
+            <SettingItem title="Nama" value="Rangga" buttonText="Kelola" />
+            <SettingItem
+              title="Status Anda"
+              value={
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ margin: '4px 0', fontSize: '0.875rem', color: '#A0AEC0' }}>
+                      Aktifkan verifikasi dua langkah
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setTwoFAEnabled(!twoFAEnabled)}
+                    style={{
+                      width: '50px',
+                      height: '26px',
+                      backgroundColor: twoFAEnabled ? '#48BB78' : '#A0AEC0',
+                      borderRadius: '9999px',
+                      padding: '3px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: twoFAEnabled ? 'flex-end' : 'flex-start',
+                      transition: 'all 0.3s ease',
+                      border: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '20px',
+                        height: '20px',
+                        backgroundColor: 'white',
+                        borderRadius: '50%',
+                        transition: 'all 0.3s ease',
+                      }}
+                    />
+                  </button>
+                </div>
+              }
+            />
+            <SettingItem title="Email" value="rangga@gmial.com" buttonText="Kelola" />
+            <SettingItem title="Role" value="Owner" />
+            <SettingItem title="Tanggal Bergabung" value="Februari 10 2025" />
           </SettingSection>
 
           <SettingSection title="Pengaturan Notifikasi">
@@ -225,18 +265,23 @@ const Pengaturan = () => {
             />
 
             <SettingItem
-              title="Log Out"
-              value="Keluar dari akun admin"
-              buttonText="Log Out"
-              buttonStyle={{
-                backgroundColor: '#E53E3E',
-                borderColor: '#E53E3E',
-                color: '#FFFFFF', // Changed text color to white
-                padding: '10px 20px',
-                fontSize: '1rem',
-                fontWeight: 'bold',
-              }}
-            />
+            title="Log Out"
+            value="Keluar dari akun admin"
+            buttonText="Log Out"
+            buttonStyle={{
+              backgroundColor: '#E53E3E',
+              borderColor: '#E53E3E',
+              color: '#FFFFFF',
+              padding: '10px 20px',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+            }}
+            onButtonClick={() => {
+              // Logout logic
+              localStorage.removeItem('authToken');
+              window.location.href = '/login';
+            }}
+          />
           </SettingSection>
         </div>
       </main>
@@ -246,31 +291,47 @@ const Pengaturan = () => {
 
 interface SettingSectionProps {
   title: string;
-  children: React.ReactNode;
+  children: React.ReactNode; // This allows passing child components
 }
 
-const SettingSection = ({ title, children }: { title?: string; children: React.ReactNode }) => {
+const SettingSection: React.FC<SettingSectionProps> = ({ title, children }) => {
   return (
-    <section style={{ marginBottom: '40px' }}>
-      {title && <h2 style={{ fontSize: '1.25rem', marginBottom: '15px', color: '#E2E8F0' }}>{title}</h2>}
-      {children}
-    </section>
+    <div className="setting-section">
+      <h2 className="setting-section-title">{title}</h2>
+      <div className="setting-section-content">
+        {children}
+      </div>
+    </div>
   );
 };
 
 interface SettingItemProps {
   title: string;
-  value?: React.ReactNode | string;
-  buttonText?: string;
-  buttonStyle?: React.CSSProperties;
+  value: string | React.ReactNode; // Ubah tipe value
+  buttonText?: string; // Buat opsional
+  buttonStyle?: {
+    backgroundColor?: string;
+    borderColor?: string;
+    color?: string;
+    padding?: string;
+    fontSize?: string;
+    fontWeight?: string;
+  };
+  onButtonClick?: () => void; // Ganti onClick menjadi onButtonClick
 }
 
-const SettingItem: React.FC<SettingItemProps> = ({ title, value, buttonText, buttonStyle }) => {
+const SettingItem: React.FC<SettingItemProps> = ({ 
+  title, 
+  value, 
+  buttonText, 
+  buttonStyle, 
+  onButtonClick 
+}) => {
   return (
     <div
       style={{
         display: 'flex',
-        flexDirection: 'column', // Changed to column layout
+        flexDirection: 'column',
         justifyContent: 'space-between',
         marginBottom: '15px',
         padding: '15px',
@@ -288,6 +349,7 @@ const SettingItem: React.FC<SettingItemProps> = ({ title, value, buttonText, but
         </div>
         {buttonText && (
           <button
+            onClick={onButtonClick}
             style={{
               padding: '8px 16px',
               borderRadius: '5px',
@@ -313,6 +375,5 @@ const SettingItem: React.FC<SettingItemProps> = ({ title, value, buttonText, but
   );
 };
 
+
 export default Pengaturan;
-
-
