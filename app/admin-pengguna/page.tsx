@@ -81,6 +81,33 @@ const AdminPengguna = () => {
       status: "Aktif",
       joined: "Mar 28",
       avatar: "demian.jpg"
+    },
+    {
+      id: 8,
+      name: "Alip",
+      role: "Pelanggan",
+      email: "alipalay@gmial.com",
+      status: "Aktif",
+      joined: "Mar 5",
+      avatar: "/alip.jpg"
+    },
+    {
+      id: 9,
+      name: "Sion",
+      role: "Pelanggan",
+      email: "sionlapet@gmail.com",
+      status: "Aktif",
+      joined: "Mar 12",
+      avatar: "/sion.jpg"
+    },
+    {
+      id: 10,
+      name: "Cinta",
+      role: "Pelanggan",
+      email: "cinta@gmail.com",
+      status: "Aktif",
+      joined: "Mar 28",
+      avatar: "/cinta.jpg"
     }
   ];
 

@@ -273,32 +273,84 @@ const AdminPesanan: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  
 
   useEffect(() => {
-    const dummyData: Order[] = [
-      { id: "PSN001", customer: "Khatarina", products: "Topeng Hantu Horor(1 Pcs)", total: "Rp80.000", date: "01-03-2024 11:32", status: "Sedang Diproses" },
-      { id: "PSN002", customer: "John Ferry", products: "Topeng Hantu Horor(1 Pcs)\nLilin Aroma Misterius(1 Pcs)", total: "Rp146.000", date: "06-09-2024 14:32", status: "Menunggu Pembayaran" },
-      { id: "PSN003", customer: "Lusia Nadia", products: "Boneka Seram (1 Pcs)\nLilin Aroma Misterius(3 Pcs)", total: "Rp132.000", date: "25-09-2024 10:22", status: "Menunggu Pembayaran" },
-      { id: "PSN004", customer: "Maria Iata", products: "Karlan Arwah Kela (1 Pcs)\nLampu Hias gantung(1 Pcs)", total: "Rp220.000", date: "30-04-2024 08:46", status: "Sedang Diproses" },
-      { id: "PSN005", customer: "Lea Ginara", products: "Lampu Hias gantung (1 Pcs)", total: "Rp120.000", date: "05-05-2024 16:05", status: "Dibatalkan" },
-      { id: "PSN006", customer: "Valensia", products: "Patung Pemujaan Kuno (1 Pcs)\nBoneka Seram (1 Pcs)", total: "Rp166.000", date: "16-09-2024 13:05", status: "Selesai" },
-      { id: "PAN007", customer: "Bagus Yogi", products: "Kotak Musik Berhantu (3 Pcs)", total: "Rp90.000", date: "04-06-2024 16:58", status: "Selesai" },
-    ];
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch("/api/pesanan");
+      const data = await response.json();
+      
+      // Mapping data agar cocok dengan tipe Order
+      const formattedData: Order[] = data.map((item: any, index: number) => ({
+      id: item.id, // UUID dari database (penting untuk delete!)
+      kode: `PSN${String(index + 1).padStart(3, '3')}`, // hanya untuk tampilan
+      customer: item.nama || "Tidak Diketahui",
+      products: item.produk?.nama + ` (${item.jumlah || 1} Pcs)` || "Produk Tidak Ditemukan",
+      total: `Rp${item.total.toLocaleString("id-ID")}`,
+      date: item.tanggal
+        ? new Date(item.tanggal).toLocaleString("id-ID")
+        : "Tanggal Tidak Tersedia",
+      status: item.status || "Tidak Diketahui",
+    }));
 
-    setTimeout(() => {
-      setOrders(dummyData);
+
+      setOrders(formattedData);
+    } catch (error) {
+      console.error("Gagal mengambil data pesanan:", error);
+    } finally {
       setLoading(false);
-    }, 2000);
-  }, []);
+    }
+  };
+
+  fetchOrders();
+}, []);
+
 
   // Function to handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   setSearchTerm(e.target.value); // Mengambil nilai dari input dan memperbarui state searchTerm
 };
 
+// Function untuk menghapus pesanan
+const handleDeleteOrder = async (id: string) => {
+  const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus pesanan ini?");
+  if (confirmDelete) {
+    try {
+      const res = await fetch(`/api/pesanan/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        let errorMessage = "Gagal menghapus pesanan";
+        try {
+          const data = await res.json();
+          errorMessage = data?.error || errorMessage;
+        } catch (_) {
+          const fallback = await res.text();
+          if (fallback) errorMessage = fallback;
+        }
+
+        console.error("Error deleting order:", errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      alert("Pesanan berhasil dihapus!");
+      
+      // ⬇️ Update state orders agar UI ikut berubah
+      setOrders(prevOrders => prevOrders.filter(order => order.id !== id));
+
+    } catch (error) {
+      console.error("Terjadi kesalahan:", error);
+      alert("Terjadi kesalahan saat menghapus pesanan.");
+    }
+  }
+};
+
+
   // Filter orders based on search term
   const filteredOrders = orders.filter((order) =>
-    order.customer.toLowerCase().includes(searchTerm.toLowerCase())
+    order.products.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // ✅ Tambahkan fungsi renderProducts
@@ -342,7 +394,7 @@ const AdminPesanan: React.FC = () => {
           />
         </div>
 
-        <table className="w-full border-collapse">
+        <table className="w-full border-collapse text-center">
           <thead>
             <tr className="bg-gray-100 border-b border-gray-300">
               <th className="p-4">ID Pesanan</th>
@@ -351,7 +403,7 @@ const AdminPesanan: React.FC = () => {
               <th className="p-4">Total</th>
               <th className="p-4">Tanggal</th>
               <th className="p-4">Status</th>
-              {/* <th className="p-4">Tindakan</th> */}
+              <th className="p-4">Tindakan</th>
             </tr>
           </thead>
           <tbody>
@@ -362,18 +414,25 @@ const AdminPesanan: React.FC = () => {
             ) : (
               filteredOrders.map((order) => (
                 <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="p-4">{order.id}</td>
-                  <td className="p-4">{order.customer}</td>
-                  <td className="p-4">{renderProducts(order.products)}</td>
-                  <td className="p-4">{order.total}</td>
-                  <td className="p-4">{order.date}</td>
-                  <td className="p-4">
-                    <span className={`px-3 py-1 rounded-full text-sm ${getStatusStyle(order.status)}`}>{order.status}</span>
-                  </td>
-                  {/* <td className="p-4">
-                    <button className="text-red-600 hover:text-red-800">ðŸ—‘</button>
-                  </td> */}
-                </tr>
+                <td className="p-4">{order.id}</td>
+                <td className="p-4">{order.customer}</td>
+                <td className="p-4">{renderProducts(order.products)}</td>
+                <td className="p-4">{order.total}</td>
+                <td className="p-4">{order.date}</td>
+                <td className="p-4">
+                  <span className={`px-3 py-1 rounded-full text-sm ${getStatusStyle(order.status)}`}>
+                    {order.status}
+                  </span>
+                </td>
+                <td className="p-4">
+                  <button 
+                    className="p-1 text-red-600 hover:text-red-800" 
+                    onClick={() => handleDeleteOrder(order.id)} // ini UUID asli
+                  >
+                    Hapus
+                  </button>
+                </td>
+              </tr>
               ))
             )}
           </tbody>

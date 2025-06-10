@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  try {
+  try { 
     const formData = await req.formData();
 
     const nama = formData.get("nama")?.toString();
