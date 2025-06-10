@@ -185,7 +185,7 @@ const AdminTim = () => {
                 <div className="mr-3">
                   <SettingsIcon />
                 </div>
-                <span>Pengaturan</span>
+                <span>Akun</span>
               </a>
             </div>
           </nav>

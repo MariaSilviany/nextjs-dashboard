@@ -229,7 +229,7 @@ export default function HauntedHallowAdmin1() {
               <div className="mr-3">
                 <SettingsIcon />
               </div>
-              <span>Pengaturan</span>
+              <span>Akun</span>
             </a>
           </div>
         </nav>

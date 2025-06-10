@@ -132,7 +132,7 @@ const Pengaturan = () => {
                   <div className="mr-3">
                     <SettingsIcon />
                   </div>
-                  <span>Pengaturan</span>
+                  <span>Akun</span>
                 </a>
               </div>
             </nav>
@@ -156,7 +156,7 @@ const Pengaturan = () => {
             fontFamily: creepster.style.fontFamily,
           }}
         >
-          PENGATURAN SISTEM
+          PENGATURAN AKUN
         </h1>
 
         <div

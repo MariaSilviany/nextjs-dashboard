@@ -70,7 +70,7 @@ export default function ContactPage() {
           filter: "brightness(0.4)"
         }}></div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className={`text-7xl font-bold text-red-600 ${nosifer.className}`} 
+          <h1 className={`text-5xl font-bold text-red-600 ${nosifer.className}`} 
               style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
             CONTACT US
           </h1>
