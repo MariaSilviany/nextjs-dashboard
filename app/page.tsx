@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Jolly_Lodger } from "next/font/google";
 import { Creepster } from "next/font/google";
+import { useState } from 'react';
+import { useRouter } from "next/navigation";
 
 // Initialize the Jolly Lodger font
 const jollyLodger = Jolly_Lodger({
@@ -16,7 +20,16 @@ const creepster = Creepster({
   display: "swap",
 });
 
+
 export default function Home() {
+  const [showProfile, setShowProfile] = useState(false);
+  const router = useRouter();
+
+  const user = {
+    name: "Alip",
+    email: "alipalay@gmail.com",
+    image: "/demian.jpg", // ganti sesuai path gambar
+  };
   return (
     <div className=""> {/* Add padding to avoid content overlap */}
       {/* Navbar */}
@@ -35,28 +48,75 @@ export default function Home() {
           <a href="/register">
             <button className={`px-4 py-2 rounded text-white text-2xl ${jollyLodger.className}`}>Register</button>
           </a>
-          
+
           <a href="/login">
             <button className={`bg-blue-500 px-4 py-2 rounded text-white text-2xl ${jollyLodger.className}`}>Login</button>
           </a>
         </div>
+        <div className="relative inline-block">
+          <Image
+            src={user.image}
+            alt="Profile"
+            width={40}
+            height={40}
+            className="rounded-full cursor-pointer border-2 border-white"
+            onClick={() => setShowProfile(!showProfile)}
+          />
+
+          {showProfile && (
+            <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg z-50 p-4 text-gray-800">
+              {/* Tombol close (❌) */}
+              <button
+                onClick={() => setShowProfile(false)}
+                className="absolute top-2 right-2 text-gray-500 hover:text-black text-lg"
+              >
+                &times;
+              </button>
+
+              <div className="flex items-center space-x-4 mt-4">
+                <Image
+                  src={user.image}
+                  alt="Profile"
+                  width={50}
+                  height={50}
+                  className="rounded-full"
+                />
+                <div>
+                  <p className="font-bold">{user.name}</p>
+                  <p className="text-sm text-gray-600">{user.email}</p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  console.log('Logout logic here');
+                  router.push('/login');
+                }}
+                className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+              >
+                Logout
+              </button>
+
+            </div>
+          )}
+        </div>
       </nav>
 
       {/* Hero Section */}
-      <header 
+      <header
         className="relative text-center h-screen bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/awal.png')" }} // Ganti gambar kastil
       >
         <div className="absolute inset-0 bg-black bg-opacity-50"></div> {/* Overlay gelap */}
         <div className="relative z-10 flex flex-col justify-center items-center h-full">
-          <h2 
-            className={`text-9xl font-bold text-blue-400 ${jollyLodger.className} drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]`} 
+          <h2
+            className={`text-9xl font-bold text-blue-400 ${jollyLodger.className} drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]`}
             style={{ WebkitTextStroke: "1px white" }}
           >
             Haunted
           </h2>
-          <h2 
-            className={`text-9xl font-bold text-red-500 ${jollyLodger.className} drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]`} 
+          <h2
+            className={`text-9xl font-bold text-red-500 ${jollyLodger.className} drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]`}
             style={{ WebkitTextStroke: "1px white" }}
           >
             Hollow
@@ -80,10 +140,10 @@ export default function Home() {
             {/* Produk 1 */}
             <div className="rounded-xl overflow-hidden bg-red-700 shadow-lg transform transition duration-300 hover:scale-105 hover:-translate-y-3 hover:z-20 hover:shadow-2xl hover:shadow-red-500/50">
               <div className="relative p-4 bg-red-700 rounded-t-xl">
-                <img 
-                  src="/produk1.png" 
-                  alt="Lilin Aroma Misterius" 
-                  className="h-28 w-full object-cover rounded-lg" 
+                <img
+                  src="/produk1.png"
+                  alt="Lilin Aroma Misterius"
+                  className="h-28 w-full object-cover rounded-lg"
                 />
                 <span className="absolute top-2 right-2 bg-white text-black text-sm px-2 py-1 rounded-full">
                   <span className="text-yellow-500">★</span> 4
@@ -98,10 +158,10 @@ export default function Home() {
             {/* Produk 2 */}
             <div className="rounded-xl overflow-hidden bg-red-700 shadow-lg transform transition duration-300 hover:scale-105 hover:-translate-y-3 hover:z-20 hover:shadow-2xl hover:shadow-red-500/50">
               <div className="relative p-4 bg-red-700 rounded-t-xl">
-                <img 
-                  src="/produk2.png" 
-                  alt="Topeng Hantu Horor" 
-                  className="h-28 w-full object-cover rounded-lg" 
+                <img
+                  src="/produk2.png"
+                  alt="Topeng Hantu Horor"
+                  className="h-28 w-full object-cover rounded-lg"
                 />
                 <span className="absolute top-2 right-2 bg-white text-black text-sm px-2 py-1 rounded-full">
                   <span className="text-yellow-500">★</span> 4.5
@@ -116,10 +176,10 @@ export default function Home() {
             {/* Produk 3 */}
             <div className="rounded-xl overflow-hidden bg-red-700 shadow-lg transform transition duration-300 hover:scale-105 hover:-translate-y-3 hover:z-20 hover:shadow-2xl hover:shadow-red-500/50">
               <div className="relative p-4 bg-red-700 rounded-t-xl">
-                <img 
-                  src="/produk3.png" 
-                  alt="Patung Pemujaan Kuno" 
-                  className="h-28 w-full object-cover rounded-lg" 
+                <img
+                  src="/produk3.png"
+                  alt="Patung Pemujaan Kuno"
+                  className="h-28 w-full object-cover rounded-lg"
                 />
                 <span className="absolute top-2 right-2 bg-white text-black text-sm px-2 py-1 rounded-full">
                   <span className="text-yellow-500">★</span> 5
@@ -134,10 +194,10 @@ export default function Home() {
             {/* Produk 4 */}
             <div className="rounded-xl overflow-hidden bg-red-700 shadow-lg transform transition duration-300 hover:scale-105 hover:-translate-y-3 hover:z-20 hover:shadow-2xl hover:shadow-red-500/50">
               <div className="relative p-4 bg-red-700 rounded-t-xl">
-                <img 
-                  src="/produk4.png" 
-                  alt="Boneka Seram" 
-                  className="h-28 w-full object-cover rounded-lg" 
+                <img
+                  src="/produk4.png"
+                  alt="Boneka Seram"
+                  className="h-28 w-full object-cover rounded-lg"
                 />
                 <span className="absolute top-2 right-2 bg-white text-black text-sm px-2 py-1 rounded-full">
                   <span className="text-yellow-500">★</span> 4
@@ -150,7 +210,7 @@ export default function Home() {
             </div>
           </div>
 
-          <p className={`mt-16 text-5xl text-red-700 text-center break-words ${jollyLodger.className}`}> 
+          <p className={`mt-16 text-5xl text-red-700 text-center break-words ${jollyLodger.className}`}>
             Yakin Gamau Beli Sekarang?!<br />
             Ambil koleksi horor pilihanmu dengan diskon hingga 30%<br />
             sebelum mereka menemukanmu lebih dulu…
@@ -158,7 +218,7 @@ export default function Home() {
 
           {/* Tombol Beli Sekarang */}
           <div className="flex justify-center mt-8">
-            <button 
+            <button
               className={`rounded-lg px-8 py-2 bg-blue-500 text-white text-lg hover:bg-blue-600 transition duration-300 shadow-lg ${creepster.className}`}
             >
               Beli Sekarang!
@@ -335,33 +395,33 @@ export default function Home() {
                   <span className="text-red-500">Hollow</span>
                 </h3>
               </div>
-              
+
               <div className="text-gray-300 text-sm space-y-4">
                 <p>
-                  Sejak tahun 1986, Haunted Hollow telah menjadi lebih dari sekadar toko biasa. Berlokasi 
-                  di Jl. Kegelapan No. 13, Kota Bayangan tempat ini dibangun dengan suasana mending, 
+                  Sejak tahun 1986, Haunted Hollow telah menjadi lebih dari sekadar toko biasa. Berlokasi
+                  di Jl. Kegelapan No. 13, Kota Bayangan tempat ini dibangun dengan suasana mending,
                   yang harus dilihat dengan mata sendiri untuk dipercaya. Banyak yang datang kesini termasuk
-                  orang-orang biasa, tapi banyak juga mereka yang sudah wafat gelisah resah, sesekali 
+                  orang-orang biasa, tapi banyak juga mereka yang sudah wafat gelisah resah, sesekali
                   mengaku mendengar bisikan samar saat mengambil barang tertentu. Akhirnya, barang-
                   barang di toko ini terkadang berpindah tempat sendiri—sebuah kejutan yang sebagainya di
-                  alam semesta. Di sini kita harus hilang takut, dan anak tangga dari keremanga yang 
+                  alam semesta. Di sini kita harus hilang takut, dan anak tangga dari keremanga yang
                   mengatumya.
                 </p>
                 <p>
-                  Pemilik toko, Pak Rangga yang hobinya berburu barang antik, menghabiskan tahun-tahun 
-                  penyusuran hingga mengumpulkan banyak hal tiadadua yang unik-upieku. Konon, ia adalah 
-                  generasi kelima yang menjaga toko ini, dari deretan sebelumnya yang telah tiada atau yang 
-                  tercatat. Setiap malam sebelum tutup, lilin-lilin kecil dinyalakan di sudut ruangan sebagai 
-                  penghormatan, katanya, bagi heheia sajak kala eda yang lalu. Yang inda, Haunted Hollow 
+                  Pemilik toko, Pak Rangga yang hobinya berburu barang antik, menghabiskan tahun-tahun
+                  penyusuran hingga mengumpulkan banyak hal tiadadua yang unik-upieku. Konon, ia adalah
+                  generasi kelima yang menjaga toko ini, dari deretan sebelumnya yang telah tiada atau yang
+                  tercatat. Setiap malam sebelum tutup, lilin-lilin kecil dinyalakan di sudut ruangan sebagai
+                  penghormatan, katanya, bagi heheia sajak kala eda yang lalu. Yang inda, Haunted Hollow
                   bukan hanya tempat berjualan di bising, ini mengubah dan bintangan-bintangan.
                 </p>
               </div>
             </div>
 
             <div className="rounded-lg overflow-hidden shadow-lg">
-              <img 
+              <img
                 src="/profil1.png"
-                alt="Haunted Hollow Store" 
+                alt="Haunted Hollow Store"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -369,9 +429,9 @@ export default function Home() {
 
           <div className="grid grid-cols-2 gap-8 mt-16 items-center">
             <div className="rounded-lg overflow-hidden shadow-lg order-2 md:order-1">
-              <img 
+              <img
                 src="/produk4.png"
-                alt="Haunted Dolls" 
+                alt="Haunted Dolls"
                 className="w-64-auto rounded-lg"
               />
             </div>
@@ -380,20 +440,20 @@ export default function Home() {
               <h3 className={`text-6xl text-blue-400 ${jollyLodger.className} mb-4 text-center md:text-center`}>
                 Produk
               </h3>
-              
+
               <div className="text-gray-300 text-sm space-y-4">
                 <p>
-                Di Haunted Hollow, setiap barang memiliki aura misterius. Lilin ritual 
+                  Di Haunted Hollow, setiap barang memiliki aura misterius. Lilin ritual
                   berkelap-kelip sendiri, buku usang terkadang menampilkan tulisan baru, dan
-                  cermin antik dikabarkan memantulkan bayangan yang bukan milik 
-                  pembelinya. Teh herbal spesial di sini juga disebut-sebut membawa 
+                  cermin antik dikabarkan memantulkan bayangan yang bukan milik
+                  pembelinya. Teh herbal spesial di sini juga disebut-sebut membawa
                   peminumnya ke dalam mimpi yang terasa terlalu nyata.
                 </p>
                 <p>
                   Rak kayu tua menyimpan boneka dan topeng kayu yang sering
-                  ditemukan berubah posisi tanpa ada yang menyentuhnya. Jam tua di sudut 
+                  ditemukan berubah posisi tanpa ada yang menyentuhnya. Jam tua di sudut
                   toko terkadang berhenti di waktu yang sama setiap malam. Setiap produk
-                  tampak biasa, tetapi mereka menyimpan sesuatu 
+                  tampak biasa, tetapi mereka menyimpan sesuatu
                   sebuah bisikan, sebuah rahasia, atau mungkin sekadar menunggu pemilik barunya
                 </p>
               </div>
