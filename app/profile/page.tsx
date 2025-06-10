@@ -49,9 +49,9 @@ export default function Home() {
   ];
 
   return (
-    <div className=""> {/* Add padding to avoid content overlap */}
+     <div className="min-h-screen flex flex-col">
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 bg-gray-800 max-w-7xl mx-auto rounded-lg mt-4 z-50">
+      <nav className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 bg-gray-800 max-w-7xl mx-auto rounded-lg z-50">
         <h1 className={`text-4xl font-bold drop-shadow-lg ${jollyLodger.className}`}>
           <span className="text-blue-500">Haunted</span>
           <span className="text-red-500">Hollow</span>
@@ -74,10 +74,10 @@ export default function Home() {
       </nav>
 
       {/* Profil Toko */}
-      <section className="bg-gray-900 py-16 px-4 relative mt-24" style={{ backgroundImage: "url('/HairCre.png')" }}>
+      <section className="bg-gray-900 py-16 px-4 relative">
         <div className="max-w-6xl mx-auto">
           {/* Title */}
-          <h2 className={`text-4xl font-bold text-red-500 text-center mb-12 ${creepster.className}`} style={{ WebkitTextStroke: "0.8px white" }}>
+          <h2 className={`text-4xl font-bold text-red-500 text-center mb-12 mt-20 ${creepster.className}`} style={{ WebkitTextStroke: "0.8px white" }}>
             PROFIL TOKO
           </h2>
 
