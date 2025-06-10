@@ -268,12 +268,13 @@ export default function AdminPesanan1() {
   );
 }
 
-
 const AdminPesanan: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
 
   useEffect(() => {
   const fetchOrders = async () => {
@@ -305,6 +306,11 @@ const AdminPesanan: React.FC = () => {
 
   fetchOrders();
 }, []);
+
+useEffect(() => {
+  setCurrentPage(1); // Reset ke halaman pertama saat pencarian berubah
+}, [searchTerm]);
+
 
 
   // Function to handle search input change
@@ -353,6 +359,15 @@ const handleDeleteOrder = async (id: string) => {
     order.products.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  //Potong data
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+
+  const currentData = filteredOrders.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+
   // ✅ Tambahkan fungsi renderProducts
   const renderProducts = (products: string) => {
     return (
@@ -379,6 +394,7 @@ const handleDeleteOrder = async (id: string) => {
         return "bg-gray-200 text-gray-800";
     }
   };
+
   
   return (
     <div className="min-h-screen bg-[#1e2a3e] p-8 text-white">
@@ -412,7 +428,7 @@ const handleDeleteOrder = async (id: string) => {
                 <td colSpan={7}><SkeletonAdminPesanan /></td>
               </tr>
             ) : (
-              filteredOrders.map((order) => (
+              currentData.map((order) => (
                 <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-100">
                 <td className="p-4">{order.id}</td>
                 <td className="p-4">{order.customer}</td>
@@ -437,6 +453,29 @@ const handleDeleteOrder = async (id: string) => {
             )}
           </tbody>
         </table>
+        <div className="flex justify-center mt-4">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 bg-white border border-gray-300 text-sm text-gray-700 rounded-md hover:bg-gray-100 disabled:opacity-50"
+            >
+              « Prev
+            </button>
+
+            <span className="text-sm text-gray-600">
+              Halaman {currentPage} dari {totalPages}
+            </span>
+
+            <button
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 bg-white border border-gray-300 text-sm text-gray-700 rounded-md hover:bg-gray-100 disabled:opacity-50"
+            >
+              Next »
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
