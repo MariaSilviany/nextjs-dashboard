@@ -27,17 +27,17 @@ const creepster = Creepster({
 
 export default function Home() {
   const products = [
-    { name: "Kafan Arwah Kelam", price: "Rp100.000", img: "/kat1.png" },
-    { name: "Lampu Hias Gantung", price: "Rp120.000", img: "/kat2.png" },
-    { name: "Kotak Musik Berhantu", price: "Rp90.000", img: "/kat5.png" },
-    { name: "Lilin Aroma Misterius", price: "Rp66.000", img: "/kat3.png" },
-    { name: "Kalung Perak Anti Kutukan", price: "Rp150.000", img: "/kat4.png" },
-    { name: "Patung Pemujaan Kuno", price: "Rp150.000", img: "/produk3.png" },
-    { name: "Topeng Hantu Horor", price: "Rp80.000", img: "/produk2.png" },
-    { name: "Boneka Seram", price: "Rp66.000", img: "/produk4.png" },
-    { name: "Lukisan", price: "Rp90.000", img: "/lukisan.jpg" },
-    { name: "Cermin", price: "Rp50.000", img: "/cermin.jpg" },
-    { name: "Bola Berapi", price: "Rp450.000", img: "/bol1.jpg" },
+    { slug: "kafan", name: "Kafan Arwah Kelam", price: "Rp100.000", img: "/kat1.png" },
+    { slug: "lampu", name: "Lampu Hias Gantung", price: "Rp120.000", img: "/kat2.png" },
+    { slug: "musik", name: "Kotak Musik Berhantu", price: "Rp90.000", img: "/kat5.png" },
+    { slug: "lilin", name: "Lilin Aroma Misterius", price: "Rp66.000", img: "/kat3.png" },
+    { slug: "kalung", name: "Kalung Perak Anti Kutukan", price: "Rp150.000", img: "/kat4.png" },
+    { slug: "patung", name: "Patung Pemujaan Kuno", price: "Rp150.000", img: "/produk3.png" },
+    { slug: "topeng", name: "Topeng Hantu Horor", price: "Rp80.000", img: "/produk2.png" },
+    { slug: "boneka", name: "Boneka Seram", price: "Rp66.000", img: "/produk4.png" },
+    { slug: "lukisan", name: "Lukisan", price: "Rp90.000", img: "/lukisan.jpg" },
+    { slug: "cermin", name: "Cermin", price: "Rp50.000", img: "/cermin.jpg" },
+    { slug: "bola", name: "Bola Berapi", price: "Rp450.000", img: "/bol1.jpg" },
   ];
 
   // Tambahkan State Pagination
@@ -145,13 +145,11 @@ export default function Home() {
               <div className="p-2 text-center">
                 <h3 className="text-lg font-semibold">{product.name}</h3>
                 <p className="text-sm text-gray-700 mb-2">{product.price}</p>
-                {product.name === "Kafan Arwah Kelam" && (
-                  <Link href="/detailproduk">
-                    <button className="bg-blue-800 hover:bg-red-700 text-white px-4 py-1 rounded text-sm">
-                      Detail Produk
-                    </button>
-                  </Link>
-                )}
+                <Link href={`/detail-${product.slug}`}>
+                  <button className="bg-blue-800 hover:bg-red-700 text-white px-4 py-1 rounded text-sm">
+                    Detail Produk
+                  </button>
+                </Link>
               </div>
             </div>
           ))}
