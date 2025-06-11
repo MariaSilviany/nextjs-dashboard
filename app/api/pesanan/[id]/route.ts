@@ -5,9 +5,9 @@ const prisma = new PrismaClient();
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: Record<string, string> } // GANTI DI SINI
+  { params }: { params: { id: string } }
 ) {
-  const id = context.params.id;
+  const id = params.id;
 
   // Validasi UUID
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
