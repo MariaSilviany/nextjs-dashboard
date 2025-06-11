@@ -6,6 +6,7 @@ import { Jolly_Lodger } from "next/font/google";
 import { Creepster } from "next/font/google";
 import { useState } from 'react';
 import { useRouter } from "next/navigation";
+import { useEffect } from 'react';
 
 // Initialize the Jolly Lodger font
 const jollyLodger = Jolly_Lodger({
@@ -24,12 +25,25 @@ const creepster = Creepster({
 export default function Home() {
   const [showProfile, setShowProfile] = useState(false);
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState<null | boolean>(null);
 
   const user = {
     name: "Alip",
     email: "alipalay@gmail.com",
     image: "/demian.jpg", // ganti sesuai path gambar
   };
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loginStatus = sessionStorage.getItem('isLoggedIn');
+      if (loginStatus && loginStatus === 'true') {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    }
+  }, []);
+
+
   return (
     <div className=""> {/* Add padding to avoid content overlap */}
       {/* Navbar */}
@@ -44,62 +58,66 @@ export default function Home() {
           <Link href="/kontak" className="text-white text-2xl">Kontak</Link>
           <Link href="/profile" className="text-white text-2xl">Profil</Link>
         </div>
-        <div className="space-x-2">
-          <a href="/register">
-            <button className={`px-4 py-2 rounded text-white text-2xl ${jollyLodger.className}`}>Register</button>
-          </a>
+        {isLoggedIn === false ? ( 
+          <div className="space-x-2">
+            <a href="/register">
+              <button className={`px-4 py-2 rounded text-white text-2xl ${jollyLodger.className}`}>Register</button>
+            </a>
+            <a href="/login">
+              <button className={`bg-blue-500 px-4 py-2 rounded text-white text-2xl ${jollyLodger.className}`}>Login</button>
+            </a>
+          </div>
+        ) : (
+          // Jika sudah login, tampilkan profil akun dan menu
+          <div className="relative inline-block">
+            <Image
+              src={user.image}
+              alt="Profile"
+              width={40}
+              height={40}
+              className="rounded-full cursor-pointer border-2 border-white"
+              onClick={() => setShowProfile(!showProfile)}
+            />
 
-          <a href="/login">
-            <button className={`bg-blue-500 px-4 py-2 rounded text-white text-2xl ${jollyLodger.className}`}>Login</button>
-          </a>
-        </div>
-        <div className="relative inline-block">
-          <Image
-            src={user.image}
-            alt="Profile"
-            width={40}
-            height={40}
-            className="rounded-full cursor-pointer border-2 border-white"
-            onClick={() => setShowProfile(!showProfile)}
-          />
+            {showProfile && (
+              <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg z-50 p-4 text-gray-800">
+                {/* Tombol close (❌) */}
+                <button
+                  onClick={() => setShowProfile(false)}
+                  className="absolute top-2 right-2 text-gray-500 hover:text-black text-lg"
+                >
+                  &times;
+                </button>
 
-          {showProfile && (
-            <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg z-50 p-4 text-gray-800">
-              {/* Tombol close (❌) */}
-              <button
-                onClick={() => setShowProfile(false)}
-                className="absolute top-2 right-2 text-gray-500 hover:text-black text-lg"
-              >
-                &times;
-              </button>
-
-              <div className="flex items-center space-x-4 mt-4">
-                <Image
-                  src={user.image}
-                  alt="Profile"
-                  width={50}
-                  height={50}
-                  className="rounded-full"
-                />
-                <div>
-                  <p className="font-bold">{user.name}</p>
-                  <p className="text-sm text-gray-600">{user.email}</p>
+                <div className="flex items-center space-x-4 mt-4">
+                  <Image
+                    src={user.image}
+                    alt="Profile"
+                    width={50}
+                    height={50}
+                    className="rounded-full"
+                  />
+                  <div>
+                    <p className="font-bold">{user.name}</p>
+                    <p className="text-sm text-gray-600">{user.email}</p>
+                  </div>
                 </div>
+
+                <button
+                  onClick={() => {
+                    sessionStorage.removeItem('isLoggedIn'); // Ini penting!
+                    setIsLoggedIn(false);
+                    setShowProfile(false);
+                    router.push('/');
+                  }}
+                  className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+                >
+                  Logout
+                </button>
               </div>
-
-              <button
-                onClick={() => {
-                  console.log('Logout logic here');
-                  router.push('/login');
-                }}
-                className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-              >
-                Logout
-              </button>
-
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}

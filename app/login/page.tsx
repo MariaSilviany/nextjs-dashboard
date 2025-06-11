@@ -48,18 +48,14 @@ export default function LoginPage() {
       password !== customerCredentials.password
     ) {
       setError("Email dan Password salah!");
-    } else if (email === adminCredentials.email && password !== adminCredentials.password) {
-      setError("Password salah!");
-    } else if (email === customerCredentials.email && password !== customerCredentials.password) {
-      setError("Password salah!");
-    } else if (email !== adminCredentials.email && email !== customerCredentials.email && password) {
-      setError("Email salah!");
     } else if (email === adminCredentials.email && password === adminCredentials.password) {
       alert("Login Sukses!");
+      localStorage.setItem('isLoggedIn', 'true');
       router.push("/admin-dashboard");
     } else if (email === customerCredentials.email && password === customerCredentials.password) {
       alert("Login Sukses!");
-      router.push("/");
+      sessionStorage.setItem('isLoggedIn', 'true');
+      router.push("/"); // Balik ke beranda
     }
   };
 
@@ -67,18 +63,18 @@ export default function LoginPage() {
     <main className="flex flex-col min-h-screen items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('/background.png')" }}>
       {/* Logo/Title outside the black box */}
       <div className="w-full flex justify-center mb-4">
-        <h1 className={`text-8xl font-bold drop-shadow-lg ${jollyLodger.className}`}style={{ WebkitTextStroke: "0.8px white" }}>
+        <h1 className={`text-8xl font-bold drop-shadow-lg ${jollyLodger.className}`} style={{ WebkitTextStroke: "0.8px white" }}>
           <span className="text-blue-400">Haunted</span>
           <span className="text-red-900">Hollow</span>
         </h1>
       </div>
-      
+
       <div className="w-96 bg-black bg-opacity-50 rounded-lg shadow-10xl ">
         {/* Title  */}
         <div className="text-center py-4">
-            <h2 className={`text-4xl font-bold drop-shadow-lg ${jollyLodger.className}`}>
-                <span className="text-gray-100"> Sign in </span>
-            </h2>
+          <h2 className={`text-4xl font-bold drop-shadow-lg ${jollyLodger.className}`}>
+            <span className="text-gray-100"> Sign in </span>
+          </h2>
         </div>
 
         <form className="px-8 pb-8 space-y-4" onSubmit={handleLogin}>
@@ -92,14 +88,13 @@ export default function LoginPage() {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full bg-gray-800 border text-white rounded-md px-4 py-2 text-sm ${
-                error.includes("Email") || error.includes("Email dan Password")
-                  ? "border-red-500"
-                  : "border-gray-700"
-              }`}
+              className={`w-full bg-gray-800 border text-white rounded-md px-4 py-2 text-sm ${error.includes("Email") || error.includes("Email dan Password")
+                ? "border-red-500"
+                : "border-gray-700"
+                }`}
             />
           </div>
-          
+
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
@@ -110,16 +105,15 @@ export default function LoginPage() {
               placeholder="Masukkan password Anda"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`w-full bg-gray-800 border text-white rounded-md px-4 py-2 text-sm ${
-                error.includes("Password") || error.includes("Email dan Password")
-                  ? "border-red-500"
-                  : "border-gray-700"
-              }`}
+              className={`w-full bg-gray-800 border text-white rounded-md px-4 py-2 text-sm ${error.includes("Password") || error.includes("Email dan Password")
+                ? "border-red-500"
+                : "border-gray-700"
+                }`}
             />
           </div>
-          
+
           {error && <p className="text-sm text-red-500">{error}</p>}
-          
+
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <input type="checkbox" id="remember" className="h-4 w-4 border-gray-700 rounded" />
@@ -131,7 +125,7 @@ export default function LoginPage() {
               Lupa Password?
             </a>
           </div>
-          
+
           <button
             type="submit"
             className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md transition-colors"
@@ -142,7 +136,7 @@ export default function LoginPage() {
         <p className="mb-7 text-center text-sm text-gray-400">
           Tidak punya akun?{" "}
           <a href="/register" className="text-white hover:underline">
-            Daftar 
+            Daftar
           </a>
         </p>
       </div>
