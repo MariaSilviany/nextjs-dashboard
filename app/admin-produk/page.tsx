@@ -476,3 +476,5 @@ const HauntedHallowAdmin: React.FC = () => {
     </div>
   );
 };
+
+export default HauntedHallowAdmin;
