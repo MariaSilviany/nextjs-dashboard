@@ -352,12 +352,12 @@ const HauntedHallowAdmin: React.FC = () => {
    }
 
         // Setelah berhasil menghapus, perbarui state produk
-        setProductData((prevProducts) => prevProducts.filter((product) => product.id !== id));
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
+       setProductData((prevProducts: Product[]) =>
+      prevProducts.filter((product) => product.id !== Number(id))
+    );
+
+
+
 
   // Filter produk berdasarkan pencarian
   const filteredProducts = productData.filter((product) => {
