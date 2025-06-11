@@ -3,16 +3,17 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const id = params.id;
+export async function DELETE(req: NextRequest) {
+  const url = new URL(req.url);
+  const id = url.pathname.split("/").pop(); // ambil ID dari URL path
 
-  // Validasi UUID
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-  if (!uuidRegex.test(id)) {
-    return NextResponse.json({ error: "ID tidak valid (bukan UUID)" }, { status: 400 });
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  if (!id || !uuidRegex.test(id)) {
+    return NextResponse.json(
+      { error: "ID tidak valid (bukan UUID)" },
+      { status: 400 }
+    );
   }
 
   try {
@@ -26,6 +27,9 @@ export async function DELETE(
     });
   } catch (error) {
     console.error("Gagal menghapus pesanan:", error);
-    return NextResponse.json({ error: "Terjadi kesalahan saat menghapus pesanan" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Terjadi kesalahan saat menghapus pesanan" },
+      { status: 500 }
+    );
   }
 }
