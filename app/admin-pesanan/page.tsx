@@ -356,8 +356,10 @@ const handleDeleteOrder = async (id: string) => {
 
   // Filter orders based on search term
   const filteredOrders = orders.filter((order) =>
-    order.products.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  order.products.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  order.customer.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
 
   //Potong data
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
