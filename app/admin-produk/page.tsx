@@ -353,8 +353,9 @@ const HauntedHallowAdmin: React.FC = () => {
 
         // Setelah berhasil menghapus, perbarui state produk
         setProductData((prevProducts: Product[]) =>
-          prevProducts.filter((product) => product.id !== Number(id))
-        );
+  prevProducts.filter((product) => product.id !== Number(id))
+);
+
       } catch (error) {
         console.error(error);
       }
