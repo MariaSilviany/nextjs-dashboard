@@ -60,18 +60,7 @@ const TambahPesanan: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#1e2a3e]">
-      <div className="w-56 bg-[#65181b] shadow-sm flex flex-col fixed h-full">
-        <div className="p-4">
-          <h1 className={`text-4xl ${jollyLodger.className} mb-4 text-white`}>
-            <span className="text-blue-400">Haunted</span>
-            <span className="text-red-500">Hollow</span>
-          </h1>
-        </div>
-        <nav className="flex-1 px-2 py-4 space-y-1"></nav>
-      </div>
-
-      <div className="flex-1 bg-gray-50 flex justify-center items-center ml-56">
+      <div className="flex-1 bg-gray-50 flex justify-center items-start pt-32 min-h-screen">
         <div className="bg-gray-200 rounded-lg shadow-sm p-20 max-w-6xl w-full">
           <div className={`rounded px-6 py-2 bg-[#1f3447] text-white text-center text-2xl font-bold mb-8 ${creepster.className}`}>
             TAMBAH PESANAN
@@ -164,7 +153,6 @@ const TambahPesanan: React.FC = () => {
           {message && <div className="mt-4 text-red-500">{message}</div>}
         </div>
       </div>
-    </div>
   );
 };
 
