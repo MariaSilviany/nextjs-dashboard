@@ -9,7 +9,7 @@ import {
   UsersIcon,
   ArchiveBoxIcon,
 } from "@heroicons/react/24/solid";
-import prisma from "../lib/prisma";
+import prisma from "@/lib/prisma";
 
 //Font yang digunakan
 const jollyLodger = Jolly_Lodger({
