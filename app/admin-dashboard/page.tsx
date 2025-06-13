@@ -10,8 +10,11 @@ import {
   ArchiveBoxIcon,
 } from "@heroicons/react/24/solid";
 import prisma from "../lib/prisma";
-import type { produk } from "@prisma/client";
+import type { Produk, Penjualan } from "@prisma/client";
 
+type ProdukWithPenjualan = Produk & {
+  penjualan: Pick<Penjualan, "jumlah">[];
+};
 
 //Font yang digunakan
 const jollyLodger = Jolly_Lodger({
@@ -94,13 +97,6 @@ function ProdukUnggulanSkeleton() {
 }
 
 // --- Data Fetching ---
-type ProdukWithPenjualan = {
-  id: number;
-  nama: string;
-  harga: number;
-  gambar_url: string;
-  penjualan: { jumlah: number }[];
-};
 
 async function getRatingToko() {
   // Loading
@@ -159,7 +155,7 @@ async function getProdukUnggulan() {
     }))
     .sort((a, b) => b.jumlahTerjual - a.jumlahTerjual)
     .slice(0, 4);
-}
+} // ✅ Tambahkan penutup ini
 
 
 // SVG Icon
