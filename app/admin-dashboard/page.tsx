@@ -9,7 +9,7 @@ import {
   UsersIcon,
   ArchiveBoxIcon,
 } from "@heroicons/react/24/solid";
-import prisma from "@/lib/prisma";
+import prisma from "../lib/prisma";
 
 //Font yang digunakan
 const jollyLodger = Jolly_Lodger({
@@ -26,31 +26,6 @@ const nunitoSans = Nunito_Sans({
   weight: ["400", "700"],
   subsets: ["latin"],
 });
-
-//Tambahan tipe
-type PenjualanWithRelations = {
-  id: string;
-  jumlah: number;
-  total: number;
-  status: string;
-  tanggal: Date;
-  produk: { nama: string };
-  pelanggan: { nama: string };
-};
-
-type ProdukWithPenjualan = {
-  id: string;
-  nama: string;
-  harga: number;
-  gambar_url: string;
-  stok: number;
-  status: string;
-  penjualan: { jumlah: number }[];
-};
-
-type ProdukUnggulan = ProdukWithPenjualan & {
-  jumlahTerjual: number;
-};
 
 // --- Skeleton Components ---
 function CardSkeleton() {
@@ -160,30 +135,20 @@ async function getPenjualanTerakhir() {
   });
 }
 
-async function getProdukUnggulan(): Promise<ProdukUnggulan[]> {
+async function getProdukUnggulan() {
+  // Loading
   await new Promise((res) => setTimeout(res, 6000));
-
   const semuaProduk = await prisma.produk.findMany({
     include: {
       penjualan: true,
     },
   });
-
-  const produkDenganJumlah: ProdukUnggulan[] = semuaProduk.map(
-    (p: ProdukWithPenjualan) => ({
+  return semuaProduk
+    .map((p) => ({
       ...p,
-      jumlahTerjual: p.penjualan.reduce(
-        (acc: number, curr: { jumlah: number }) => acc + curr.jumlah,
-        0
-      ),
-    })
-  );
-
-  return produkDenganJumlah
-    .sort(
-      (a: ProdukUnggulan, b: ProdukUnggulan) =>
-        b.jumlahTerjual - a.jumlahTerjual
-    )
+      jumlahTerjual: p.penjualan.reduce((acc, curr) => acc + curr.jumlah, 0),
+    }))
+    .sort((a, b) => b.jumlahTerjual - a.jumlahTerjual)
     .slice(0, 4);
 }
 
@@ -418,15 +383,13 @@ async function PenjualanTerakhirTable() {
             </tr>
           </thead>
           <tbody>
-            {penjualanTerakhir.map((p: PenjualanWithRelations) => (
+            {penjualanTerakhir.map((p) => (
               <tr key={p.id} className="border-t">
                 <td className="p-2">{p.produk.nama}</td>
                 <td className="p-2">{p.pelanggan.nama}</td>
                 <td className="p-2">{p.jumlah}</td>
                 <td className="p-2">{p.status}</td>
                 <td className="p-2">Rp {p.total.toLocaleString("id-ID")}</td>
-                <td className="p-2">
-                </td>
               </tr>
             ))}
           </tbody>
@@ -448,22 +411,22 @@ async function ProdukUnggulanGrid() {
       <div
         className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ${nunitoSans.className}`}
       >
-        {produkUnggulan.map((p: ProdukUnggulan) => (
-          <div key={p.id} className="bg-white rounded-lg shadow-md p-4">
+        {produkUnggulan.map((p) => (
+          <div key={p.id} className="bg-gray-100 p-4 rounded shadow">
             <Image
-              src={p.gambar_url}
+              src={
+                p.gambar_url.startsWith("http")
+                  ? p.gambar_url
+                  : `/${p.gambar_url}`
+              }
               alt={p.nama}
-              width={300}
+              width={400}
               height={200}
-              className="object-cover w-full h-32 rounded"
+              className="rounded h-32 w-full object-cover"
             />
-            <h3 className="text-lg font-semibold mt-2">{p.nama}</h3>
-            <p className="text-gray-600">
-              Rp {p.harga.toLocaleString("id-ID")}
-            </p>
-            <p className="text-sm text-gray-500">
-              Terjual: {p.jumlahTerjual}
-            </p>
+            <h4 className="text-lg font-bold mt-2">{p.nama}</h4>
+            <p className="text-sm">Rp {p.harga.toLocaleString("id-ID")}</p>
+            <p className="text-xs text-gray-500">{p.jumlahTerjual} terjual</p>
           </div>
         ))}
       </div>
