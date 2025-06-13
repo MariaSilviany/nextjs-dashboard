@@ -2,8 +2,15 @@ import { PrismaClient } from "@prisma/client";
 import { LatestInvoice } from "./definitions";
 import { formatCurrency } from "./utils";
 
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
 
-const prisma = new PrismaClient();
+const prisma = globalForPrisma.prisma ?? new PrismaClient();
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+
+// ====== FUNGSI2 DATABASE ======
 
 export async function fetchRevenuePrisma() {
   try {
@@ -22,24 +29,10 @@ export async function fetchLatestInvoicesPrisma() {
       orderBy: {
         date: "desc",
       },
-      // Hapus include customer jika tidak ada relasi customer
-      // include: {
-      //   customer: {
-      //     select: {
-      //       name: true,
-      //       image_url: true,
-      //       email: true,
-      //     },
-      //   },
-      // },
     });
 
     const latestInvoices = data.map((invoice) => ({
       amount: formatCurrency(invoice.amount),
-      // Jika tidak ada relasi customer, gunakan field yang ada di invoices
-      // name: invoice.customer?.name,
-      // image_url: invoice.customer?.image_url,
-      // email: invoice.customer?.email,
       id: invoice.id,
     })) as unknown as LatestInvoice[];
 
