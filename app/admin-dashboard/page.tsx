@@ -145,7 +145,11 @@ type ProdukWithPenjualan = {
   penjualan: { jumlah: number }[];
 };
 
-async function getProdukUnggulan() {
+type ProdukUnggulan = ProdukWithPenjualan & {
+  jumlahTerjual: number;
+};
+
+async function getProdukUnggulan(): Promise<ProdukUnggulan[]> {
   // Loading
   await new Promise((res) => setTimeout(res, 6000));
 
@@ -155,15 +159,16 @@ async function getProdukUnggulan() {
     },
   });
 
-  const produkDenganJumlah = semuaProduk.map((p: ProdukWithPenjualan) => ({
+  const produkDenganJumlah: ProdukUnggulan[] = semuaProduk.map((p: ProdukWithPenjualan) => ({
     ...p,
     jumlahTerjual: p.penjualan.reduce((acc, curr) => acc + curr.jumlah, 0),
   }));
 
   return produkDenganJumlah
-    .sort((a, b) => b.jumlahTerjual - a.jumlahTerjual)
+    .sort((a: ProdukUnggulan, b: ProdukUnggulan) => b.jumlahTerjual - a.jumlahTerjual)
     .slice(0, 4);
 }
+
 
 
 // SVG Icon
