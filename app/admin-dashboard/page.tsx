@@ -27,6 +27,31 @@ const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
 });
 
+//Tambahan tipe
+type PenjualanWithRelations = {
+  id: string;
+  jumlah: number;
+  total: number;
+  status: string;
+  tanggal: string;
+  produk: { nama: string };
+  pelanggan: { nama: string };
+};
+
+type ProdukWithPenjualan = {
+  id: string;
+  nama: string;
+  harga: number;
+  gambar_url: string;
+  stok: number;
+  status: string;
+  penjualan: { jumlah: number }[];
+};
+
+type ProdukUnggulan = ProdukWithPenjualan & {
+  jumlahTerjual: number;
+};
+
 // --- Skeleton Components ---
 function CardSkeleton() {
   return (
@@ -135,22 +160,7 @@ async function getPenjualanTerakhir() {
   });
 }
 
-type ProdukWithPenjualan = {
-  id: string;
-  nama: string;
-  harga: number;
-  gambar_url: string;
-  stok: number;
-  status: string;
-  penjualan: { jumlah: number }[];
-};
-
-type ProdukUnggulan = ProdukWithPenjualan & {
-  jumlahTerjual: number;
-};
-
 async function getProdukUnggulan(): Promise<ProdukUnggulan[]> {
-  // Loading
   await new Promise((res) => setTimeout(res, 6000));
 
   const semuaProduk = await prisma.produk.findMany({
@@ -159,17 +169,21 @@ async function getProdukUnggulan(): Promise<ProdukUnggulan[]> {
     },
   });
 
-  const produkDenganJumlah: ProdukUnggulan[] = semuaProduk.map((p: ProdukWithPenjualan) => ({
-  ...p,
-  jumlahTerjual: p.penjualan.reduce(
-    (acc: number, curr: { jumlah: number }) => acc + curr.jumlah,
-    0
-  ),
-}));
-
+  const produkDenganJumlah: ProdukUnggulan[] = semuaProduk.map(
+    (p: ProdukWithPenjualan) => ({
+      ...p,
+      jumlahTerjual: p.penjualan.reduce(
+        (acc: number, curr: { jumlah: number }) => acc + curr.jumlah,
+        0
+      ),
+    })
+  );
 
   return produkDenganJumlah
-    .sort((a: ProdukUnggulan, b: ProdukUnggulan) => b.jumlahTerjual - a.jumlahTerjual)
+    .sort(
+      (a: ProdukUnggulan, b: ProdukUnggulan) =>
+        b.jumlahTerjual - a.jumlahTerjual
+    )
     .slice(0, 4);
 }
 
@@ -404,7 +418,7 @@ async function PenjualanTerakhirTable() {
             </tr>
           </thead>
           <tbody>
-            {penjualanTerakhir.map((p) => (
+            {penjualanTerakhir.map((p: PenjualanWithRelations) => (
               <tr key={p.id} className="border-t">
                 <td className="p-2">{p.produk.nama}</td>
                 <td className="p-2">{p.pelanggan.nama}</td>
@@ -432,22 +446,22 @@ async function ProdukUnggulanGrid() {
       <div
         className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ${nunitoSans.className}`}
       >
-        {produkUnggulan.map((p) => (
-          <div key={p.id} className="bg-gray-100 p-4 rounded shadow">
+        {produkUnggulan.map((p: ProdukUnggulan) => (
+          <div key={p.id} className="bg-white rounded-lg shadow-md p-4">
             <Image
-              src={
-                p.gambar_url.startsWith("http")
-                  ? p.gambar_url
-                  : `/${p.gambar_url}`
-              }
+              src={p.gambar_url}
               alt={p.nama}
-              width={400}
+              width={300}
               height={200}
-              className="rounded h-32 w-full object-cover"
+              className="object-cover w-full h-32 rounded"
             />
-            <h4 className="text-lg font-bold mt-2">{p.nama}</h4>
-            <p className="text-sm">Rp {p.harga.toLocaleString("id-ID")}</p>
-            <p className="text-xs text-gray-500">{p.jumlahTerjual} terjual</p>
+            <h3 className="text-lg font-semibold mt-2">{p.nama}</h3>
+            <p className="text-gray-600">
+              Rp {p.harga.toLocaleString("id-ID")}
+            </p>
+            <p className="text-sm text-gray-500">
+              Terjual: {p.jumlahTerjual}
+            </p>
           </div>
         ))}
       </div>
