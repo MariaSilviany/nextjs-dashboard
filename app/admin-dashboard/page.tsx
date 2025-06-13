@@ -135,6 +135,14 @@ async function getPenjualanTerakhir() {
   });
 }
 
+type ProdukWithPenjualan = {
+  id: number;
+  nama: string;
+  harga: number;
+  gambar_url: string;
+  penjualan: { jumlah: number }[];
+};
+
 async function getProdukUnggulan() {
   // Loading
   await new Promise((res) => setTimeout(res, 6000));
@@ -144,12 +152,13 @@ async function getProdukUnggulan() {
     },
   });
   return semuaProduk
-    .map((p) => ({
-      ...p,
-      jumlahTerjual: p.penjualan.reduce((acc, curr) => acc + curr.jumlah, 0),
-    }))
-    .sort((a, b) => b.jumlahTerjual - a.jumlahTerjual)
-    .slice(0, 4);
+  .map((p: ProdukWithPenjualan) => ({
+    ...p,
+    jumlahTerjual: p.penjualan.reduce((acc, curr) => acc + curr.jumlah, 0),
+  }))
+  .sort((a, b) => b.jumlahTerjual - a.jumlahTerjual)
+  .slice(0, 4);
+
 }
 
 // SVG Icon
