@@ -160,16 +160,18 @@ async function getProdukUnggulan(): Promise<ProdukUnggulan[]> {
   });
 
   const produkDenganJumlah: ProdukUnggulan[] = semuaProduk.map((p: ProdukWithPenjualan) => ({
-    ...p,
-    jumlahTerjual: p.penjualan.reduce((acc, curr) => acc + curr.jumlah, 0),
-  }));
+  ...p,
+  jumlahTerjual: p.penjualan.reduce(
+    (acc: number, curr: { jumlah: number }) => acc + curr.jumlah,
+    0
+  ),
+}));
+
 
   return produkDenganJumlah
     .sort((a: ProdukUnggulan, b: ProdukUnggulan) => b.jumlahTerjual - a.jumlahTerjual)
     .slice(0, 4);
 }
-
-
 
 // SVG Icon
 const DashboardIcon = () => (
