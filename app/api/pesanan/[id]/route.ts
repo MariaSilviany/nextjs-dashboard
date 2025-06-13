@@ -1,13 +1,11 @@
-// app/api/pesanan/[id]/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
 
-// Pastikan ini ditambahkan untuk menggunakan Node.js runtime
-export const runtime = "nodejs";
+const prisma = new PrismaClient();
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
+export async function DELETE(req: NextRequest) {
+  const url = new URL(req.url);
+  const id = url.pathname.split("/").pop(); // ambil ID dari URL path
 
   const uuidRegex =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -27,15 +25,8 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
       message: "Pesanan berhasil dihapus",
       pesanan: deleted,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Gagal menghapus pesanan:", error);
-    if (error.code === "P2025") {
-      return NextResponse.json(
-        { error: "Pesanan tidak ditemukan" },
-        { status: 404 }
-      );
-    }
-
     return NextResponse.json(
       { error: "Terjadi kesalahan saat menghapus pesanan" },
       { status: 500 }
