@@ -1,4 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+// app/lib/prisma.ts
+import { PrismaClient } from "@prisma/client/edge";
 import { LatestInvoice } from "./definitions";
 import { formatCurrency } from "./utils";
 
@@ -8,9 +9,15 @@ const globalForPrisma = globalThis as unknown as {
 
 const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
+}
 
-// ====== FUNGSI2 DATABASE ======
+export default prisma;
+
+// ========================
+// Fungsi-fungsi Database
+// ========================
 
 export async function fetchRevenuePrisma() {
   try {
@@ -76,5 +83,3 @@ export async function fetchCardDataPrisma() {
     throw new Error("Failed to fetch card data.");
   }
 }
-
-export default prisma;

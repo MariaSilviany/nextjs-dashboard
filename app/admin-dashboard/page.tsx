@@ -33,7 +33,7 @@ type PenjualanWithRelations = {
   jumlah: number;
   total: number;
   status: string;
-  tanggal: string;
+  tanggal: Date;
   produk: { nama: string };
   pelanggan: { nama: string };
 };
@@ -425,6 +425,8 @@ async function PenjualanTerakhirTable() {
                 <td className="p-2">{p.jumlah}</td>
                 <td className="p-2">{p.status}</td>
                 <td className="p-2">Rp {p.total.toLocaleString("id-ID")}</td>
+                <td className="p-2">
+                </td>
               </tr>
             ))}
           </tbody>
