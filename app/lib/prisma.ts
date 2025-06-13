@@ -1,23 +1,9 @@
-// app/lib/prisma.ts
-import { PrismaClient } from "@prisma/client/edge";
+import { PrismaClient } from "@prisma/client";
 import { LatestInvoice } from "./definitions";
 import { formatCurrency } from "./utils";
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
 
-const prisma = globalForPrisma.prisma ?? new PrismaClient();
-
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
-}
-
-export default prisma;
-
-// ========================
-// Fungsi-fungsi Database
-// ========================
+const prisma = new PrismaClient();
 
 export async function fetchRevenuePrisma() {
   try {
@@ -36,10 +22,24 @@ export async function fetchLatestInvoicesPrisma() {
       orderBy: {
         date: "desc",
       },
+      // Hapus include customer jika tidak ada relasi customer
+      // include: {
+      //   customer: {
+      //     select: {
+      //       name: true,
+      //       image_url: true,
+      //       email: true,
+      //     },
+      //   },
+      // },
     });
 
     const latestInvoices = data.map((invoice) => ({
       amount: formatCurrency(invoice.amount),
+      // Jika tidak ada relasi customer, gunakan field yang ada di invoices
+      // name: invoice.customer?.name,
+      // image_url: invoice.customer?.image_url,
+      // email: invoice.customer?.email,
       id: invoice.id,
     })) as unknown as LatestInvoice[];
 
@@ -83,3 +83,5 @@ export async function fetchCardDataPrisma() {
     throw new Error("Failed to fetch card data.");
   }
 }
+
+export default prisma;
