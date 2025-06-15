@@ -18,6 +18,7 @@
       "@/*": ["./app/*"],
       "@prisma": ["./prisma/generated/client"]
     },
+    "typeRoots": ["./node_modules/@types", "./types"],  // ✅ tambahan agar custom types terbaca
     "plugins": [
       {
         "name": "next"
@@ -30,7 +31,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/lib/placeholder-data.ts",
-    "scripts/seed.js"
+    "scripts/seed.js",
+    "types"  // ✅ pastikan folder types termasuk
   ],
   "exclude": ["node_modules"]
 }
