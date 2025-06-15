@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 export async function fetchRevenuePrisma() {
   try {
-    const data = await prisma.revenue.findMany();
+    const data = await prisma.pendapatan.findMany();
     return data;
   } catch (error) {
     console.error("Database Error:", error);
