@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { v4 as uuidv4 } from "uuid";
 import cloudinary from "@/lib/cloudinary";
-import formidable, { File } from "formidable";
+import { IncomingForm, File } from "formidable";
 import { Readable } from "stream";
 
 // Nonaktifkan body parser bawaan Next.js
@@ -21,12 +21,13 @@ async function bufferFromReadable(readable: Readable): Promise<Buffer> {
   return Buffer.concat(chunks);
 }
 
-// GET semua produk (dengan pagination)
+// GET semua produk
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1");
     const pageSize = parseInt(searchParams.get("limit") || "10");
+
     const skip = (page - 1) * pageSize;
 
     const [data, total] = await Promise.all([
@@ -48,7 +49,7 @@ export async function GET(req: NextRequest) {
 // POST (tambah produk baru)
 export async function POST(req: NextRequest) {
   try {
-    const form = formidable({ multiples: false });
+    const form = new IncomingForm({ multiples: false });
 
     const { fields, files }: { fields: any; files: { gambar?: File } } = await new Promise(
       (resolve, reject) => {
