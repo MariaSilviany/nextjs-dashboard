@@ -10,11 +10,10 @@ import {
   ArchiveBoxIcon,
 } from "@heroicons/react/24/solid";
 import prisma from "../lib/prisma";
-import type { produk, penjualan } from "@prisma/client";
+import type { Produk, Penjualan } from "@/generated/client";
 
-
-type ProdukWithPenjualan = produk & {
-  penjualan: Pick<penjualan, "jumlah">[];
+type ProdukWithPenjualan = Produk & {
+  penjualan: Pick<Penjualan, "jumlah">[];
 };
 
 
