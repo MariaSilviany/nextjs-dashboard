@@ -21,13 +21,12 @@ async function bufferFromReadable(readable: Readable): Promise<Buffer> {
   return Buffer.concat(chunks);
 }
 
-// GET semua produk
+// GET semua produk (dengan pagination)
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1");
     const pageSize = parseInt(searchParams.get("limit") || "10");
-
     const skip = (page - 1) * pageSize;
 
     const [data, total] = await Promise.all([
@@ -53,7 +52,7 @@ export async function POST(req: NextRequest) {
 
     const { fields, files }: { fields: any; files: { gambar?: File } } = await new Promise(
       (resolve, reject) => {
-        form.parse(req, (err, fields, files) => {
+        form.parse(req as any, (err, fields, files) => {
           if (err) reject(err);
           else resolve({ fields, files });
         });
