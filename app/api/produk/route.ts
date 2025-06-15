@@ -21,19 +21,18 @@ async function bufferFromReadable(readable: Readable): Promise<Buffer> {
   return Buffer.concat(chunks);
 }
 
-// GET semua produk
+// GET semua produk dengan pagination
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1");
-    const pageSize = parseInt(searchParams.get("limit") || "10");
-
-    const skip = (page - 1) * pageSize;
+    const limit = parseInt(searchParams.get("limit") || "10");
+    const skip = (page - 1) * limit;
 
     const [data, total] = await Promise.all([
       prisma.produk.findMany({
         skip,
-        take: pageSize,
+        take: limit,
         orderBy: { nama: "asc" },
       }),
       prisma.produk.count(),
@@ -42,9 +41,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ data, total });
   } catch (error) {
     console.error("GET error:", error);
-    return NextResponse.json({ error: "Gagal mengambil data produk" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Gagal mengambil data produk" },
+      { status: 500 }
+    );
   }
 }
+
 
 // POST (tambah produk baru)
 export async function POST(req: NextRequest) {
