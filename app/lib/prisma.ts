@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma";
 import { LatestInvoice } from "./definitions";
 import { formatCurrency } from "./utils";
 

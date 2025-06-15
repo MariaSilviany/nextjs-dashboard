@@ -9,12 +9,13 @@ import {
   UsersIcon,
   ArchiveBoxIcon,
 } from "@heroicons/react/24/solid";
-import prisma from "../lib/prisma";
-import type { Produk, Penjualan } from "@/generated/client";
+import prisma from "@/lib/prisma";
+import type { produk, penjualan } from "@prisma";
 
-type ProdukWithPenjualan = Produk & {
-  penjualan: Pick<Penjualan, "jumlah">[];
+type ProdukWithPenjualan = produk & {
+  penjualan: Pick<penjualan, "jumlah">[];
 };
+
 
 
 //Font yang digunakan
