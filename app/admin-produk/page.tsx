@@ -293,13 +293,12 @@ const HauntedHallowAdmin: React.FC = () => {
   useEffect(() => {
   const fetchProducts = async () => {
     try {
-      const res = await fetch("/api/produk"); // Panggil endpoint GET
-      if (!res.ok) {
-        throw new Error("Gagal memuat data produk");
-      }
-      const data = await res.json();
+      const res = await fetch("/api/produk");
+      if (!res.ok) throw new Error("Gagal memuat data produk");
 
-      // ✅ Formatkan tanggal jika ada field created_at, updated_at, atau lainnya
+      const result = await res.json(); // { data, total }
+      const data = result.data; // ✅ ambil array produk dari field `data`
+
       const formattedData = data.map((item: any) => {
         const rawDate = item.created_at || item.tanggal || "";
         let formattedDate = "Tanggal tidak tersedia";
@@ -314,7 +313,7 @@ const HauntedHallowAdmin: React.FC = () => {
 
         return {
           ...item,
-          formattedDate, // kamu bisa gunakan field ini nanti
+          formattedDate,
         };
       });
 
