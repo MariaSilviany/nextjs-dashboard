@@ -192,6 +192,10 @@ const config = {
         "fromEnvVar": null,
         "value": "debian-openssl-3.0.x",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -218,8 +222,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel produk {\n  id         String      @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  nama       String      @db.VarChar(255)\n  harga      Int\n  gambar_url String      @db.VarChar(255)\n  stok       Int         @default(0)\n  status     String      @db.VarChar(50)\n  penjualan  penjualan[]\n  pesanan    pesanan[]\n}\n\nmodel pelanggan {\n  id        String      @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  nama      String      @db.VarChar(255)\n  email     String      @unique @db.VarChar(255)\n  alamat    String      @db.Text\n  telepon   String      @db.VarChar(20)\n  penjualan penjualan[]\n}\n\nmodel penjualan {\n  id           String    @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  pelanggan_id String    @db.Uuid\n  produk_id    String    @db.Uuid\n  jumlah       Int\n  total        Int\n  status       String    @db.VarChar(50) // \"Dikirim\", \"Proses\", \"Selesai\"\n  tanggal      DateTime  @default(now()) @db.Timestamp()\n  pelanggan    pelanggan @relation(fields: [pelanggan_id], references: [id])\n  produk       produk    @relation(fields: [produk_id], references: [id])\n}\n\nmodel pendapatan {\n  bulan      String @unique @db.VarChar(7)\n  pendapatan Int\n}\n\nmodel rating_toko {\n  id         String   @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  nilai      Float\n  bulan      String   @db.VarChar(7)\n  created_at DateTime @default(now()) @db.Timestamp()\n}\n\nmodel user {\n  id      String   @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  nama    String   @db.VarChar(255)\n  role    String   @default(\"admin\") @db.VarChar(20)\n  email   String   @unique @db.VarChar(255)\n  status  String   @db.VarChar(50)\n  tanggal DateTime @default(now()) @db.Timestamp()\n}\n\nmodel pesanan {\n  id        String   @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  nama      String   @db.VarChar(255)\n  produk_id String   @db.Uuid\n  produk    produk   @relation(fields: [produk_id], references: [id])\n  total     Int\n  tanggal   DateTime @default(now()) @db.Timestamp()\n  status    String   @db.VarChar(50)\n}\n",
-  "inlineSchemaHash": "9c56588c1d66005ea63fa175e1679650d3908d769788670514f825a6de2f165e",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n  output        = \"./generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel produk {\n  id         String      @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  nama       String      @db.VarChar(255)\n  harga      Int\n  gambar_url String      @db.VarChar(255)\n  stok       Int         @default(0)\n  status     String      @db.VarChar(50)\n  penjualan  penjualan[]\n  pesanan    pesanan[]\n}\n\nmodel pelanggan {\n  id        String      @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  nama      String      @db.VarChar(255)\n  email     String      @unique @db.VarChar(255)\n  alamat    String      @db.Text\n  telepon   String      @db.VarChar(20)\n  penjualan penjualan[]\n}\n\nmodel penjualan {\n  id           String    @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  pelanggan_id String    @db.Uuid\n  produk_id    String    @db.Uuid\n  jumlah       Int\n  total        Int\n  status       String    @db.VarChar(50) // \"Dikirim\", \"Proses\", \"Selesai\"\n  tanggal      DateTime  @default(now()) @db.Timestamp()\n  pelanggan    pelanggan @relation(fields: [pelanggan_id], references: [id])\n  produk       produk    @relation(fields: [produk_id], references: [id])\n}\n\nmodel pendapatan {\n  bulan      String @unique @db.VarChar(7)\n  pendapatan Int\n}\n\nmodel rating_toko {\n  id         String   @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  nilai      Float\n  bulan      String   @db.VarChar(7)\n  created_at DateTime @default(now()) @db.Timestamp()\n}\n\nmodel user {\n  id      String   @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  nama    String   @db.VarChar(255)\n  role    String   @default(\"admin\") @db.VarChar(20)\n  email   String   @unique @db.VarChar(255)\n  status  String   @db.VarChar(50)\n  tanggal DateTime @default(now()) @db.Timestamp()\n}\n\nmodel pesanan {\n  id        String   @id @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  nama      String   @db.VarChar(255)\n  produk_id String   @db.Uuid\n  produk    produk   @relation(fields: [produk_id], references: [id])\n  total     Int\n  tanggal   DateTime @default(now()) @db.Timestamp()\n  status    String   @db.VarChar(50)\n}\n",
+  "inlineSchemaHash": "823fe3dc7f28d541c0611302a437c5df7e1eb0d0a8e2f3a2871df87d2f9ef986",
   "copyEngine": true
 }
 
@@ -260,6 +264,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
 path.join(process.cwd(), "prisma/generated/client/libquery_engine-debian-openssl-3.0.x.so.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-rhel-openssl-3.0.x.so.node");
+path.join(process.cwd(), "prisma/generated/client/libquery_engine-rhel-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/generated/client/schema.prisma")
