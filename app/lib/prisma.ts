@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma";
 import { LatestInvoice } from "./definitions";
 import { formatCurrency } from "./utils";
 
-
 const prisma = new PrismaClient();
 
 export async function fetchRevenuePrisma() {
@@ -17,29 +16,15 @@ export async function fetchRevenuePrisma() {
 
 export async function fetchLatestInvoicesPrisma() {
   try {
-    const data = await prisma.invoices.findMany({
+    const data = await prisma.penjualan.findMany({
       take: 5,
       orderBy: {
-        date: "desc",
+        tanggal: "desc", // sesuaikan dengan field yg ada di penjualan
       },
-      // Hapus include customer jika tidak ada relasi customer
-      // include: {
-      //   customer: {
-      //     select: {
-      //       name: true,
-      //       image_url: true,
-      //       email: true,
-      //     },
-      //   },
-      // },
     });
 
     const latestInvoices = data.map((invoice) => ({
-      amount: formatCurrency(invoice.amount),
-      // Jika tidak ada relasi customer, gunakan field yang ada di invoices
-      // name: invoice.customer?.name,
-      // image_url: invoice.customer?.image_url,
-      // email: invoice.customer?.email,
+      amount: formatCurrency(invoice.total),
       id: invoice.id,
     })) as unknown as LatestInvoice[];
 
@@ -52,29 +37,29 @@ export async function fetchLatestInvoicesPrisma() {
 
 export async function fetchCardDataPrisma() {
   try {
-    const invoiceCountPromise = prisma.invoices.count();
-    const customerCountPromise = prisma.customers.count();
-    const invoiceStatusPromise = prisma.invoices.groupBy({
-      by: ["status"],
-      _sum: {
-        amount: true,
-      },
-    });
+    const penjualanCountPromise = prisma.penjualan.count();
+    const pelangganCountPromise = prisma.pelanggan.count();
 
-    const data = await Promise.all([
-      invoiceCountPromise,
-      customerCountPromise,
-      invoiceStatusPromise,
+    // karena Prisma belum support groupBy() di model yang tidak valid tanpa schema eksplisit,
+    // kita ambil semua penjualan dan hitung statusnya manual
+    const allPenjualan = await prisma.penjualan.findMany();
+
+    const paid = allPenjualan
+      .filter((p) => p.status === "Selesai")
+      .reduce((sum, p) => sum + p.total, 0);
+
+    const pending = allPenjualan
+      .filter((p) => p.status === "Proses" || p.status === "Dikirim")
+      .reduce((sum, p) => sum + p.total, 0);
+
+    const [jumlahPenjualan, jumlahPelanggan] = await Promise.all([
+      penjualanCountPromise,
+      pelangganCountPromise,
     ]);
 
-    const paid =
-      data[2].find((status) => status.status === "paid")?._sum.amount || 0;
-    const pending =
-      data[2].find((status) => status.status === "pending")?._sum.amount || 0;
-
     return {
-      numberOfCustomers: data[1],
-      numberOfInvoices: data[0],
+      numberOfCustomers: jumlahPelanggan,
+      numberOfInvoices: jumlahPenjualan,
       totalPaidInvoices: formatCurrency(paid),
       totalPendingInvoices: formatCurrency(pending),
     };
