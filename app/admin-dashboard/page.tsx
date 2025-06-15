@@ -10,11 +10,13 @@ import {
   ArchiveBoxIcon,
 } from "@heroicons/react/24/solid";
 import prisma from "../lib/prisma";
-import type { Produk, Penjualan } from "@prisma/client";
+import type { produk, penjualan } from "@prisma/client";
 
-type ProdukWithPenjualan = Produk & {
-  penjualan: Pick<Penjualan, "jumlah">[];
+
+type ProdukWithPenjualan = produk & {
+  penjualan: Pick<penjualan, "jumlah">[];
 };
+
 
 //Font yang digunakan
 const jollyLodger = Jolly_Lodger({
