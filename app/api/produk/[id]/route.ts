@@ -82,29 +82,24 @@ export async function PUT(req: Request) {
 }
 
 
-
-
-// DELETE /api/produk/[id]
-export async function DELETE(req: Request) {
-  const url = new URL(req.url);
-  const id = url.pathname.split("/").pop();
-
-  if (!id) {
-    return NextResponse.json({ error: "ID tidak ditemukan di URL" }, { status: 400 });
-  }
-
-  console.log("Mencoba menghapus produk dengan ID:", id);
-
+// DELETE produk berdasarkan ID
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   try {
-    await prisma.$transaction([
-      prisma.pesanan.deleteMany({ where: { produk_id: id } }),
-      prisma.penjualan.deleteMany({ where: { produk_id: id } }),
-      prisma.produk.delete({ where: { id } }),
-    ]);
+    const { id } = params;
 
-    return NextResponse.json({ message: "Produk dan relasinya berhasil dihapus" }, { status: 200 });
-  } catch (error: any) {
-    console.error("Gagal menghapus produk:", error.message);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    await prisma.produk.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return NextResponse.json({ message: "Produk berhasil dihapus" }, { status: 200 });
+  } catch (error) {
+    console.error("DELETE error:", error);
+    return NextResponse.json({ error: "Gagal menghapus produk" }, { status: 500 });
   }
 }
+

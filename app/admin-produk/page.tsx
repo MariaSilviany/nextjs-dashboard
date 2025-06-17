@@ -289,11 +289,14 @@ const HauntedHallowAdmin: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  // Fungsi untuk memuat data produk dari API
-  useEffect(() => {
+// Fungsi untuk memuat data produk dari API
+useEffect(() => {
   const fetchProducts = async () => {
     try {
-      const res = await fetch("/api/produk");
+      const res = await fetch("/api/produk", {
+      cache: "no-store"
+    });
+
       if (!res.ok) throw new Error("Gagal memuat data produk");
 
       const result = await res.json(); // { data, total }
@@ -329,6 +332,7 @@ const HauntedHallowAdmin: React.FC = () => {
 }, []);
 
 
+
   // Fungsi untuk menangani perubahan input pencarian
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -352,7 +356,7 @@ const HauntedHallowAdmin: React.FC = () => {
 
         // Setelah berhasil menghapus, perbarui state produk
         setProductData((prevProducts: Product[]) =>
-  prevProducts.filter((product) => product.id !== Number(id))
+  prevProducts.filter((product) => product.id !== id)
 );
 
       } catch (error) {

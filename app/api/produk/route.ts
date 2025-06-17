@@ -1,46 +1,24 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { v4 as uuidv4 } from "uuid";
-import cloudinary from "@/lib/cloudinary";
-import { IncomingForm, File } from "formidable";
-import { Readable } from "stream";
 
-// Nonaktifkan body parser bawaan Next.js
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-// Helper: Baca stream file menjadi buffer
-async function bufferFromReadable(readable: Readable): Promise<Buffer> {
-  const chunks: Uint8Array[] = [];
-  for await (const chunk of readable) {
-    chunks.push(chunk);
-  }
-  return Buffer.concat(chunks);
-}
-
-// GET semua produk dengan pagination
-export async function GET(req: NextRequest) {
+// GET: Ambil semua produk
+export async function GET() {
   try {
-    const { searchParams } = new URL(req.url);
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "10");
-    const skip = (page - 1) * limit;
+    const produk = await prisma.produk.findMany({
+      orderBy: { nama: "asc" },
+      select: {
+        id: true,
+        nama: true,
+        harga: true,
+        stok: true,
+        status: true,
+        gambar_url: true,
+      },
+    });
 
-    const [data, total] = await Promise.all([
-      prisma.produk.findMany({
-        skip,
-        take: limit,
-        orderBy: { nama: "asc" },
-      }),
-      prisma.produk.count(),
-    ]);
-
-    return NextResponse.json({ data, total });
+    return NextResponse.json({ data: produk, total: produk.length });
   } catch (error) {
-    console.error("GET error:", error);
+    console.error("❌ GET /api/produk error:", error);
     return NextResponse.json(
       { error: "Gagal mengambil data produk" },
       { status: 500 }
@@ -48,60 +26,36 @@ export async function GET(req: NextRequest) {
   }
 }
 
-
-// POST (tambah produk baru)
-export async function POST(req: NextRequest) {
+// POST: Tambah produk baru
+export async function POST(req: Request) {
   try {
-    const form = new IncomingForm({ multiples: false });
+    const body = await req.json();
+    const { nama, harga, stok, status, gambar_url } = body;
 
-    const { fields, files }: { fields: any; files: { gambar?: File } } = await new Promise(
-      (resolve, reject) => {
-        form.parse(req as any, (err, fields, files) => {
-          if (err) reject(err);
-          else resolve({ fields, files });
-        });
-      }
-    );
-
-    const { nama, harga, stok, status } = fields;
-    const gambar = files.gambar;
-
-    let imageUrl = "";
-
-    if (gambar && gambar.filepath) {
-      const fileStream = Readable.from(gambar.filepath);
-      const fileBuffer = await bufferFromReadable(fileStream);
-
-      const uploaded = await new Promise<{ secure_url: string }>((resolve, reject) => {
-        cloudinary.uploader.upload_stream(
-          {
-            resource_type: "image",
-            folder: "produk",
-            public_id: `${uuidv4()}-${gambar.originalFilename?.split(".")[0]}`,
-          },
-          (error, result) => {
-            if (error || !result) reject(error);
-            else resolve(result);
-          }
-        ).end(fileBuffer);
-      });
-
-      imageUrl = uploaded.secure_url;
+    // Validasi input
+    if (!nama || !harga || !stok || !status || !gambar_url) {
+      return NextResponse.json(
+        { error: "Semua field wajib diisi." },
+        { status: 400 }
+      );
     }
 
-    const newProduk = await prisma.produk.create({
+    const produkBaru = await prisma.produk.create({
       data: {
         nama,
         harga: parseInt(harga),
         stok: parseInt(stok),
         status,
-        gambar_url: imageUrl,
+        gambar_url, // bisa berupa base64 atau path dari public/
       },
     });
 
-    return NextResponse.json({ data: newProduk }, { status: 201 });
+    return NextResponse.json({ data: produkBaru }, { status: 201 });
   } catch (error) {
-    console.error("POST error:", error);
-    return NextResponse.json({ error: "Gagal menambahkan produk" }, { status: 500 });
+    console.error("❌ POST /api/produk error:", error);
+    return NextResponse.json(
+      { error: "Gagal menambahkan produk" },
+      { status: 500 }
+    );
   }
 }

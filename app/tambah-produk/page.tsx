@@ -10,8 +10,9 @@ const TambahProduk: React.FC = () => {
     harga: "",
     stok: 0,
     status: true,
-    gambar: null as File | null,
+    gambar: "", // bukan null atau File, tapi string
   });
+
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null); // ✅ Tambahkan state success
@@ -45,59 +46,62 @@ const TambahProduk: React.FC = () => {
     }
   };
 
+ 
   // Fungsi untuk menyimpan produk
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (
-      !formData.namaProduk ||
-      !formData.harga ||
-      formData.stok <= 0 ||
-      !formData.gambar
-    ) {
-      setError("Semua kolom wajib diisi!");
-      return;
+  if (
+    !formData.namaProduk ||
+    !formData.harga ||
+    formData.stok <= 0 ||
+    !formData.gambar // Di sini `gambar` adalah string URL, bukan file
+  ) {
+    setError("Semua kolom wajib diisi!");
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/produk", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nama: formData.namaProduk,
+        harga: parseInt(formData.harga),
+        stok: formData.stok,
+        status: formData.status ? "Aktif" : "Nonaktif",
+        gambar_url: formData.gambar, // gunakan sebagai URL gambar
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || "Gagal menyimpan produk");
     }
 
-    try {
-      const data = new FormData();
-      data.append("nama", formData.namaProduk);
-      data.append("harga", formData.harga);
-      data.append("stok", String(formData.stok));
-      data.append("status", formData.status ? "Aktif" : "Nonaktif");
-      data.append("gambar", formData.gambar);
+    // ✅ Reset form dan tampilkan pesan sukses
+    setFormData({
+      namaProduk: "",
+      harga: "",
+      stok: 0,
+      status: true,
+      gambar: "", // sekarang string, bukan file
+    });
+    setError(null);
+    setSuccess("Produk berhasil ditambahkan!");
 
-      const res = await fetch("/api/produk", {
-        method: "POST",
-        body: data,
-      });
+    // Redirect setelah berhasil
+    setTimeout(() => {
+      router.push("/admin-produk");
+    }, 1500);
 
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Gagal menyimpan produk");
-      }
-
-      // ✅ Reset form dan tampilkan pesan sukses
-      setFormData({
-        namaProduk: "",
-        harga: "",
-        stok: 0,
-        status: true,
-        gambar: null,
-      });
-      setError(null);
-      setSuccess("Produk berhasil ditambahkan!");
-
-      // Redirect setelah berhasil
-      setTimeout(() => {
-        router.push("/admin-produk");
-      }, 1500);
-
-    } catch (err: any) {
-      console.error(err);
-      setError(err.message || "Terjadi kesalahan saat menyimpan produk");
-    }
-  };
+  } catch (err: any) {
+    console.error(err);
+    setError(err.message || "Terjadi kesalahan saat menyimpan produk");
+  }
+};
 
   return (
     <div className="flex min-h-screen bg-[#1e2a3e]">
@@ -194,8 +198,11 @@ const TambahProduk: React.FC = () => {
                   </label>
                   <input
                     type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
+                    placeholder="Masukkan URL gambar (contoh: https://...)"
+                    value={formData.gambar}
+                    onChange={(e) =>
+                      setFormData({ ...formData, gambar: e.target.value })
+                    }
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
                   />
                   {formData.gambar && (
