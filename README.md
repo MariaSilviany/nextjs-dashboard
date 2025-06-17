@@ -17,7 +17,7 @@ password: 12345
 Link GitHub: https://github.com/MariaSilviany/nextjs-dashboard 
 
 
-Link deploy: https://nextjs-dashboard-r9v6.vercel.app/ 
+Link deploy: https://nextjs-dashboard-alpha-rust-46.vercel.app/
 
 
 Bagian yang sudah dikerjakan tiap anggota:
