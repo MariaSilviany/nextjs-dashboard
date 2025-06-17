@@ -83,17 +83,16 @@ export async function PUT(req: Request) {
 
 
 // DELETE produk berdasarkan ID
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const { id } = params;
+export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+  const { id } = context.params;
 
+  if (!id) {
+    return NextResponse.json({ error: "ID tidak ditemukan" }, { status: 400 });
+  }
+
+  try {
     await prisma.produk.delete({
-      where: {
-        id: id,
-      },
+      where: { id },
     });
 
     return NextResponse.json({ message: "Produk berhasil dihapus" }, { status: 200 });
