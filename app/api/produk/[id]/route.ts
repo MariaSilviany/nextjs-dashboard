@@ -1,12 +1,10 @@
+// app/api/produk/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
-// const prisma = new PrismaClient();
-
-// app/api/produk/[id]/route.ts
-export async function GET(req: Request) {
-  const url = new URL(req.url);
-  const id = url.pathname.split("/").pop();
+// GET produk berdasarkan ID
+export async function GET(req: NextRequest, context: { params: { id: string } }) {
+  const { id } = context.params;
 
   if (!id) {
     return NextResponse.json({ error: "ID tidak ditemukan di URL" }, { status: 400 });
@@ -26,17 +24,9 @@ export async function GET(req: Request) {
   }
 }
 
-
-
-
-// PUT /api/produk/[id]
-export async function PUT(req: Request) {
-  const url = new URL(req.url);
-  const id = url.pathname.split("/").pop();
-
-  if (!id) {
-    return NextResponse.json({ error: "ID tidak ditemukan di URL" }, { status: 400 });
-  }
+// PUT produk berdasarkan ID
+export async function PUT(req: NextRequest, context: { params: { id: string } }) {
+  const { id } = context.params;
 
   try {
     const formData = await req.formData();
@@ -60,13 +50,10 @@ export async function PUT(req: Request) {
     const gambarLama = formData.get("gambarLama") as string | null;
 
     let gambar_url = "";
-
     if (gambarFile && gambarFile.name) {
       gambar_url = gambarFile.name;
     } else if (gambarLama) {
       gambar_url = gambarLama;
-    } else {
-      gambar_url = "";
     }
 
     const updated = await prisma.produk.update({
@@ -81,24 +68,15 @@ export async function PUT(req: Request) {
   }
 }
 
-
 // DELETE produk berdasarkan ID
 export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
   const { id } = context.params;
 
-  if (!id) {
-    return NextResponse.json({ error: "ID tidak ditemukan" }, { status: 400 });
-  }
-
   try {
-    await prisma.produk.delete({
-      where: { id },
-    });
-
+    await prisma.produk.delete({ where: { id } });
     return NextResponse.json({ message: "Produk berhasil dihapus" }, { status: 200 });
   } catch (error) {
     console.error("DELETE error:", error);
     return NextResponse.json({ error: "Gagal menghapus produk" }, { status: 500 });
   }
 }
-
