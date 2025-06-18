@@ -1,65 +1,73 @@
-// app/api/produk/[id]/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import { NextResponse } from "next/server";
+import { sql } from "@vercel/postgres";
 
-interface Context {
-  params: { id: string };
-}
-
-// GET
-export async function GET(request: NextRequest, context: Context) {
-  const { id } = context.params;
-
+// GET produk berdasarkan ID
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   try {
-    const produk = await prisma.produk.findUnique({ where: { id } });
+    const result = await sql`SELECT * FROM produk WHERE id = ${params.id};`;
 
-    if (!produk) {
-      return NextResponse.json({ error: 'Produk tidak ditemukan' }, { status: 404 });
+    if (result.rows.length === 0) {
+      return NextResponse.json({ error: "Produk tidak ditemukan" }, { status: 404 });
     }
 
-    return NextResponse.json(produk);
-  } catch (error) {
-    console.error('GET error:', error);
-    return NextResponse.json({ error: 'Gagal mengambil data produk' }, { status: 500 });
+    return NextResponse.json({ data: result.rows[0] });
+  } catch (error: any) {
+    console.error("[GET /api/produk/[id]] ERROR:", error.message || error);
+    return NextResponse.json({ error: "Gagal mengambil produk" }, { status: 500 });
   }
 }
 
-// PUT
-export async function PUT(request: NextRequest, context: Context) {
-  const { id } = context.params;
-
+// PUT untuk update produk
+export async function PUT(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   try {
-    const formData = await request.formData();
-    const nama = formData.get('nama') as string;
-    const harga = parseInt(formData.get('harga') as string);
-    const stok = parseInt(formData.get('stok') as string);
-    const status = formData.get('status') as string;
-    const gambarFile = formData.get('gambar') as File | null;
-    const gambarLama = formData.get('gambarLama') as string | null;
+    const body = await req.json();
+    const {
+      nama_produk,
+      harga,
+      stok,
+      kategori,
+      gambar,
+      rating,
+      in_stock,
+    } = body;
 
-    const gambar_url = gambarFile?.name || gambarLama || '';
+    const result = await sql`
+      UPDATE produk
+      SET
+        nama_produk = ${nama_produk},
+        harga = ${harga},
+        stok = ${stok},
+        kategori = ${kategori},
+        gambar = ${gambar},
+        rating = ${rating},
+        in_stock = ${in_stock}
+      WHERE id = ${params.id}
+      RETURNING *;
+    `;
 
-    const updated = await prisma.produk.update({
-      where: { id },
-      data: { nama, harga, stok, status, gambar_url },
-    });
-
-    return NextResponse.json(updated);
-  } catch (error) {
-    console.error('PUT error:', error);
-    return NextResponse.json({ error: 'Gagal update produk' }, { status: 500 });
+    return NextResponse.json({ data: result.rows[0] });
+  } catch (error: any) {
+    console.error("[PUT /api/produk/[id]] ERROR:", error.message || error);
+    return NextResponse.json({ error: "Gagal mengupdate produk" }, { status: 500 });
   }
 }
 
-// DELETE
-export async function DELETE(request: NextRequest, context: Context) {
-  const { id } = context.params;
-
+// DELETE produk berdasarkan ID
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   try {
-    await prisma.produk.delete({ where: { id } });
-    return NextResponse.json({ message: 'Produk berhasil dihapus' });
-  } catch (error) {
-    console.error('DELETE error:', error);
-    return NextResponse.json({ error: 'Gagal menghapus produk' }, { status: 500 });
+    await sql`DELETE FROM produk WHERE id = ${params.id};`;
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    console.error("[DELETE /api/produk/[id]] ERROR:", error.message || error);
+    return NextResponse.json({ error: "Gagal menghapus produk" }, { status: 500 });
   }
 }
