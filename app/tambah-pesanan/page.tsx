@@ -17,12 +17,15 @@ const TambahPesanan: React.FC = () => {
   const [message, setMessage] = useState('');
 
   // Ambil daftar produk
-  useEffect(() => {
-    fetch("/api/produk")
-      .then((res) => res.json())
-      .then((data) => setProdukList(data))
-      .catch((err) => console.error("Gagal ambil produk:", err));
-  }, []);
+useEffect(() => {
+  fetch("/api/produk")
+    .then((res) => res.json())
+    .then((data) => {
+      setProdukList(data.data || []); // ✅ gunakan `data.data`
+    })
+    .catch((err) => console.error("Gagal ambil produk:", err));
+}, []);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
