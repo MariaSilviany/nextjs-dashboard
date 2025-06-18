@@ -10,7 +10,7 @@ const jollyLodger = Jolly_Lodger({ weight: "400", subsets: ["latin"], display: "
 const creepster = Creepster({ weight: "400", subsets: ["latin"], display: "swap" });
 
 interface Product {
-  id: number;
+  id: string;
   nama: string;
   harga: string;
   stok: string;
@@ -341,29 +341,30 @@ useEffect(() => {
   };
 
   // Fungsi untuk menghapus produk
-  const handleDeleteProduct = async (id: string) => {
-    const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus produk ini?");
-    if (confirmDelete) {
-      try {
-        const res = await fetch(`/api/produk/${id}`, {
-     method: "DELETE",
-   });
-   if (!res.ok) {
-     const errorMessage = await res.text(); // Ambil pesan kesalahan dari respons
-     console.error("Error deleting product:", errorMessage);
-     throw new Error("Gagal menghapus produk");
-   }
+const handleDeleteProduct = async (id: string) => {
+  const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus produk ini?");
+  if (confirmDelete) {
+    try {
+      const res = await fetch(`/api/produk/${id}`, {
+        method: "DELETE",
+      });
 
-        // Setelah berhasil menghapus, perbarui state produk
-        setProductData((prevProducts: Product[]) =>
-  prevProducts.filter((product) => product.id !== id)
-);
-
-      } catch (error) {
-        console.error(error);
+      if (!res.ok) {
+        const errorMessage = await res.text();
+        console.error("Error deleting product:", errorMessage);
+        throw new Error("Gagal menghapus produk");
       }
+
+      // Update state setelah produk dihapus
+      setProductData((prevProducts: Product[]) =>
+        prevProducts.filter((product) => product.id !== id)
+      );
+    } catch (error) {
+      console.error(error);
     }
-  };
+  }
+};
+
 
   // Filter produk berdasarkan pencarian
   const filteredProducts = productData.filter((product) => {
