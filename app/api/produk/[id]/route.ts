@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
-// GET
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
+// Helper untuk ambil ID dari URL
+function getIdFromUrl(req: NextRequest): string | null {
+  const parts = req.nextUrl.pathname.split('/');
+  return parts[parts.length - 1] || null;
+}
+
+// GET /api/produk/[id]
+export async function GET(req: NextRequest) {
+  const id = getIdFromUrl(req);
+  if (!id) return NextResponse.json({ error: 'ID tidak valid' }, { status: 400 });
 
   try {
     const produk = await prisma.produk.findUnique({ where: { id } });
@@ -13,24 +20,30 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     }
 
     return NextResponse.json(produk);
-  } catch (error) {
+  } catch (error: any) {
     console.error('GET error:', error);
     return NextResponse.json({ error: 'Gagal mengambil data produk' }, { status: 500 });
   }
 }
 
-// PUT
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
+// PUT /api/produk/[id]
+export async function PUT(req: NextRequest) {
+  const id = getIdFromUrl(req);
+  if (!id) return NextResponse.json({ error: 'ID tidak valid' }, { status: 400 });
 
   try {
-    const formData = await request.formData();
+    const formData = await req.formData();
+
     const nama = formData.get('nama') as string;
     const harga = parseInt(formData.get('harga') as string);
     const stok = parseInt(formData.get('stok') as string);
     const status = formData.get('status') as string;
     const gambarFile = formData.get('gambar') as File | null;
     const gambarLama = formData.get('gambarLama') as string | null;
+
+    if (!nama || isNaN(harga) || isNaN(stok) || !status) {
+      return NextResponse.json({ error: 'Field tidak lengkap atau tidak valid' }, { status: 400 });
+    }
 
     const gambar_url = gambarFile?.name || gambarLama || '';
 
@@ -40,20 +53,21 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     });
 
     return NextResponse.json(updated);
-  } catch (error) {
+  } catch (error: any) {
     console.error('PUT error:', error);
     return NextResponse.json({ error: 'Gagal update produk' }, { status: 500 });
   }
 }
 
-// DELETE
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
+// DELETE /api/produk/[id]
+export async function DELETE(req: NextRequest) {
+  const id = getIdFromUrl(req);
+  if (!id) return NextResponse.json({ error: 'ID tidak valid' }, { status: 400 });
 
   try {
     await prisma.produk.delete({ where: { id } });
     return NextResponse.json({ message: 'Produk berhasil dihapus' });
-  } catch (error) {
+  } catch (error: any) {
     console.error('DELETE error:', error);
     return NextResponse.json({ error: 'Gagal menghapus produk' }, { status: 500 });
   }
