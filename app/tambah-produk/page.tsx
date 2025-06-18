@@ -204,7 +204,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                   />
                   {formData.gambar && (
                     <p className="text-sm text-gray-700 mt-2">
-                      Gambar: {formData.gambar.name}
+                      Gambar: {formData.gambar}
                     </p>
                   )}
                 </div>
