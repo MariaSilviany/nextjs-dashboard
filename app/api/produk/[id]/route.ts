@@ -1,13 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
 
-// GET produk berdasarkan ID
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: { id: string } }
 ) {
   try {
-    const result = await sql`SELECT * FROM produk WHERE id = ${params.id};`;
+    const id = context.params.id;
+    const result = await sql`SELECT * FROM produk WHERE id = ${id};`;
 
     if (result.rows.length === 0) {
       return NextResponse.json({ error: "Produk tidak ditemukan" }, { status: 404 });
@@ -15,18 +15,18 @@ export async function GET(
 
     return NextResponse.json({ data: result.rows[0] });
   } catch (error: any) {
-    console.error("[GET /api/produk/[id]] ERROR:", error.message || error);
     return NextResponse.json({ error: "Gagal mengambil produk" }, { status: 500 });
   }
 }
 
+
 // PUT untuk update produk
 export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: { id: string } }
 ) {
-  try {
-    const body = await req.json();
+  const id = context.params.id;
+  const body = await req.json();
     const {
       nama_produk,
       harga,
@@ -60,9 +60,10 @@ export async function PUT(
 
 // DELETE produk berdasarkan ID
 export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: { id: string } }
 ) {
+  const id = context.params.id;
   try {
     await sql`DELETE FROM produk WHERE id = ${params.id};`;
     return NextResponse.json({ success: true });
