@@ -37,14 +37,15 @@ const TambahProduk: React.FC = () => {
   };
 
   // Fungsi untuk menangani upload gambar
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData({
-        ...formData,
-        gambar: e.target.files[0],
-      });
-    }
-  };
+ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  if (e.target.files && e.target.files[0]) {
+    setFormData({
+      ...formData,
+      gambar: e.target.files[0].name, // ✅ hanya ambil nama file (string)
+    });
+  }
+};
+
 
  
   // Fungsi untuk menyimpan produk
@@ -198,12 +199,8 @@ const handleSubmit = async (e: React.FormEvent) => {
                   </label>
                   <input
                     type="file"
-                    placeholder="Masukkan URL gambar (contoh: https://...)"
-                    value={formData.gambar}
-                    onChange={(e) =>
-                      setFormData({ ...formData, gambar: e.target.value })
-                    }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+                    onChange={handleFileChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   />
                   {formData.gambar && (
                     <p className="text-sm text-gray-700 mt-2">
