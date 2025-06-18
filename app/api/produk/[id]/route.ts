@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
-// Definisikan tipe untuk params
-interface Params {
-  id: string;
-}
-
 // GET
-export async function GET(request: NextRequest, { params }: { params: Params }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
 
   try {
@@ -25,7 +20,7 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
 }
 
 // PUT
-export async function PUT(request: NextRequest, { params }: { params: Params }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
 
   try {
@@ -52,7 +47,7 @@ export async function PUT(request: NextRequest, { params }: { params: Params }) 
 }
 
 // DELETE
-export async function DELETE(request: NextRequest, { params }: { params: Params }) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
 
   try {
