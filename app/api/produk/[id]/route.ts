@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
 
+// GET produk berdasarkan ID
 export async function GET(
   req: NextRequest,
   context: { params: { id: string } }
@@ -19,14 +20,14 @@ export async function GET(
   }
 }
 
-
 // PUT untuk update produk
 export async function PUT(
   req: NextRequest,
   context: { params: { id: string } }
 ) {
-  const id = context.params.id;
-  const body = await req.json();
+  try {
+    const id = context.params.id;
+    const body = await req.json();
     const {
       nama_produk,
       harga,
@@ -47,7 +48,7 @@ export async function PUT(
         gambar = ${gambar},
         rating = ${rating},
         in_stock = ${in_stock}
-      WHERE id = ${params.id}
+      WHERE id = ${id}
       RETURNING *;
     `;
 
@@ -63,9 +64,9 @@ export async function DELETE(
   req: NextRequest,
   context: { params: { id: string } }
 ) {
-  const id = context.params.id;
   try {
-    await sql`DELETE FROM produk WHERE id = ${params.id};`;
+    const id = context.params.id;
+    await sql`DELETE FROM produk WHERE id = ${id};`;
     return NextResponse.json({ success: true });
   } catch (error: any) {
     console.error("[DELETE /api/produk/[id]] ERROR:", error.message || error);
